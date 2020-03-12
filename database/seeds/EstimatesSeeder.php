@@ -1,9 +1,9 @@
 <?php
 
-use App\Models\User;
+use App\Models\Estimate;
 use Illuminate\Database\Seeder;
 
-class UsersTableSeeder extends Seeder
+class EstimatesSeeder extends Seeder
 {
     /**
      * Run the database seeds.
@@ -13,9 +13,7 @@ class UsersTableSeeder extends Seeder
     public function run()
     {
         if(app()->environment() == 'local') {
-            factory(User::class, 1)->create([
-                'email' => 'admin@admin.com'
-            ]);
+            factory(Estimate::class, 24)->create();
         }
     }
 }

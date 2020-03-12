@@ -16,6 +16,8 @@
     <link rel="dns-prefetch" href="//fonts.gstatic.com">
     <link href="https://fonts.googleapis.com/css?family=Nunito" rel="stylesheet">
 
+    <link href="https://unpkg.com/ionicons@4.5.10-0/dist/css/ionicons.min.css" rel="stylesheet">
+
     <!-- Styles -->
     <link href="{{ asset('css/app.css') }}" rel="stylesheet">
 </head>
@@ -76,5 +78,8 @@
             @yield('content')
         </main>
     </div>
+
+    <script src="https://unpkg.com/ionicons@5.0.0/dist/ionicons.js"></script>
+
 </body>
 </html>
