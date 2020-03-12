@@ -14,7 +14,7 @@ class EstimateController extends Controller
      */
     public function index()
     {
-        $estimates = Estimate::latest()->paginate(12);
+        $estimates = Estimate::latest()->paginate(10);
 
         return view('estimates.index', compact('estimates'));
     }

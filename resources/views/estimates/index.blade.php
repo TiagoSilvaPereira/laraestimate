@@ -20,8 +20,15 @@
             </div>
         </div>
         @empty
-            
+            @lang('app.no_estimates_found')
         @endforelse
+
+    </div>
+
+    <div class="row">
+        <div class="col-sm-12">
+            {{ $estimates->render() }}
+        </div>
     </div>
 </div>
 @endsection
