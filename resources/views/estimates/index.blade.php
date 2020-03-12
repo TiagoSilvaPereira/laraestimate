@@ -6,7 +6,7 @@
 
         <div class="col-sm-12 mb-4">
             <h1>@lang('app.estimates')</h1>
-            <button class="btn btn-primary btn-lg"><i class="icon ion-md-add"></i> @lang('app.add_estimate')</button>
+            <a href="{{ route('estimates.create') }}" class="btn btn-primary btn-lg"><i class="icon ion-md-add"></i> @lang('app.add_estimate')</a>
         </div>
 
         @forelse ($estimates as $estimate)    

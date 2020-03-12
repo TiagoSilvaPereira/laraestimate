@@ -19,4 +19,4 @@ Route::get('/', function () {
 
 Auth::routes();
 
-Route::get('/estimates', 'EstimateController@index')->name('estimate');
+Route::resource('estimates', 'EstimateController');

@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use App\Models\Estimate;
 use Illuminate\Http\Request;
+use App\Http\Requests\EstimateStoreRequest;
 
 class EstimateController extends Controller
 {
@@ -26,7 +27,7 @@ class EstimateController extends Controller
      */
     public function create()
     {
-        //
+        return view('estimates.create');
     }
 
     /**
@@ -35,9 +36,15 @@ class EstimateController extends Controller
      * @param  \Illuminate\Http\Request  $request
      * @return \Illuminate\Http\Response
      */
-    public function store(Request $request)
+    public function store(EstimateStoreRequest $request)
     {
-        //
+        $data = $request->only('name', 'description');
+
+        $estimate = Estimate::create($data);
+
+        return redirect()
+            ->route('estimates.index')
+            ->withSuccess(trans('app.estimate_created_successfully'));
     }
 
     /**
@@ -48,7 +55,7 @@ class EstimateController extends Controller
      */
     public function show(Estimate $estimate)
     {
-        //
+        return view('estimates.edit');
     }
 
     /**
