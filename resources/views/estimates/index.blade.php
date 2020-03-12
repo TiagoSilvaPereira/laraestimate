@@ -16,6 +16,11 @@
                     <h4 class="card-title">{{ $estimate->name }}</h4>
 
                     <p class="card-subtitle">{{ $estimate->created_at->diffForHumans() }}</p>
+
+                    <div class="mt-2">
+                        <a href="#" class="text-primary"><i class="icon ion-md-create"></i></a>
+                        <a href="#" class="text-danger float-right"><i class="icon ion-md-trash"></i></a>
+                    </div>
                 </div>
             </div>
         </div>

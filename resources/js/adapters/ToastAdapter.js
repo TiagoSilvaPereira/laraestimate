@@ -1,5 +1,7 @@
 window.toastr = require('toastr');
 
+toastr.options.closeButton = true;
+
 window.toast = {
 
     success(message, title = null) {

@@ -50028,6 +50028,7 @@ webpackContext.id = "./resources/js sync recursive \\.vue$/";
 /***/ (function(module, exports, __webpack_require__) {
 
 window.toastr = __webpack_require__(/*! toastr */ "./node_modules/toastr/toastr.js");
+toastr.options.closeButton = true;
 window.toast = {
   success: function success(message) {
     var title = arguments.length > 1 && arguments[1] !== undefined ? arguments[1] : null;
