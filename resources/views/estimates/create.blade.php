@@ -15,7 +15,7 @@
 
                         <div class="form-group">
                             <label for="name">@lang('app.labels.name')</label>
-                            <input type="text" class="form-control">
+                            <input name="name" type="text" class="form-control" required>
                         </div>
 
                         <div class="form-group">
