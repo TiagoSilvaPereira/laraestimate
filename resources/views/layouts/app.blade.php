@@ -84,5 +84,9 @@
     <script src="https://unpkg.com/ionicons@5.0.0/dist/ionicons.js"></script>
     @stack('scripts')
 
+    @if(config('app.env') == 'local')
+        <script src="http://localhost:35729/livereload.js"></script>
+    @endif  
+
 </body>
 </html>

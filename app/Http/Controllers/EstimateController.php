@@ -56,7 +56,7 @@ class EstimateController extends Controller
      */
     public function show(Estimate $estimate)
     {
-        return view('estimates.edit');
+        return view('estimates.edit', $estimate);
     }
 
     /**
@@ -67,7 +67,7 @@ class EstimateController extends Controller
      */
     public function edit(Estimate $estimate)
     {
-        //
+        return view('estimates.edit', $estimate);
     }
 
     /**

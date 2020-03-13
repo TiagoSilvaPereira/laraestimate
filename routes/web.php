@@ -19,4 +19,6 @@ Route::get('/', function () {
 
 Auth::routes();
 
-Route::resource('estimates', 'EstimateController');
+Route::prefix('/')->middleware('auth')->group(function () {
+    Route::resource('estimates', 'EstimateController');
+});
