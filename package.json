@@ -21,10 +21,13 @@
         "sass": "^1.20.1",
         "sass-loader": "^8.0.0",
         "vue": "^2.5.17",
-        "vue-template-compiler": "^2.6.10"
+        "vue-template-compiler": "^2.6.10",
+        "webpack-livereload-plugin": "^1.2.0"
     },
     "dependencies": {
         "bootbox": "^5.4.0",
-        "toastr": "^2.1.4"
+        "toastr": "^2.1.4",
+        "trumbowyg": "^2.21.0",
+        "vue-trix": "^1.1.9"
     }
 }

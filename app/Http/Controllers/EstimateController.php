@@ -44,7 +44,7 @@ class EstimateController extends Controller
         $estimate = Estimate::create($data);
 
         return redirect()
-            ->route('estimates.index')
+            ->route('estimates.edit', $estimate)
             ->withSuccess(trans('app.estimate_created_successfully'));
     }
 
@@ -56,7 +56,7 @@ class EstimateController extends Controller
      */
     public function show(Estimate $estimate)
     {
-        return view('estimates.edit', $estimate);
+        return view('estimates.edit', compact('estimate'));
     }
 
     /**
@@ -67,7 +67,7 @@ class EstimateController extends Controller
      */
     public function edit(Estimate $estimate)
     {
-        return view('estimates.edit', $estimate);
+        return view('estimates.edit', compact('estimate'));
     }
 
     /**

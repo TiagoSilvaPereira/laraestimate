@@ -16,7 +16,6 @@ class CreateSectionsTable extends Migration
         Schema::create('sections', function (Blueprint $table) {
             $table->id();
 
-            $table->string('title');
             $table->text('text')->nullable();
             $table->enum('type', ['text', 'contact', 'prices']);
 

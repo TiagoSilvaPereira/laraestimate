@@ -1,0 +1,66 @@
+<style scoped>
+.section:hover {
+    /* background-color: #fafafa; */
+}
+</style>
+
+<template>
+    <div class="section p-2 mb-5">
+        <VueTrix v-model="text" @input="saveText()" />
+    </div>
+</template>
+
+<script>
+import VueTrix from "vue-trix";
+
+export default {
+    components: {
+        VueTrix
+    },
+
+    props: ['section'],
+
+    data() {
+        return {
+            text: null,
+        }
+    },
+
+    mounted() {
+        this.initEditor();
+    },
+
+    methods: {
+
+        initEditor() {
+            this.text = this.section.text;
+        },
+
+        saveText: _.debounce(function() {
+            
+            if(!this.section.id) {
+                this.save();
+                return;
+            }
+
+            this.update();
+
+        }, 300),
+
+        save() {
+            let url = '/estimates/:estimate/sections';
+            url = url.replace(':estimate', this.$parent.estimate);
+
+            axios.post(url, {
+                text: this.text
+            }).then(({data}) => {
+                this.section.id = data.id;
+            });
+        },
+
+        update() {
+
+        }
+    }
+}
+</script>

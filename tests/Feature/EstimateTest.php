@@ -17,7 +17,7 @@ class EstimateTest extends TestCase
 
         factory(Estimate::class, 5)->create();
 
-        $this->get('/estimates');
+        $this->get(route('estimates.index'));
     }
 
     public function test_a_user_can_list_estimates()
@@ -25,7 +25,7 @@ class EstimateTest extends TestCase
         $this->signIn();
         $estimates = factory(Estimate::class, 5)->create();
 
-        $response = $this->get('/estimates');
+        $response = $this->get(route('estimates.index'));
 
         $response
             ->assertStatus(200)
