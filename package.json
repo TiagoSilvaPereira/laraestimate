@@ -24,6 +24,7 @@
         "vue-template-compiler": "^2.6.10"
     },
     "dependencies": {
+        "bootbox": "^5.4.0",
         "toastr": "^2.1.4"
     }
 }

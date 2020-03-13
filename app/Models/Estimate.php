@@ -8,7 +8,7 @@ use Illuminate\Database\Eloquent\SoftDeletes;
 class Estimate extends Model
 {
     use SoftDeletes;
-    
+
     protected $fillable = [
         'name',
         'description',
@@ -24,4 +24,12 @@ class Estimate extends Model
     {
         return $this->hasMany(Section::class);
     }
+
+    public function scopeSearch($query, $search)
+    {
+        return $query->where(function($query) use ($search) {
+            return $query->where('name', 'like', "%{$search}%")
+                ->orWhere('description', 'like', "%{$search}%");
+        });
+    }    
 }

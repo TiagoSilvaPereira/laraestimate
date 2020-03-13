@@ -7,10 +7,13 @@ return [
     'no_estimates_found' => 'No estimates found',
     'create_estimate' => 'Create Estimate',
     'estimate_created_successfully' => 'Estimate created successfully',
+    'are_you_sure' => 'Are you sure?',
 
     'labels' => [
         'optional' => 'Optional',
         'name' => 'Name',
         'description' => 'Description',
-    ]
+        'back' => 'Back',
+        'create' => 'Create',
+    ],
 ];

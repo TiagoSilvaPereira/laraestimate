@@ -13,11 +13,12 @@ class EstimateController extends Controller
      *
      * @return \Illuminate\Http\Response
      */
-    public function index()
+    public function index(Request $request)
     {
-        $estimates = Estimate::latest()->paginate(10);
+        $search = $request->get('search', '');
+        $estimates = Estimate::search($search)->latest()->paginate(10);
 
-        return view('estimates.index', compact('estimates'));
+        return view('estimates.index', compact('estimates', 'search'));
     }
 
     /**
