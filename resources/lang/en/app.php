@@ -7,6 +7,7 @@ return [
     'no_estimates_found' => 'No estimates found',
     'create_estimate' => 'Create Estimate',
     'estimate_created_successfully' => 'Estimate created successfully',
+    'deleted_successfully' => 'Deleted succesfully',
     'are_you_sure' => 'Are you sure?',
 
     'labels' => [

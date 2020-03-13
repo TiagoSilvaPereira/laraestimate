@@ -90,6 +90,9 @@ class EstimateController extends Controller
      */
     public function destroy(Estimate $estimate)
     {
-        //
+        $estimate->delete();
+        
+        return redirect()->route('estimates.index')
+            ->withSuccess(trans('app.deleted_successfully'));
     }
 }
