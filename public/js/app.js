@@ -1923,10 +1923,17 @@ __webpack_require__.r(__webpack_exports__);
 //
 //
 //
+//
+//
+//
+//
+//
+//
 /* harmony default export */ __webpack_exports__["default"] = ({
   props: ['estimate'],
   data: function data() {
     return {
+      saving: false,
       textSections: [],
       priceSections: []
     };
@@ -1949,6 +1956,14 @@ __webpack_require__.r(__webpack_exports__);
       this.textSections.push({
         'text': ''
       });
+    },
+    showSavingLabel: function showSavingLabel() {
+      var _this2 = this;
+
+      this.saving = true;
+      setTimeout(function () {
+        _this2.saving = false;
+      }, 500);
     }
   }
 });
@@ -1996,6 +2011,8 @@ __webpack_require__.r(__webpack_exports__);
       this.text = this.section.text;
     },
     saveText: _.debounce(function () {
+      this.$parent.showSavingLabel();
+
       if (!this.section.id) {
         this.save();
         return;
@@ -2015,7 +2032,14 @@ __webpack_require__.r(__webpack_exports__);
         _this.section.id = data.id;
       });
     },
-    update: function update() {}
+    update: function update() {
+      var url = '/estimates/:estimate/sections/:section';
+      url = url.replace(':estimate', this.$parent.estimate);
+      url = url.replace(':section', this.section.id);
+      axios.put(url, {
+        text: this.text
+      });
+    }
   }
 });
 
@@ -40037,6 +40061,12 @@ var render = function() {
   var _h = _vm.$createElement
   var _c = _vm._self._c || _h
   return _c("div", [
+    _c("div", [
+      _vm.saving
+        ? _c("small", [_vm._v("Saving...")])
+        : _c("small", [_vm._v("All changes are saved")])
+    ]),
+    _vm._v(" "),
     _c("div", { staticClass: "row" }, [
       _c(
         "div",

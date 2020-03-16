@@ -37,7 +37,8 @@ export default {
         },
 
         saveText: _.debounce(function() {
-            
+            this.$parent.showSavingLabel();
+
             if(!this.section.id) {
                 this.save();
                 return;
@@ -59,7 +60,13 @@ export default {
         },
 
         update() {
+            let url = '/estimates/:estimate/sections/:section';
+            url = url.replace(':estimate', this.$parent.estimate);
+            url = url.replace(':section', this.section.id);
 
+            axios.put(url, {
+                text: this.text
+            });
         }
     }
 }

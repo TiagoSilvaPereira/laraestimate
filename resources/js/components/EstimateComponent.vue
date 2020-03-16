@@ -1,6 +1,12 @@
 <template>
     <div>
+        <div>
+            <small v-if="saving">Saving...</small>
+            <small v-else>All changes are saved</small>
+        </div>
+
         <div class="row">
+
             <div class="col-sm-12">
                 <text-section v-for="(textSection, index) in textSections" :key="index" :section="textSection"></text-section>
             </div>
@@ -19,6 +25,7 @@ export default {
 
     data() {
         return {
+            saving: false,
             textSections: [],
             priceSections: []
         }
@@ -43,6 +50,14 @@ export default {
             this.textSections.push({
                 'text': ''
             });
+        },
+
+        showSavingLabel() {
+            this.saving = true;
+
+            setTimeout(() => {
+                this.saving = false;
+            }, 500);
         }
 
     }

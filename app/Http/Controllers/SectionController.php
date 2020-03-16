@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\Section;
 use App\Models\Estimate;
 use Illuminate\Http\Request;
 use App\Http\Requests\SectionStoreRequest;
@@ -21,6 +22,15 @@ class SectionController extends Controller
         $section = $estimate->sections()->create($data);
 
         return response()->json($section);
+    }
+
+    public function update(SectionStoreRequest $request, Estimate $estimate, Section $section)
+    {
+        $data = $request->only(['text']);
+
+        $section->update($data);
+
+        return response()->json(true);
     }
 
 }

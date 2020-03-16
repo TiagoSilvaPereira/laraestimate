@@ -16,7 +16,7 @@
                 <div class="card-body">
                     <h4 class="card-title">@lang('app.edit_estimate')</h4>
 
-                    <div class="mt-4">
+                    <div>
                         <estimate-component estimate="{{ $estimate->id }}"></estimate-component>
                     </div>
 
