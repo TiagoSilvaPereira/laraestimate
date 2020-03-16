@@ -2002,6 +2002,15 @@ __webpack_require__.r(__webpack_exports__);
 //
 //
 //
+//
+//
+//
+//
+//
+//
+//
+//
+//
 
 /* harmony default export */ __webpack_exports__["default"] = ({
   components: {
@@ -40186,6 +40195,21 @@ var render = function() {
             _vm._v("Prices Section " + _vm._s(_vm.section.id))
           ]),
       _vm._v(" "),
+      _c("div", { staticClass: "mb-4 text-right" }, [
+        _c(
+          "button",
+          {
+            staticClass: "btn btn-sm btn-outline-danger mt-2",
+            on: {
+              click: function($event) {
+                return _vm.remove()
+              }
+            }
+          },
+          [_c("i", { staticClass: "icon ion-md-trash" }), _vm._v(" Remove")]
+        )
+      ]),
+      _vm._v(" "),
       _c("VueTrix", {
         on: {
           input: function($event) {
@@ -40201,23 +40225,27 @@ var render = function() {
         }
       }),
       _vm._v(" "),
-      _c(
-        "button",
-        {
-          staticClass: "btn btn-sm btn-outline-danger mt-2",
-          on: {
-            click: function($event) {
-              return _vm.remove()
-            }
-          }
-        },
-        [_c("i", { staticClass: "icon ion-md-trash" }), _vm._v(" Remove")]
-      )
+      _vm.section.type == "prices"
+        ? _c("div", { staticClass: "mt-2" }, [_vm._m(0)])
+        : _vm._e(),
+      _vm._v(" "),
+      _c("hr", { staticClass: "mt-4" })
     ],
     1
   )
 }
-var staticRenderFns = []
+var staticRenderFns = [
+  function() {
+    var _vm = this
+    var _h = _vm.$createElement
+    var _c = _vm._self._c || _h
+    return _c(
+      "button",
+      { staticClass: "btn btn-sm btn-outline-primary mt-2" },
+      [_c("i", { staticClass: "icon ion-md-add" }), _vm._v(" Add Item")]
+    )
+  }
+]
 render._withStripped = true
 
 

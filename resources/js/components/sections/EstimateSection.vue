@@ -8,9 +8,18 @@
     <div class="section p-2 mb-5">
         <small v-if="section.type == 'text'" class="text-primary mb-4">Text Section {{ section.id }}</small>
         <small v-else class="text-primary mb-4">Prices Section {{ section.id }}</small>
+        
+        <div class="mb-4 text-right">
+            <button class="btn btn-sm btn-outline-danger mt-2" @click="remove()"><i class="icon ion-md-trash"></i> Remove</button>
+        </div>
 
         <VueTrix v-model="text" @input="saveText()" />
-        <button class="btn btn-sm btn-outline-danger mt-2" @click="remove()"><i class="icon ion-md-trash"></i> Remove</button>
+
+        <div class="mt-2" v-if="section.type == 'prices'">
+            <button class="btn btn-sm btn-outline-primary mt-2"><i class="icon ion-md-add"></i> Add Item</button>
+        </div>
+
+        <hr class="mt-4">
     </div>
 </template>
 
