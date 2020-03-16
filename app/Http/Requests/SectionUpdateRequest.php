@@ -4,7 +4,7 @@ namespace App\Http\Requests;
 
 use Illuminate\Foundation\Http\FormRequest;
 
-class SectionStoreRequest extends FormRequest
+class SectionUpdateRequest extends FormRequest
 {
     /**
      * Determine if the user is authorized to make this request.
@@ -25,7 +25,6 @@ class SectionStoreRequest extends FormRequest
     {
         return [
             'text' => 'required|string',
-            'type' => 'required|string',
         ];
     }
 }

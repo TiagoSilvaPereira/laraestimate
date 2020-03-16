@@ -13,7 +13,7 @@
 
             <div class="col-sm-12">
                 <button class="btn btn-primary" @click="addSection()">Add Text Section</button>
-                <button class="btn btn-success">Add Prices Section</button>
+                <button class="btn btn-success" @click="addSection('prices')">Add Prices Section</button>
             </div>
         </div>
     </div>
@@ -27,7 +27,6 @@ export default {
         return {
             saving: false,
             sections: [],
-            priceSections: []
         }
     },
 
@@ -48,6 +47,7 @@ export default {
 
         addSection(type = 'text') {
             this.sections.push({
+                'id': null,
                 'text': '',
                 'type': type,
             });
@@ -62,11 +62,7 @@ export default {
         },
 
         removeSection(index, type) {
-
-            if(type == 'text') {
-                this.sections.splice(index, 1);
-            }
-
+            this.sections.splice(index, 1);
         }
 
     }

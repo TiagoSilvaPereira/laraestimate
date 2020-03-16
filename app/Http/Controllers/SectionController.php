@@ -6,6 +6,7 @@ use App\Models\Section;
 use App\Models\Estimate;
 use Illuminate\Http\Request;
 use App\Http\Requests\SectionStoreRequest;
+use App\Http\Requests\SectionUpdateRequest;
 
 class SectionController extends Controller
 {
@@ -17,14 +18,14 @@ class SectionController extends Controller
 
     public function store(SectionStoreRequest $request, Estimate $estimate)
     {
-        $data = $request->only(['text']);
+        $data = $request->only(['text', 'type']);
 
         $section = $estimate->sections()->create($data);
 
         return response()->json($section);
     }
 
-    public function update(SectionStoreRequest $request, Estimate $estimate, Section $section)
+    public function update(SectionUpdateRequest $request, Estimate $estimate, Section $section)
     {
         $data = $request->only(['text']);
 
@@ -36,7 +37,7 @@ class SectionController extends Controller
     public function destroy(Request $request, Estimate $estimate, Section $section)
     {
         $section->delete();
-        
+
         return response()->json(true);
     }
 

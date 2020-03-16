@@ -6,6 +6,9 @@
 
 <template>
     <div class="section p-2 mb-5">
+        <small v-if="section.type == 'text'" class="text-primary mb-4">Text Section {{ section.id }}</small>
+        <small v-else class="text-primary mb-4">Prices Section {{ section.id }}</small>
+
         <VueTrix v-model="text" @input="saveText()" />
         <button class="btn btn-sm btn-outline-danger mt-2" @click="remove()"><i class="icon ion-md-trash"></i> Remove</button>
     </div>
@@ -54,7 +57,8 @@ export default {
             url = url.replace(':estimate', this.$parent.estimate);
 
             axios.post(url, {
-                text: this.text
+                text: this.text,
+                type: this.section.type,
             }).then(({data}) => {
                 this.section.id = data.id;
             });

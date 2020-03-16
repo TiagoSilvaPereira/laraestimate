@@ -1934,8 +1934,7 @@ __webpack_require__.r(__webpack_exports__);
   data: function data() {
     return {
       saving: false,
-      sections: [],
-      priceSections: []
+      sections: []
     };
   },
   mounted: function mounted() {
@@ -1955,6 +1954,7 @@ __webpack_require__.r(__webpack_exports__);
     addSection: function addSection() {
       var type = arguments.length > 0 && arguments[0] !== undefined ? arguments[0] : 'text';
       this.sections.push({
+        'id': null,
         'text': '',
         'type': type
       });
@@ -1968,9 +1968,7 @@ __webpack_require__.r(__webpack_exports__);
       }, 500);
     },
     removeSection: function removeSection(index, type) {
-      if (type == 'text') {
-        this.sections.splice(index, 1);
-      }
+      this.sections.splice(index, 1);
     }
   }
 });
@@ -1987,6 +1985,9 @@ __webpack_require__.r(__webpack_exports__);
 "use strict";
 __webpack_require__.r(__webpack_exports__);
 /* harmony import */ var vue_trix__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! vue-trix */ "./node_modules/vue-trix/dist/vue-trix.esm.js");
+//
+//
+//
 //
 //
 //
@@ -2034,7 +2035,8 @@ __webpack_require__.r(__webpack_exports__);
       var url = '/estimates/:estimate/sections';
       url = url.replace(':estimate', this.$parent.estimate);
       axios.post(url, {
-        text: this.text
+        text: this.text,
+        type: this.section.type
       }).then(function (_ref) {
         var data = _ref.data;
         _this.section.id = data.id;
@@ -40126,9 +40128,18 @@ var render = function() {
           [_vm._v("Add Text Section")]
         ),
         _vm._v(" "),
-        _c("button", { staticClass: "btn btn-success" }, [
-          _vm._v("Add Prices Section")
-        ])
+        _c(
+          "button",
+          {
+            staticClass: "btn btn-success",
+            on: {
+              click: function($event) {
+                return _vm.addSection("prices")
+              }
+            }
+          },
+          [_vm._v("Add Prices Section")]
+        )
       ])
     ])
   ])
@@ -40159,6 +40170,14 @@ var render = function() {
     "div",
     { staticClass: "section p-2 mb-5" },
     [
+      _vm.section.type == "text"
+        ? _c("small", { staticClass: "text-primary mb-4" }, [
+            _vm._v("Text Section " + _vm._s(_vm.section.id))
+          ])
+        : _c("small", { staticClass: "text-primary mb-4" }, [
+            _vm._v("Prices Section " + _vm._s(_vm.section.id))
+          ]),
+      _vm._v(" "),
       _c("VueTrix", {
         on: {
           input: function($event) {
