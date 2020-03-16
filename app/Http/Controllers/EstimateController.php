@@ -56,7 +56,7 @@ class EstimateController extends Controller
      */
     public function show(Estimate $estimate)
     {
-        return view('estimates.edit', compact('estimate'));
+        return view('estimates.show', compact('estimate'));
     }
 
     /**

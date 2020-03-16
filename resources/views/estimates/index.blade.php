@@ -35,6 +35,7 @@
                     <div class="row mt-2">
                         <div class="col">
                             <a href="{{ route('estimates.edit', $estimate) }}" class="btn btn-light text-primary"><i class="icon ion-md-create"></i></a>
+                            <a href="{{ route('estimates.show', $estimate) }}" target="_blank" class="btn btn-light text-primary"><i class="icon ion-md-document"></i></a>
                         </div>
                         <div class="col">
                             <form id="deleteEstimateForm{{ $estimate->id }}" action="{{ route('estimates.destroy', $estimate) }}" method="POST" onsubmit="return estimates.confirmDelete(event, '{{ $estimate->id }}')">
