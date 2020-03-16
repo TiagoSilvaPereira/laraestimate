@@ -2049,7 +2049,10 @@ __webpack_require__.r(__webpack_exports__);
       this.text = this.section.text;
       this.items = this.section.items;
     },
-    saveSection: _.debounce(function () {
+    saveSectionWithDebounce: _.debounce(function () {
+      this.saveSection();
+    }, 300),
+    saveSection: function saveSection() {
       if (!this.madeFirstInput) {
         this.madeFirstInput = true;
         return;
@@ -2063,7 +2066,7 @@ __webpack_require__.r(__webpack_exports__);
       }
 
       this.update();
-    }, 300),
+    },
     save: function save() {
       var _this = this;
 
@@ -2111,6 +2114,17 @@ __webpack_require__.r(__webpack_exports__);
         'description': '',
         'duration': '',
         'price': null
+      });
+    },
+    removeItem: function removeItem(index) {
+      var _this3 = this;
+
+      bootbox.confirm('Are you sure?', function (confirmed) {
+        if (confirmed) {
+          _this3.items.splice(index, 1);
+
+          _this3.saveSection();
+        }
       });
     }
   }
@@ -40240,7 +40254,7 @@ var render = function() {
       _c("VueTrix", {
         on: {
           input: function($event) {
-            return _vm.saveSection()
+            return _vm.saveSectionWithDebounce()
           }
         },
         model: {
@@ -40281,7 +40295,7 @@ var render = function() {
                             _vm.$set(item, "description", $event.target.value)
                           },
                           function($event) {
-                            return _vm.saveSection()
+                            return _vm.saveSectionWithDebounce()
                           }
                         ],
                         blur: function($event) {
@@ -40316,7 +40330,7 @@ var render = function() {
                             _vm.$set(item, "duration", $event.target.value)
                           },
                           function($event) {
-                            return _vm.saveSection()
+                            return _vm.saveSectionWithDebounce()
                           }
                         ],
                         blur: function($event) {
@@ -40352,7 +40366,7 @@ var render = function() {
                             _vm.$set(item, "price", $event.target.value)
                           },
                           function($event) {
-                            return _vm.saveSection()
+                            return _vm.saveSectionWithDebounce()
                           }
                         ],
                         blur: function($event) {
@@ -40362,7 +40376,20 @@ var render = function() {
                     })
                   ]),
                   _vm._v(" "),
-                  _vm._m(0, true)
+                  _c("div", { staticClass: "col-md-1" }, [
+                    _c(
+                      "button",
+                      {
+                        staticClass: "btn btn-sm btn-outline-danger mt-2",
+                        on: {
+                          click: function($event) {
+                            return _vm.removeItem(index)
+                          }
+                        }
+                      },
+                      [_c("i", { staticClass: "icon ion-md-remove" })]
+                    )
+                  ])
                 ])
               }),
               _vm._v(" "),
@@ -40391,18 +40418,7 @@ var render = function() {
     1
   )
 }
-var staticRenderFns = [
-  function() {
-    var _vm = this
-    var _h = _vm.$createElement
-    var _c = _vm._self._c || _h
-    return _c("div", { staticClass: "col-md-1" }, [
-      _c("button", { staticClass: "btn btn-sm btn-outline-primary mt-2" }, [
-        _c("i", { staticClass: "icon ion-md-remove" })
-      ])
-    ])
-  }
-]
+var staticRenderFns = []
 render._withStripped = true
 
 
