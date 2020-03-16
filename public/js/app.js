@@ -1956,7 +1956,8 @@ __webpack_require__.r(__webpack_exports__);
       this.sections.push({
         'id': null,
         'text': '',
-        'type': type
+        'type': type,
+        'madeFirstInput': true
       });
     },
     showSavingLabel: function showSavingLabel() {
@@ -2009,6 +2010,7 @@ __webpack_require__.r(__webpack_exports__);
   props: ['section'],
   data: function data() {
     return {
+      madeFirstInput: false,
       text: null
     };
   },
@@ -2017,9 +2019,15 @@ __webpack_require__.r(__webpack_exports__);
   },
   methods: {
     initEditor: function initEditor() {
+      this.madeFirstInput = this.section.madeFirstInput;
       this.text = this.section.text;
     },
     saveText: _.debounce(function () {
+      if (!this.madeFirstInput) {
+        this.madeFirstInput = true;
+        return;
+      }
+
       this.$parent.showSavingLabel();
 
       if (!this.section.id) {

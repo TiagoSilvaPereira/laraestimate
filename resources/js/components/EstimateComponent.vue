@@ -50,6 +50,7 @@ export default {
                 'id': null,
                 'text': '',
                 'type': type,
+                'madeFirstInput': true,
             });
         },
 

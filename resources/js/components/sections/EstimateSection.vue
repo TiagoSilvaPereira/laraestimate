@@ -26,6 +26,7 @@ export default {
 
     data() {
         return {
+            madeFirstInput: false,
             text: null,
         }
     },
@@ -37,10 +38,16 @@ export default {
     methods: {
 
         initEditor() {
+            this.madeFirstInput = this.section.madeFirstInput;
             this.text = this.section.text;
         },
 
         saveText: _.debounce(function() {
+            if(!this.madeFirstInput) {
+                this.madeFirstInput = true;
+                return;
+            }
+            
             this.$parent.showSavingLabel();
 
             if(!this.section.id) {
