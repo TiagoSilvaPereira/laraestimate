@@ -22,6 +22,9 @@ class SectionController extends Controller
 
         $section = $estimate->sections()->create($data);
 
+        $items = $request->get('items', []);
+        $section->saveItems($items);
+
         return response()->json($section);
     }
 
@@ -30,6 +33,9 @@ class SectionController extends Controller
         $data = $request->only(['text']);
 
         $section->update($data);
+
+        $items = $request->get('items', []);
+        $section->saveItems($items);
 
         return response()->json(true);
     }

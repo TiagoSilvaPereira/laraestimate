@@ -13,10 +13,24 @@
             <button class="btn btn-sm btn-outline-danger mt-2" @click="remove()"><i class="icon ion-md-trash"></i> Remove</button>
         </div>
 
-        <VueTrix v-model="text" @input="saveText()" />
+        <VueTrix v-model="text" @input="saveSection()" />
 
         <div class="mt-2" v-if="section.type == 'prices'">
-            <button class="btn btn-sm btn-outline-primary mt-2"><i class="icon ion-md-add"></i> Add Item</button>
+            <div class="row mt-2" v-for="(item, index) in items" :key="index">
+                <div class="col-md-5">
+                    <input type="text" class="form-control" placeholder="Item Description" v-model="item.description" @input="saveSection()" @blur="saveSection()">
+                </div>
+                <div class="col-md-3">
+                    <input type="text" class="form-control" placeholder="Item Duration (Optional)" v-model="item.duration" @input="saveSection()" @blur="saveSection()">
+                </div>
+                <div class="col-md-3">
+                    <input type="number" step="0.1" class="form-control" placeholder="Item Price" v-model="item.price" @input="saveSection()" @blur="saveSection()">
+                </div>
+                <div class="col-md-1">
+                    <button class="btn btn-sm btn-outline-primary mt-2"><i class="icon ion-md-remove"></i></button>
+                </div>
+            </div>
+            <button class="btn btn-sm btn-outline-primary mt-2" @click="addItem()"><i class="icon ion-md-add"></i> Add Item</button>
         </div>
 
         <hr class="mt-4">
@@ -37,21 +51,24 @@ export default {
         return {
             madeFirstInput: false,
             text: null,
+            items: [],
+            addingItem: false,
         }
     },
 
     mounted() {
-        this.initEditor();
+        this.init();
     },
 
     methods: {
 
-        initEditor() {
+        init() {
             this.madeFirstInput = this.section.madeFirstInput;
             this.text = this.section.text;
+            this.items = this.section.items;
         },
 
-        saveText: _.debounce(function() {
+        saveSection: _.debounce(function() {
             if(!this.madeFirstInput) {
                 this.madeFirstInput = true;
                 return;
@@ -75,6 +92,7 @@ export default {
             axios.post(url, {
                 text: this.text,
                 type: this.section.type,
+                items: this.items,
             }).then(({data}) => {
                 this.section.id = data.id;
             });
@@ -86,7 +104,8 @@ export default {
             url = url.replace(':section', this.section.id);
 
             axios.put(url, {
-                text: this.text
+                text: this.text,
+                items: this.items,
             });
         },
 
@@ -106,6 +125,14 @@ export default {
                     axios.delete(url);
                     this.$emit('sectionRemoved');
                 }
+            });
+        },
+
+        addItem() {
+            this.items.push({
+                'description': '',
+                'duration': '',
+                'price': null,
             });
         }
     }

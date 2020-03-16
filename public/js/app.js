@@ -2011,6 +2011,20 @@ __webpack_require__.r(__webpack_exports__);
 //
 //
 //
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
 
 /* harmony default export */ __webpack_exports__["default"] = ({
   components: {
@@ -2020,18 +2034,21 @@ __webpack_require__.r(__webpack_exports__);
   data: function data() {
     return {
       madeFirstInput: false,
-      text: null
+      text: null,
+      items: [],
+      addingItem: false
     };
   },
   mounted: function mounted() {
-    this.initEditor();
+    this.init();
   },
   methods: {
-    initEditor: function initEditor() {
+    init: function init() {
       this.madeFirstInput = this.section.madeFirstInput;
       this.text = this.section.text;
+      this.items = this.section.items;
     },
-    saveText: _.debounce(function () {
+    saveSection: _.debounce(function () {
       if (!this.madeFirstInput) {
         this.madeFirstInput = true;
         return;
@@ -2053,7 +2070,8 @@ __webpack_require__.r(__webpack_exports__);
       url = url.replace(':estimate', this.$parent.estimate);
       axios.post(url, {
         text: this.text,
-        type: this.section.type
+        type: this.section.type,
+        items: this.items
       }).then(function (_ref) {
         var data = _ref.data;
         _this.section.id = data.id;
@@ -2064,7 +2082,8 @@ __webpack_require__.r(__webpack_exports__);
       url = url.replace(':estimate', this.$parent.estimate);
       url = url.replace(':section', this.section.id);
       axios.put(url, {
-        text: this.text
+        text: this.text,
+        items: this.items
       });
     },
     remove: function remove() {
@@ -2084,6 +2103,13 @@ __webpack_require__.r(__webpack_exports__);
 
           _this2.$emit('sectionRemoved');
         }
+      });
+    },
+    addItem: function addItem() {
+      this.items.push({
+        'description': '',
+        'duration': '',
+        'price': null
       });
     }
   }
@@ -40213,7 +40239,7 @@ var render = function() {
       _c("VueTrix", {
         on: {
           input: function($event) {
-            return _vm.saveText()
+            return _vm.saveSection()
           }
         },
         model: {
@@ -40226,7 +40252,137 @@ var render = function() {
       }),
       _vm._v(" "),
       _vm.section.type == "prices"
-        ? _c("div", { staticClass: "mt-2" }, [_vm._m(0)])
+        ? _c(
+            "div",
+            { staticClass: "mt-2" },
+            [
+              _vm._l(_vm.items, function(item, index) {
+                return _c("div", { key: index, staticClass: "row mt-2" }, [
+                  _c("div", { staticClass: "col-md-5" }, [
+                    _c("input", {
+                      directives: [
+                        {
+                          name: "model",
+                          rawName: "v-model",
+                          value: item.description,
+                          expression: "item.description"
+                        }
+                      ],
+                      staticClass: "form-control",
+                      attrs: { type: "text", placeholder: "Item Description" },
+                      domProps: { value: item.description },
+                      on: {
+                        input: [
+                          function($event) {
+                            if ($event.target.composing) {
+                              return
+                            }
+                            _vm.$set(item, "description", $event.target.value)
+                          },
+                          function($event) {
+                            return _vm.saveSection()
+                          }
+                        ],
+                        blur: function($event) {
+                          return _vm.saveSection()
+                        }
+                      }
+                    })
+                  ]),
+                  _vm._v(" "),
+                  _c("div", { staticClass: "col-md-3" }, [
+                    _c("input", {
+                      directives: [
+                        {
+                          name: "model",
+                          rawName: "v-model",
+                          value: item.duration,
+                          expression: "item.duration"
+                        }
+                      ],
+                      staticClass: "form-control",
+                      attrs: {
+                        type: "text",
+                        placeholder: "Item Duration (Optional)"
+                      },
+                      domProps: { value: item.duration },
+                      on: {
+                        input: [
+                          function($event) {
+                            if ($event.target.composing) {
+                              return
+                            }
+                            _vm.$set(item, "duration", $event.target.value)
+                          },
+                          function($event) {
+                            return _vm.saveSection()
+                          }
+                        ],
+                        blur: function($event) {
+                          return _vm.saveSection()
+                        }
+                      }
+                    })
+                  ]),
+                  _vm._v(" "),
+                  _c("div", { staticClass: "col-md-3" }, [
+                    _c("input", {
+                      directives: [
+                        {
+                          name: "model",
+                          rawName: "v-model",
+                          value: item.price,
+                          expression: "item.price"
+                        }
+                      ],
+                      staticClass: "form-control",
+                      attrs: {
+                        type: "number",
+                        step: "0.1",
+                        placeholder: "Item Price"
+                      },
+                      domProps: { value: item.price },
+                      on: {
+                        input: [
+                          function($event) {
+                            if ($event.target.composing) {
+                              return
+                            }
+                            _vm.$set(item, "price", $event.target.value)
+                          },
+                          function($event) {
+                            return _vm.saveSection()
+                          }
+                        ],
+                        blur: function($event) {
+                          return _vm.saveSection()
+                        }
+                      }
+                    })
+                  ]),
+                  _vm._v(" "),
+                  _vm._m(0, true)
+                ])
+              }),
+              _vm._v(" "),
+              _c(
+                "button",
+                {
+                  staticClass: "btn btn-sm btn-outline-primary mt-2",
+                  on: {
+                    click: function($event) {
+                      return _vm.addItem()
+                    }
+                  }
+                },
+                [
+                  _c("i", { staticClass: "icon ion-md-add" }),
+                  _vm._v(" Add Item")
+                ]
+              )
+            ],
+            2
+          )
         : _vm._e(),
       _vm._v(" "),
       _c("hr", { staticClass: "mt-4" })
@@ -40239,11 +40395,11 @@ var staticRenderFns = [
     var _vm = this
     var _h = _vm.$createElement
     var _c = _vm._self._c || _h
-    return _c(
-      "button",
-      { staticClass: "btn btn-sm btn-outline-primary mt-2" },
-      [_c("i", { staticClass: "icon ion-md-add" }), _vm._v(" Add Item")]
-    )
+    return _c("div", { staticClass: "col-md-1" }, [
+      _c("button", { staticClass: "btn btn-sm btn-outline-primary mt-2" }, [
+        _c("i", { staticClass: "icon ion-md-remove" })
+      ])
+    ])
   }
 ]
 render._withStripped = true

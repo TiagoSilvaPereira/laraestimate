@@ -22,4 +22,13 @@ class Section extends Model
     {
         return $this->hasMany(Item::class);
     }
+
+    public function saveItems(array $items)
+    {
+        $this->items()->delete();
+
+        collect($items)->each(function($item) {
+            $this->items()->create($item);
+        });
+    }
 }
