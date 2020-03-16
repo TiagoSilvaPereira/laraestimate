@@ -2026,6 +2026,11 @@ __webpack_require__.r(__webpack_exports__);
 //
 //
 //
+//
+//
+//
+//
+//
 
 /* harmony default export */ __webpack_exports__["default"] = ({
   components: {
@@ -2042,6 +2047,17 @@ __webpack_require__.r(__webpack_exports__);
   },
   mounted: function mounted() {
     this.init();
+  },
+  computed: {
+    total: function total() {
+      var total = this.items.reduce(function (sum, item) {
+        return sum + (item.price || 0);
+      }, 0);
+      return parseFloat(total);
+    },
+    formattedTotal: function formattedTotal() {
+      return this.total.toFixed(2);
+    }
   },
   methods: {
     init: function init() {
@@ -40392,6 +40408,12 @@ var render = function() {
                   ])
                 ])
               }),
+              _vm._v(" "),
+              _c("div", { staticClass: "row mt-2" }, [
+                _c("div", { staticClass: "col-md-3 offset-md-8 text-right" }, [
+                  _c("b", [_vm._v("Total $ " + _vm._s(_vm.formattedTotal))])
+                ])
+              ]),
               _vm._v(" "),
               _c(
                 "button",

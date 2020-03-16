@@ -30,6 +30,11 @@
                     <button class="btn btn-sm btn-outline-danger mt-2" @click="removeItem(index)"><i class="icon ion-md-remove"></i></button>
                 </div>
             </div>
+            <div class="row mt-2">
+                <div class="col-md-3 offset-md-8 text-right">
+                    <b>Total $ {{ formattedTotal }}</b>
+                </div>
+            </div>
             <button class="btn btn-sm btn-outline-primary mt-2" @click="addItem()"><i class="icon ion-md-add"></i> Add Item</button>
         </div>
 
@@ -58,6 +63,20 @@ export default {
 
     mounted() {
         this.init();
+    },
+
+    computed: {
+        total() {
+            let total = this.items.reduce((sum, item) => {
+                return sum + (item.price || 0); 
+            }, 0);
+
+            return parseFloat(total);
+        },
+
+        formattedTotal() {
+            return this.total.toFixed(2);
+        }
     },
 
     methods: {
