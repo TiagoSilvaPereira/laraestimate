@@ -1,6 +1,6 @@
 <style scoped>
 .section:hover {
-    /* background-color: #fafafa; */
+    /* background-color: #fcfcfc; */
 }
 </style>
 
@@ -71,7 +71,11 @@ export default {
                 return sum + (item.price || 0); 
             }, 0);
 
-            return parseFloat(total);
+            total = parseFloat(total);
+
+            this.section.total = total;
+
+            return total;
         },
 
         formattedTotal() {

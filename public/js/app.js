@@ -1929,6 +1929,10 @@ __webpack_require__.r(__webpack_exports__);
 //
 //
 //
+//
+//
+//
+//
 /* harmony default export */ __webpack_exports__["default"] = ({
   props: ['estimate'],
   data: function data() {
@@ -1939,6 +1943,17 @@ __webpack_require__.r(__webpack_exports__);
   },
   mounted: function mounted() {
     this.getSections();
+  },
+  computed: {
+    total: function total() {
+      var total = this.sections.reduce(function (sum, section) {
+        return sum + (section.total || 0);
+      }, 0);
+      return parseFloat(total);
+    },
+    formattedTotal: function formattedTotal() {
+      return this.total.toFixed(2);
+    }
   },
   methods: {
     getSections: function getSections() {
@@ -1958,7 +1973,8 @@ __webpack_require__.r(__webpack_exports__);
         'text': '',
         'type': type,
         'madeFirstInput': true,
-        'items': []
+        'items': [],
+        'total': 0
       });
     },
     showSavingLabel: function showSavingLabel() {
@@ -2053,7 +2069,9 @@ __webpack_require__.r(__webpack_exports__);
       var total = this.items.reduce(function (sum, item) {
         return sum + (item.price || 0);
       }, 0);
-      return parseFloat(total);
+      total = parseFloat(total);
+      this.section.total = total;
+      return total;
     },
     formattedTotal: function formattedTotal() {
       return this.total.toFixed(2);
@@ -8143,7 +8161,7 @@ exports = module.exports = __webpack_require__(/*! ../../../../node_modules/css-
 
 
 // module
-exports.push([module.i, "\n.section[data-v-6bff57e7]:hover {\n    /* background-color: #fafafa; */\n}\n", ""]);
+exports.push([module.i, "\n.section[data-v-6bff57e7]:hover {\n    /* background-color: #fcfcfc; */\n}\n", ""]);
 
 // exports
 
@@ -40169,6 +40187,8 @@ var render = function() {
         ? _c("small", [_vm._v("Saving...")])
         : _c("small", [_vm._v("All changes are saved")])
     ]),
+    _vm._v(" "),
+    _c("div", [_c("h3", [_vm._v("Total $ " + _vm._s(_vm.formattedTotal))])]),
     _vm._v(" "),
     _c("div", { staticClass: "row" }, [
       _c(

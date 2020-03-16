@@ -5,6 +5,10 @@
             <small v-else>All changes are saved</small>
         </div>
 
+        <div>
+            <h3>Total $ {{ formattedTotal }}</h3>
+        </div>
+
         <div class="row">
 
             <div class="col-sm-12">
@@ -34,6 +38,20 @@ export default {
         this.getSections();
     },
 
+    computed: {
+        total() {
+            let total = this.sections.reduce((sum, section) => {
+                return sum + (section.total || 0); 
+            }, 0);
+
+            return parseFloat(total);
+        },
+
+        formattedTotal() {
+            return this.total.toFixed(2);
+        }
+    },
+
     methods: {
 
         getSections() {
@@ -52,6 +70,7 @@ export default {
                 'type': type,
                 'madeFirstInput': true,
                 'items': [],
+                'total': 0,
             });
         },
 
