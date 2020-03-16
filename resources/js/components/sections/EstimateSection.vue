@@ -71,13 +71,21 @@ export default {
         },
 
         remove() {
+
+            if(!this.section.id) {
+                this.$emit('sectionRemoved');
+                return;
+            }
+
             let url = '/estimates/:estimate/sections/:section';
             url = url.replace(':estimate', this.$parent.estimate);
             url = url.replace(':section', this.section.id);
 
             bootbox.confirm('Are you sure?', confirmed => {
-                axios.delete(url);
-                this.$emit('sectionRemoved');
+                if(confirmed) {
+                    axios.delete(url);
+                    this.$emit('sectionRemoved');
+                }
             });
         }
     }

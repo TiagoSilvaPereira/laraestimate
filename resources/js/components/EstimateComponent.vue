@@ -8,11 +8,11 @@
         <div class="row">
 
             <div class="col-sm-12">
-                <text-section v-for="(textSection, index) in textSections" :key="index" :section="textSection" @sectionRemoved="removeSection(index, 'text')"></text-section>
+                <estimate-section v-for="(section, index) in sections" :key="index" :section="section" @sectionRemoved="removeSection(index, 'text')"></estimate-section>
             </div>
 
             <div class="col-sm-12">
-                <button class="btn btn-primary" @click="addTextSection()">Add Text Section</button>
+                <button class="btn btn-primary" @click="addSection()">Add Text Section</button>
                 <button class="btn btn-success">Add Prices Section</button>
             </div>
         </div>
@@ -26,29 +26,30 @@ export default {
     data() {
         return {
             saving: false,
-            textSections: [],
+            sections: [],
             priceSections: []
         }
     },
 
     mounted() {
-        this.getTextSections();
+        this.getSections();
     },
 
     methods: {
 
-        getTextSections() {
+        getSections() {
             let url = '/estimates/:estimate/sections';
             url = url.replace(':estimate', this.estimate);
 
             axios.get(url).then(({data}) => {
-                this.textSections = data;
+                this.sections = data;
             });
         },
 
-        addTextSection() {
-            this.textSections.push({
-                'text': ''
+        addSection(type = 'text') {
+            this.sections.push({
+                'text': '',
+                'type': type,
             });
         },
 
@@ -63,7 +64,7 @@ export default {
         removeSection(index, type) {
 
             if(type == 'text') {
-                this.textSections.splice(index, 1);
+                this.sections.splice(index, 1);
             }
 
         }

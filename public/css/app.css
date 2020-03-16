@@ -11140,3 +11140,7 @@ button.toast-close-button {
   }
 }
 
+.breadcrumb {
+  background-color: transparent;
+}
+
