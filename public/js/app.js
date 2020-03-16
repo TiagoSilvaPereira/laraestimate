@@ -1957,7 +1957,8 @@ __webpack_require__.r(__webpack_exports__);
         'id': null,
         'text': '',
         'type': type,
-        'madeFirstInput': true
+        'madeFirstInput': true,
+        'items': []
       });
     },
     showSavingLabel: function showSavingLabel() {

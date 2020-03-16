@@ -24,8 +24,12 @@ class SectionStoreRequest extends FormRequest
     public function rules()
     {
         return [
-            'text' => 'required|string',
+            'text' => 'nullable|string',
             'type' => 'required|string',
+            'items' => 'nullable|array',
+            'items.*.description' => 'nullable|string',
+            'items.*.duration' => 'nullable|string',
+            'items.*.price' => 'nullable|number',
         ];
     }
 }

@@ -51,6 +51,7 @@ export default {
                 'text': '',
                 'type': type,
                 'madeFirstInput': true,
+                'items': [],
             });
         },
 
