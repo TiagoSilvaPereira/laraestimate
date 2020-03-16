@@ -41,7 +41,7 @@ export default {
     computed: {
         total() {
             let total = this.sections.reduce((sum, section) => {
-                return sum + (section.total || 0); 
+                return sum + (parseFloat(section.total) || 0); 
             }, 0);
 
             return parseFloat(total);

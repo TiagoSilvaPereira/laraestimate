@@ -68,7 +68,7 @@ export default {
     computed: {
         total() {
             let total = this.items.reduce((sum, item) => {
-                return sum + (item.price || 0); 
+                return sum + (parseFloat(item.price) || 0); 
             }, 0);
 
             total = parseFloat(total);
