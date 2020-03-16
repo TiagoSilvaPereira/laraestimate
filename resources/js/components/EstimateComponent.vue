@@ -8,7 +8,7 @@
         <div class="row">
 
             <div class="col-sm-12">
-                <text-section v-for="(textSection, index) in textSections" :key="index" :section="textSection"></text-section>
+                <text-section v-for="(textSection, index) in textSections" :key="index" :section="textSection" @sectionRemoved="removeSection(index, 'text')"></text-section>
             </div>
 
             <div class="col-sm-12">
@@ -58,6 +58,14 @@ export default {
             setTimeout(() => {
                 this.saving = false;
             }, 500);
+        },
+
+        removeSection(index, type) {
+
+            if(type == 'text') {
+                this.textSections.splice(index, 1);
+            }
+
         }
 
     }

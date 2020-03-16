@@ -1964,6 +1964,11 @@ __webpack_require__.r(__webpack_exports__);
       setTimeout(function () {
         _this2.saving = false;
       }, 500);
+    },
+    removeSection: function removeSection(index, type) {
+      if (type == 'text') {
+        this.textSections.splice(index, 1);
+      }
     }
   }
 });
@@ -1980,6 +1985,7 @@ __webpack_require__.r(__webpack_exports__);
 "use strict";
 __webpack_require__.r(__webpack_exports__);
 /* harmony import */ var vue_trix__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! vue-trix */ "./node_modules/vue-trix/dist/vue-trix.esm.js");
+//
 //
 //
 //
@@ -2038,6 +2044,18 @@ __webpack_require__.r(__webpack_exports__);
       url = url.replace(':section', this.section.id);
       axios.put(url, {
         text: this.text
+      });
+    },
+    remove: function remove() {
+      var _this2 = this;
+
+      var url = '/estimates/:estimate/sections/:section';
+      url = url.replace(':estimate', this.$parent.estimate);
+      url = url.replace(':section', this.section.id);
+      bootbox.confirm('Are you sure?', function (confirmed) {
+        axios["delete"](url);
+
+        _this2.$emit('sectionRemoved');
       });
     }
   }
@@ -40074,7 +40092,12 @@ var render = function() {
         _vm._l(_vm.textSections, function(textSection, index) {
           return _c("text-section", {
             key: index,
-            attrs: { section: textSection }
+            attrs: { section: textSection },
+            on: {
+              sectionRemoved: function($event) {
+                return _vm.removeSection(index, "text")
+              }
+            }
           })
         }),
         1
@@ -40140,7 +40163,20 @@ var render = function() {
           },
           expression: "text"
         }
-      })
+      }),
+      _vm._v(" "),
+      _c(
+        "button",
+        {
+          staticClass: "btn btn-sm btn-outline-danger mt-2",
+          on: {
+            click: function($event) {
+              return _vm.remove()
+            }
+          }
+        },
+        [_c("i", { staticClass: "icon ion-md-trash" }), _vm._v(" Remove")]
+      )
     ],
     1
   )

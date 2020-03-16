@@ -33,4 +33,11 @@ class SectionController extends Controller
         return response()->json(true);
     }
 
+    public function destroy(Request $request, Estimate $estimate, Section $section)
+    {
+        $section->delete();
+        
+        return response()->json(true);
+    }
+
 }

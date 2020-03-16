@@ -7,6 +7,7 @@
 <template>
     <div class="section p-2 mb-5">
         <VueTrix v-model="text" @input="saveText()" />
+        <button class="btn btn-sm btn-outline-danger mt-2" @click="remove()"><i class="icon ion-md-trash"></i> Remove</button>
     </div>
 </template>
 
@@ -66,6 +67,17 @@ export default {
 
             axios.put(url, {
                 text: this.text
+            });
+        },
+
+        remove() {
+            let url = '/estimates/:estimate/sections/:section';
+            url = url.replace(':estimate', this.$parent.estimate);
+            url = url.replace(':section', this.section.id);
+
+            bootbox.confirm('Are you sure?', confirmed => {
+                axios.delete(url);
+                this.$emit('sectionRemoved');
             });
         }
     }
