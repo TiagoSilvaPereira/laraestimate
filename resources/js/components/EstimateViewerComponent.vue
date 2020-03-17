@@ -1,30 +1,31 @@
 <style>
-    body {
+    #estimateMainSection {
         background-color: #eee;
         text-align: justify;
     }
 
-    .print-background {
+    #estimateMainSection .print-background {
         background-color: #fff;
     }
 
-    h1 {
-        text-align: center;
+    #estimateMainSection h1 {
+        text-align: left !important;
         font-size: 1.5rem;
     }
-    tr.item:not(.selected) {
+
+    #estimateMainSection tr.item:not(.selected) {
         color: #ccc;
         text-decoration: line-through;
     }
 
-    input[type="checkbox"] {
+    #estimateMainSection input[type="checkbox"] {
         width: 1.5em;
         height: 1.5em;
     }
 </style>
 
 <template>
-    <main class="p-5">
+    <main id="estimateMainSection" class="p-5">
         <div class="fixed-top p-4 text-right" v-if="estimateData">
             <button class="btn btn-primary d-print-none" @click="print()"><i class="icon ion-md-print"></i> Print</button>
         </div>

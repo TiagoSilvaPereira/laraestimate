@@ -2072,6 +2072,7 @@ __webpack_require__.r(__webpack_exports__);
 //
 //
 //
+//
 /* harmony default export */ __webpack_exports__["default"] = ({
   props: ['estimate'],
   data: function data() {
@@ -8371,7 +8372,7 @@ exports = module.exports = __webpack_require__(/*! ../../../node_modules/css-loa
 
 
 // module
-exports.push([module.i, "\nbody {\n    background-color: #eee;\n    text-align: justify;\n}\n.print-background {\n    background-color: #fff;\n}\nh1 {\n    text-align: center;\n    font-size: 1.5rem;\n}\ntr.item:not(.selected) {\n    color: #ccc;\n    text-decoration: line-through;\n}\ninput[type=\"checkbox\"] {\n    width: 1.5em;\n    height: 1.5em;\n}\n", ""]);
+exports.push([module.i, "\n#estimateMainSection {\n    background-color: #eee;\n    text-align: justify;\n}\n#estimateMainSection .print-background {\n    background-color: #fff;\n}\n#estimateMainSection h1 {\n    text-align: left !important;\n    font-size: 1.5rem;\n}\n#estimateMainSection tr.item:not(.selected) {\n    color: #ccc;\n    text-decoration: line-through;\n}\n#estimateMainSection input[type=\"checkbox\"] {\n    width: 1.5em;\n    height: 1.5em;\n}\n", ""]);
 
 // exports
 
@@ -40522,153 +40523,172 @@ var render = function() {
   var _vm = this
   var _h = _vm.$createElement
   var _c = _vm._self._c || _h
-  return _c("main", { staticClass: "p-5" }, [
-    _vm.estimateData
-      ? _c("div", { staticClass: "fixed-top p-4 text-right" }, [
-          _c(
-            "button",
-            {
-              staticClass: "btn btn-primary d-print-none",
-              on: {
-                click: function($event) {
-                  return _vm.print()
-                }
-              }
-            },
-            [_c("i", { staticClass: "icon ion-md-print" }), _vm._v(" Print")]
-          )
-        ])
-      : _vm._e(),
-    _vm._v(" "),
-    _c("div", { staticClass: "container", attrs: { id: "printContainer" } }, [
-      _c("div", { staticClass: "row" }, [
-        _vm.estimateData
-          ? _c(
-              "div",
+  return _c(
+    "main",
+    { staticClass: "p-5", attrs: { id: "estimateMainSection" } },
+    [
+      _vm.estimateData
+        ? _c("div", { staticClass: "fixed-top p-4 text-right" }, [
+            _c(
+              "button",
               {
-                staticClass: "col-md-8 offset-md-2 bg-white p-5",
-                attrs: { id: "estimateDocument" }
+                staticClass: "btn btn-primary d-print-none",
+                on: {
+                  click: function($event) {
+                    return _vm.print()
+                  }
+                }
               },
-              _vm._l(_vm.estimateData.sections, function(section) {
-                return _c("section", { key: section.id, staticClass: "mb-5" }, [
-                  _c("p", {
-                    domProps: { innerHTML: _vm._s(section.presentable_text) }
-                  }),
-                  _vm._v(" "),
-                  section.items.length
-                    ? _c(
-                        "table",
-                        { staticClass: "table mt-4" },
-                        [
-                          _vm._m(0, true),
-                          _vm._v(" "),
-                          _vm._l(section.items, function(item) {
-                            return _c(
-                              "tr",
-                              {
-                                key: item.id,
-                                staticClass: "item",
-                                class: { selected: item.selected }
-                              },
-                              [
-                                _c("td", [
-                                  !item.obligatory
-                                    ? _c("input", {
-                                        directives: [
-                                          {
-                                            name: "model",
-                                            rawName: "v-model",
-                                            value: item.selected,
-                                            expression: "item.selected"
-                                          }
-                                        ],
-                                        attrs: { type: "checkbox" },
-                                        domProps: {
-                                          checked: Array.isArray(item.selected)
-                                            ? _vm._i(item.selected, null) > -1
-                                            : item.selected
-                                        },
-                                        on: {
-                                          change: [
-                                            function($event) {
-                                              var $$a = item.selected,
-                                                $$el = $event.target,
-                                                $$c = $$el.checked
-                                                  ? true
-                                                  : false
-                                              if (Array.isArray($$a)) {
-                                                var $$v = null,
-                                                  $$i = _vm._i($$a, $$v)
-                                                if ($$el.checked) {
-                                                  $$i < 0 &&
-                                                    _vm.$set(
-                                                      item,
-                                                      "selected",
-                                                      $$a.concat([$$v])
-                                                    )
-                                                } else {
-                                                  $$i > -1 &&
-                                                    _vm.$set(
-                                                      item,
-                                                      "selected",
-                                                      $$a
-                                                        .slice(0, $$i)
-                                                        .concat(
-                                                          $$a.slice($$i + 1)
-                                                        )
-                                                    )
-                                                }
-                                              } else {
-                                                _vm.$set(item, "selected", $$c)
+              [_c("i", { staticClass: "icon ion-md-print" }), _vm._v(" Print")]
+            )
+          ])
+        : _vm._e(),
+      _vm._v(" "),
+      _c("div", { staticClass: "container", attrs: { id: "printContainer" } }, [
+        _c("div", { staticClass: "row" }, [
+          _vm.estimateData
+            ? _c(
+                "div",
+                {
+                  staticClass: "col-md-8 offset-md-2 bg-white p-5",
+                  attrs: { id: "estimateDocument" }
+                },
+                _vm._l(_vm.estimateData.sections, function(section) {
+                  return _c(
+                    "section",
+                    { key: section.id, staticClass: "mb-5" },
+                    [
+                      _c("p", {
+                        domProps: {
+                          innerHTML: _vm._s(section.presentable_text)
+                        }
+                      }),
+                      _vm._v(" "),
+                      section.items.length
+                        ? _c(
+                            "table",
+                            { staticClass: "table mt-4" },
+                            [
+                              _vm._m(0, true),
+                              _vm._v(" "),
+                              _vm._l(section.items, function(item) {
+                                return _c(
+                                  "tr",
+                                  {
+                                    key: item.id,
+                                    staticClass: "item",
+                                    class: { selected: item.selected }
+                                  },
+                                  [
+                                    _c("td", [
+                                      !item.obligatory
+                                        ? _c("input", {
+                                            directives: [
+                                              {
+                                                name: "model",
+                                                rawName: "v-model",
+                                                value: item.selected,
+                                                expression: "item.selected"
                                               }
+                                            ],
+                                            attrs: { type: "checkbox" },
+                                            domProps: {
+                                              checked: Array.isArray(
+                                                item.selected
+                                              )
+                                                ? _vm._i(item.selected, null) >
+                                                  -1
+                                                : item.selected
                                             },
-                                            function($event) {
-                                              return _vm.renderPrices()
+                                            on: {
+                                              change: [
+                                                function($event) {
+                                                  var $$a = item.selected,
+                                                    $$el = $event.target,
+                                                    $$c = $$el.checked
+                                                      ? true
+                                                      : false
+                                                  if (Array.isArray($$a)) {
+                                                    var $$v = null,
+                                                      $$i = _vm._i($$a, $$v)
+                                                    if ($$el.checked) {
+                                                      $$i < 0 &&
+                                                        _vm.$set(
+                                                          item,
+                                                          "selected",
+                                                          $$a.concat([$$v])
+                                                        )
+                                                    } else {
+                                                      $$i > -1 &&
+                                                        _vm.$set(
+                                                          item,
+                                                          "selected",
+                                                          $$a
+                                                            .slice(0, $$i)
+                                                            .concat(
+                                                              $$a.slice($$i + 1)
+                                                            )
+                                                        )
+                                                    }
+                                                  } else {
+                                                    _vm.$set(
+                                                      item,
+                                                      "selected",
+                                                      $$c
+                                                    )
+                                                  }
+                                                },
+                                                function($event) {
+                                                  return _vm.renderPrices()
+                                                }
+                                              ]
                                             }
-                                          ]
-                                        }
-                                      })
-                                    : _vm._e()
-                                ]),
-                                _vm._v(" "),
-                                _c("td", [
-                                  _vm._v(_vm._s(item.description || "-"))
-                                ]),
-                                _vm._v(" "),
-                                _c("td", [
-                                  _vm._v(_vm._s(item.duration || "-"))
-                                ]),
+                                          })
+                                        : _vm._e()
+                                    ]),
+                                    _vm._v(" "),
+                                    _c("td", [
+                                      _vm._v(_vm._s(item.description || "-"))
+                                    ]),
+                                    _vm._v(" "),
+                                    _c("td", [
+                                      _vm._v(_vm._s(item.duration || "-"))
+                                    ]),
+                                    _vm._v(" "),
+                                    _c("td", { staticClass: "text-right" }, [
+                                      _vm._v(_vm._s(item.price || "-"))
+                                    ])
+                                  ]
+                                )
+                              }),
+                              _vm._v(" "),
+                              _c("tr", [
+                                _vm._m(1, true),
                                 _vm._v(" "),
                                 _c("td", { staticClass: "text-right" }, [
-                                  _vm._v(_vm._s(item.price || "-"))
+                                  _vm._v(
+                                    _vm._s(
+                                      _vm.formattedPrice(
+                                        _vm.sectionTotal(section)
+                                      )
+                                    )
+                                  )
                                 ])
-                              ]
-                            )
-                          }),
-                          _vm._v(" "),
-                          _c("tr", [
-                            _vm._m(1, true),
-                            _vm._v(" "),
-                            _c("td", { staticClass: "text-right" }, [
-                              _vm._v(
-                                _vm._s(
-                                  _vm.formattedPrice(_vm.sectionTotal(section))
-                                )
-                              )
-                            ])
-                          ])
-                        ],
-                        2
-                      )
-                    : _vm._e()
-                ])
-              }),
-              0
-            )
-          : _vm._e()
+                              ])
+                            ],
+                            2
+                          )
+                        : _vm._e()
+                    ]
+                  )
+                }),
+                0
+              )
+            : _vm._e()
+        ])
       ])
-    ])
-  ])
+    ]
+  )
 }
 var staticRenderFns = [
   function() {
