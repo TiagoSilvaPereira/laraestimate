@@ -2043,6 +2043,12 @@ __webpack_require__.r(__webpack_exports__);
 //
 //
 //
+//
+//
+//
+//
+//
+//
 /* harmony default export */ __webpack_exports__["default"] = ({
   props: ['estimate'],
   data: function data() {
@@ -2053,13 +2059,37 @@ __webpack_require__.r(__webpack_exports__);
   mounted: function mounted() {
     this.init();
   },
+  computed: {
+    estimateTotalPrice: function estimateTotalPrice() {
+      var _this = this;
+
+      if (!this.estimateData.sections) return 0;
+      var total = this.estimateData.sections.reduce(function (sum, section) {
+        return sum + _this.sectionTotal(section, false);
+      }, 0);
+      return total;
+    },
+    estimateTotalSelectedPrice: function estimateTotalSelectedPrice() {
+      var _this2 = this;
+
+      if (!this.estimateData.sections) return 0;
+      var total = this.estimateData.sections.reduce(function (sum, section) {
+        return sum + _this2.sectionTotal(section, true);
+      }, 0);
+      return total;
+    }
+  },
   methods: {
     init: function init() {
-      var _this = this;
+      var _this3 = this;
 
       axios.get('/estimates/' + this.estimate + '/data').then(function (_ref) {
         var data = _ref.data;
-        _this.estimateData = _this.treatData(data);
+        _this3.estimateData = _this3.treatData(data);
+
+        _this3.$nextTick(function () {
+          _this3.renderPrices();
+        });
       });
     },
     treatData: function treatData(data) {
@@ -2073,14 +2103,32 @@ __webpack_require__.r(__webpack_exports__);
       return data;
     },
     sectionTotal: function sectionTotal(section) {
+      var onlySelected = arguments.length > 1 && arguments[1] !== undefined ? arguments[1] : true;
       var total = section.items.reduce(function (sum, item) {
-        var itemPrice = !item.selected ? 0 : parseFloat(item.price) || 0;
+        var itemPrice = parseFloat(item.price) || 0;
+
+        if (onlySelected) {
+          itemPrice = !item.selected ? 0 : itemPrice;
+        }
+
         return sum + itemPrice;
       }, 0);
       return parseFloat(total);
     },
     formattedPrice: function formattedPrice(price) {
       return price.toFixed(2);
+    },
+    renderPrices: function renderPrices() {
+      var _this4 = this;
+
+      var totalPriceElements = document.querySelectorAll('.total-price');
+      var totalSelectedPriceElements = document.querySelectorAll('.total-selected-price');
+      document.querySelectorAll('.total-price').forEach(function (priceElement) {
+        priceElement.innerHTML = _this4.formattedPrice(_this4.estimateTotalPrice);
+      });
+      document.querySelectorAll('.total-selected-price').forEach(function (priceElement) {
+        priceElement.innerHTML = _this4.formattedPrice(_this4.estimateTotalSelectedPrice);
+      });
     }
   }
 });
@@ -8255,7 +8303,7 @@ exports = module.exports = __webpack_require__(/*! ../../../node_modules/css-loa
 
 
 // module
-exports.push([module.i, "\ntr.item[data-v-3e7cb2a8]:not(.selected) {\n    color: #ccc;\n    text-decoration: line-through;\n}\n", ""]);
+exports.push([module.i, "\ntr.item[data-v-3e7cb2a8]:not(.selected) {\n    color: #ccc;\n    text-decoration: line-through;\n}\ninput[type=\"checkbox\"][data-v-3e7cb2a8] {\n    width: 1.5em;\n    height: 1.5em;\n}\n", ""]);
 
 // exports
 
@@ -40412,7 +40460,9 @@ var render = function() {
               { staticClass: "col-md-8 offset-md-2 bg-white p-5" },
               _vm._l(_vm.estimateData.sections, function(section) {
                 return _c("section", { key: section.id, staticClass: "mb-5" }, [
-                  _c("p", { domProps: { innerHTML: _vm._s(section.text) } }),
+                  _c("p", {
+                    domProps: { innerHTML: _vm._s(section.presentable_text) }
+                  }),
                   _vm._v(" "),
                   section.items.length
                     ? _c(
@@ -40447,34 +40497,39 @@ var render = function() {
                                         : item.selected
                                     },
                                     on: {
-                                      change: function($event) {
-                                        var $$a = item.selected,
-                                          $$el = $event.target,
-                                          $$c = $$el.checked ? true : false
-                                        if (Array.isArray($$a)) {
-                                          var $$v = null,
-                                            $$i = _vm._i($$a, $$v)
-                                          if ($$el.checked) {
-                                            $$i < 0 &&
-                                              _vm.$set(
-                                                item,
-                                                "selected",
-                                                $$a.concat([$$v])
-                                              )
+                                      change: [
+                                        function($event) {
+                                          var $$a = item.selected,
+                                            $$el = $event.target,
+                                            $$c = $$el.checked ? true : false
+                                          if (Array.isArray($$a)) {
+                                            var $$v = null,
+                                              $$i = _vm._i($$a, $$v)
+                                            if ($$el.checked) {
+                                              $$i < 0 &&
+                                                _vm.$set(
+                                                  item,
+                                                  "selected",
+                                                  $$a.concat([$$v])
+                                                )
+                                            } else {
+                                              $$i > -1 &&
+                                                _vm.$set(
+                                                  item,
+                                                  "selected",
+                                                  $$a
+                                                    .slice(0, $$i)
+                                                    .concat($$a.slice($$i + 1))
+                                                )
+                                            }
                                           } else {
-                                            $$i > -1 &&
-                                              _vm.$set(
-                                                item,
-                                                "selected",
-                                                $$a
-                                                  .slice(0, $$i)
-                                                  .concat($$a.slice($$i + 1))
-                                              )
+                                            _vm.$set(item, "selected", $$c)
                                           }
-                                        } else {
-                                          _vm.$set(item, "selected", $$c)
+                                        },
+                                        function($event) {
+                                          return _vm.renderPrices()
                                         }
-                                      }
+                                      ]
                                     }
                                   })
                                 ]),
@@ -40497,22 +40552,13 @@ var render = function() {
                           _c("tr", [
                             _vm._m(1, true),
                             _vm._v(" "),
-                            _c(
-                              "td",
-                              {
-                                staticClass: "text-right",
-                                attrs: { colspan: "4" }
-                              },
-                              [
-                                _vm._v(
-                                  _vm._s(
-                                    _vm.formattedPrice(
-                                      _vm.sectionTotal(section)
-                                    )
-                                  )
+                            _c("td", { staticClass: "text-right" }, [
+                              _vm._v(
+                                _vm._s(
+                                  _vm.formattedPrice(_vm.sectionTotal(section))
                                 )
-                              ]
-                            )
+                              )
+                            ])
                           ])
                         ],
                         2
@@ -40547,7 +40593,7 @@ var staticRenderFns = [
     var _h = _vm.$createElement
     var _c = _vm._self._c || _h
     return _c("td", { staticClass: "text-right", attrs: { colspan: "3" } }, [
-      _c("b", [_vm._v("Total:")])
+      _c("b", [_vm._v("Section Total:")])
     ])
   }
 ]

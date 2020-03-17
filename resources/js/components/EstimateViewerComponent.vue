@@ -3,14 +3,20 @@
         color: #ccc;
         text-decoration: line-through;
     }
+
+    input[type="checkbox"] {
+        width: 1.5em;
+        height: 1.5em;
+    }
 </style>
+
 <template>
     <main class="p-5">
         <div class="container">
             <div class="row">
                 <div class="col-md-8 offset-md-2 bg-white p-5" v-if="estimateData">
                     <section class="mb-5" v-for="section in estimateData.sections" :key="section.id">
-                        <p v-html="section.text"></p>
+                        <p v-html="section.presentable_text"></p>
     
                         <table class="table mt-4" v-if="section.items.length">
                             <tr>
@@ -21,15 +27,15 @@
                             </tr>
 
                             <tr v-for="item in section.items" :key="item.id" class="item" :class="{'selected': item.selected}">
-                                <td><input type="checkbox" v-model="item.selected"></td>
+                                <td><input type="checkbox" v-model="item.selected" @change="renderPrices()"></td>
                                 <td>{{ item.description || '-' }}</td>
                                 <td>{{ item.duration || '-' }}</td>
                                 <td class="text-right">{{ item.price || '-' }}</td>
                             </tr>
 
                             <tr>
-                                <td colspan="3" class="text-right"><b>Total:</b></td>
-                                <td class="text-right" colspan="4">{{ formattedPrice(sectionTotal(section)) }}</td>
+                                <td colspan="3" class="text-right"><b>Section Total:</b></td>
+                                <td class="text-right">{{ formattedPrice(sectionTotal(section)) }}</td>
                             </tr>
                         </table>
                     </section>
@@ -54,11 +60,39 @@ export default {
         this.init();
     },
 
+    computed: {
+
+        estimateTotalPrice() {
+            if(!this.estimateData.sections) return 0;
+
+            let total = this.estimateData.sections.reduce((sum, section) => {
+                return sum + this.sectionTotal(section, false); 
+            }, 0);
+
+            return total;
+        },
+
+        estimateTotalSelectedPrice() {
+            if(!this.estimateData.sections) return 0;
+            
+            let total = this.estimateData.sections.reduce((sum, section) => {
+                return sum + this.sectionTotal(section, true); 
+            }, 0);
+
+            return total;
+        }
+
+    },
+
     methods: {
 
         init() {
             axios.get('/estimates/' + this.estimate + '/data').then(({data}) => {
                 this.estimateData = this.treatData(data);
+                
+                this.$nextTick(() => {
+                    this.renderPrices();
+                })
             });
         },
 
@@ -76,9 +110,14 @@ export default {
             return data;
         },
 
-        sectionTotal(section) {
+        sectionTotal(section, onlySelected = true) {
             let total = section.items.reduce((sum, item) => {
-                let itemPrice = !item.selected ? 0 : (parseFloat(item.price) || 0);
+                let itemPrice = (parseFloat(item.price) || 0);
+
+                if(onlySelected) {
+                    itemPrice = !item.selected ? 0 : itemPrice;
+                }
+
                 return sum + itemPrice; 
             }, 0);
 
@@ -87,6 +126,19 @@ export default {
 
         formattedPrice(price) {
             return price.toFixed(2);
+        },
+
+        renderPrices() {
+            let totalPriceElements = document.querySelectorAll('.total-price');
+            let totalSelectedPriceElements = document.querySelectorAll('.total-selected-price');
+
+            document.querySelectorAll('.total-price').forEach(priceElement => {
+                priceElement.innerHTML = this.formattedPrice(this.estimateTotalPrice);
+            });
+
+            document.querySelectorAll('.total-selected-price').forEach(priceElement => {
+                priceElement.innerHTML = this.formattedPrice(this.estimateTotalSelectedPrice);
+            });
         }
 
     }
