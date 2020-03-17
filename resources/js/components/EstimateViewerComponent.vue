@@ -1,5 +1,5 @@
 <style>
-    html, body {
+    body {
         background-color: #eee;
         text-align: justify;
     }

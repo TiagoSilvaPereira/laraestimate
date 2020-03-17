@@ -8371,7 +8371,7 @@ exports = module.exports = __webpack_require__(/*! ../../../node_modules/css-loa
 
 
 // module
-exports.push([module.i, "\nhtml, body {\n    background-color: #eee;\n    text-align: justify;\n}\n.print-background {\n    background-color: #fff;\n}\nh1 {\n    text-align: center;\n    font-size: 1.5rem;\n}\ntr.item:not(.selected) {\n    color: #ccc;\n    text-decoration: line-through;\n}\ninput[type=\"checkbox\"] {\n    width: 1.5em;\n    height: 1.5em;\n}\n", ""]);
+exports.push([module.i, "\nbody {\n    background-color: #eee;\n    text-align: justify;\n}\n.print-background {\n    background-color: #fff;\n}\nh1 {\n    text-align: center;\n    font-size: 1.5rem;\n}\ntr.item:not(.selected) {\n    color: #ccc;\n    text-decoration: line-through;\n}\ninput[type=\"checkbox\"] {\n    width: 1.5em;\n    height: 1.5em;\n}\n", ""]);
 
 // exports
 
