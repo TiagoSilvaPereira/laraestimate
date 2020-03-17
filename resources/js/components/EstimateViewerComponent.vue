@@ -27,7 +27,7 @@
                             </tr>
 
                             <tr v-for="item in section.items" :key="item.id" class="item" :class="{'selected': item.selected}">
-                                <td><input type="checkbox" v-model="item.selected" @change="renderPrices()"></td>
+                                <td><input type="checkbox" v-if="!item.obligatory" v-model="item.selected" @change="renderPrices()"></td>
                                 <td>{{ item.description || '-' }}</td>
                                 <td>{{ item.duration || '-' }}</td>
                                 <td class="text-right">{{ item.price || '-' }}</td>

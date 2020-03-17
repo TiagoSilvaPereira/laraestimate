@@ -1985,6 +1985,10 @@ __webpack_require__.r(__webpack_exports__);
         _this2.saving = false;
       }, 500);
     },
+    updateSection: function updateSection(sectionData, index) {
+      console.log(arguments);
+      this.sections[index] = sectionData;
+    },
     removeSection: function removeSection(index, type) {
       this.sections.splice(index, 1);
     }
@@ -2189,6 +2193,15 @@ __webpack_require__.r(__webpack_exports__);
 //
 //
 //
+//
+//
+//
+//
+//
+//
+//
+//
+//
 
 /* harmony default export */ __webpack_exports__["default"] = ({
   components: {
@@ -2200,7 +2213,8 @@ __webpack_require__.r(__webpack_exports__);
       madeFirstInput: false,
       text: null,
       items: [],
-      addingItem: false
+      addingItem: false,
+      sectionData: null
     };
   },
   mounted: function mounted() {
@@ -2208,22 +2222,26 @@ __webpack_require__.r(__webpack_exports__);
   },
   computed: {
     total: function total() {
-      var total = this.items.reduce(function (sum, item) {
+      var total = this.sectionData.items.reduce(function (sum, item) {
         return sum + (parseFloat(item.price) || 0);
       }, 0);
       total = parseFloat(total);
-      this.section.total = total;
+      this.sectionData.total = total;
       return total;
     },
     formattedTotal: function formattedTotal() {
       return this.total.toFixed(2);
     }
   },
+  watch: {
+    sectionData: function sectionData() {
+      this.$emit('sectionUpdated', this.sectionData);
+    }
+  },
   methods: {
     init: function init() {
-      this.madeFirstInput = this.section.madeFirstInput;
-      this.text = this.section.text;
-      this.items = this.section.items;
+      this.sectionData = this.section;
+      this.madeFirstInput = this.sectionData.madeFirstInput != undefined ? this.sectionData.madeFirstInput : true;
     },
     saveSectionWithDebounce: _.debounce(function () {
       this.saveSection();
@@ -2236,7 +2254,7 @@ __webpack_require__.r(__webpack_exports__);
 
       this.$parent.showSavingLabel();
 
-      if (!this.section.id) {
+      if (!this.sectionData.id) {
         this.save();
         return;
       }
@@ -2249,34 +2267,34 @@ __webpack_require__.r(__webpack_exports__);
       var url = '/estimates/:estimate/sections';
       url = url.replace(':estimate', this.$parent.estimate);
       axios.post(url, {
-        text: this.text,
-        type: this.section.type,
-        items: this.items
+        text: this.sectionData.text,
+        type: this.sectionData.type,
+        items: this.sectionData.items
       }).then(function (_ref) {
         var data = _ref.data;
-        _this.section.id = data.id;
+        _this.sectionData.id = data.id;
       });
     },
     update: function update() {
       var url = '/estimates/:estimate/sections/:section';
       url = url.replace(':estimate', this.$parent.estimate);
-      url = url.replace(':section', this.section.id);
+      url = url.replace(':section', this.sectionData.id);
       axios.put(url, {
-        text: this.text,
-        items: this.items
+        text: this.sectionData.text,
+        items: this.sectionData.items
       });
     },
     remove: function remove() {
       var _this2 = this;
 
-      if (!this.section.id) {
+      if (!this.sectionData.id) {
         this.$emit('sectionRemoved');
         return;
       }
 
       var url = '/estimates/:estimate/sections/:section';
       url = url.replace(':estimate', this.$parent.estimate);
-      url = url.replace(':section', this.section.id);
+      url = url.replace(':section', this.sectionData.id);
       bootbox.confirm('Are you sure?', function (confirmed) {
         if (confirmed) {
           axios["delete"](url);
@@ -2286,10 +2304,11 @@ __webpack_require__.r(__webpack_exports__);
       });
     },
     addItem: function addItem() {
-      this.items.push({
+      this.sectionData.items.push({
         'description': '',
         'duration': '',
-        'price': null
+        'price': null,
+        'obligatory': false
       });
     },
     removeItem: function removeItem(index) {
@@ -2297,7 +2316,7 @@ __webpack_require__.r(__webpack_exports__);
 
       bootbox.confirm('Are you sure?', function (confirmed) {
         if (confirmed) {
-          _this3.items.splice(index, 1);
+          _this3.sectionData.items.splice(index, 1);
 
           _this3.saveSection();
         }
@@ -40390,6 +40409,9 @@ var render = function() {
             key: index,
             attrs: { section: section },
             on: {
+              sectionUpdated: function($event) {
+                return _vm.updateSection($event, index)
+              },
               sectionRemoved: function($event) {
                 return _vm.removeSection(index, "text")
               }
@@ -40481,57 +40503,63 @@ var render = function() {
                               },
                               [
                                 _c("td", [
-                                  _c("input", {
-                                    directives: [
-                                      {
-                                        name: "model",
-                                        rawName: "v-model",
-                                        value: item.selected,
-                                        expression: "item.selected"
-                                      }
-                                    ],
-                                    attrs: { type: "checkbox" },
-                                    domProps: {
-                                      checked: Array.isArray(item.selected)
-                                        ? _vm._i(item.selected, null) > -1
-                                        : item.selected
-                                    },
-                                    on: {
-                                      change: [
-                                        function($event) {
-                                          var $$a = item.selected,
-                                            $$el = $event.target,
-                                            $$c = $$el.checked ? true : false
-                                          if (Array.isArray($$a)) {
-                                            var $$v = null,
-                                              $$i = _vm._i($$a, $$v)
-                                            if ($$el.checked) {
-                                              $$i < 0 &&
-                                                _vm.$set(
-                                                  item,
-                                                  "selected",
-                                                  $$a.concat([$$v])
-                                                )
-                                            } else {
-                                              $$i > -1 &&
-                                                _vm.$set(
-                                                  item,
-                                                  "selected",
-                                                  $$a
-                                                    .slice(0, $$i)
-                                                    .concat($$a.slice($$i + 1))
-                                                )
-                                            }
-                                          } else {
-                                            _vm.$set(item, "selected", $$c)
+                                  !item.obligatory
+                                    ? _c("input", {
+                                        directives: [
+                                          {
+                                            name: "model",
+                                            rawName: "v-model",
+                                            value: item.selected,
+                                            expression: "item.selected"
                                           }
+                                        ],
+                                        attrs: { type: "checkbox" },
+                                        domProps: {
+                                          checked: Array.isArray(item.selected)
+                                            ? _vm._i(item.selected, null) > -1
+                                            : item.selected
                                         },
-                                        function($event) {
-                                          return _vm.renderPrices()
+                                        on: {
+                                          change: [
+                                            function($event) {
+                                              var $$a = item.selected,
+                                                $$el = $event.target,
+                                                $$c = $$el.checked
+                                                  ? true
+                                                  : false
+                                              if (Array.isArray($$a)) {
+                                                var $$v = null,
+                                                  $$i = _vm._i($$a, $$v)
+                                                if ($$el.checked) {
+                                                  $$i < 0 &&
+                                                    _vm.$set(
+                                                      item,
+                                                      "selected",
+                                                      $$a.concat([$$v])
+                                                    )
+                                                } else {
+                                                  $$i > -1 &&
+                                                    _vm.$set(
+                                                      item,
+                                                      "selected",
+                                                      $$a
+                                                        .slice(0, $$i)
+                                                        .concat(
+                                                          $$a.slice($$i + 1)
+                                                        )
+                                                    )
+                                                }
+                                              } else {
+                                                _vm.$set(item, "selected", $$c)
+                                              }
+                                            },
+                                            function($event) {
+                                              return _vm.renderPrices()
+                                            }
+                                          ]
                                         }
-                                      ]
-                                    }
-                                  })
+                                      })
+                                    : _vm._e()
                                 ]),
                                 _vm._v(" "),
                                 _c("td", [
@@ -40618,205 +40646,283 @@ var render = function() {
   var _vm = this
   var _h = _vm.$createElement
   var _c = _vm._self._c || _h
-  return _c(
-    "div",
-    { staticClass: "section p-2 mb-5" },
-    [
-      _vm.section.type == "text"
-        ? _c("small", { staticClass: "text-primary mb-4" }, [
-            _vm._v("Text Section " + _vm._s(_vm.section.id))
-          ])
-        : _c("small", { staticClass: "text-primary mb-4" }, [
-            _vm._v("Prices Section " + _vm._s(_vm.section.id))
-          ]),
-      _vm._v(" "),
-      _c("div", { staticClass: "mb-4 text-right" }, [
-        _c(
-          "button",
-          {
-            staticClass: "btn btn-sm btn-outline-danger mt-2",
-            on: {
-              click: function($event) {
-                return _vm.remove()
-              }
-            }
-          },
-          [_c("i", { staticClass: "icon ion-md-trash" }), _vm._v(" Remove")]
-        )
-      ]),
-      _vm._v(" "),
-      _c("VueTrix", {
-        on: {
-          input: function($event) {
-            return _vm.saveSectionWithDebounce()
-          }
-        },
-        model: {
-          value: _vm.text,
-          callback: function($$v) {
-            _vm.text = $$v
-          },
-          expression: "text"
-        }
-      }),
-      _vm._v(" "),
-      _vm.section.type == "prices"
-        ? _c(
-            "div",
-            { staticClass: "mt-2" },
-            [
-              _vm._l(_vm.items, function(item, index) {
-                return _c("div", { key: index, staticClass: "row mt-2" }, [
-                  _c("div", { staticClass: "col-md-5" }, [
-                    _c("input", {
-                      directives: [
-                        {
-                          name: "model",
-                          rawName: "v-model",
-                          value: item.description,
-                          expression: "item.description"
-                        }
-                      ],
-                      staticClass: "form-control",
-                      attrs: { type: "text", placeholder: "Item Description" },
-                      domProps: { value: item.description },
-                      on: {
-                        input: [
-                          function($event) {
-                            if ($event.target.composing) {
-                              return
-                            }
-                            _vm.$set(item, "description", $event.target.value)
-                          },
-                          function($event) {
-                            return _vm.saveSectionWithDebounce()
-                          }
-                        ],
-                        blur: function($event) {
-                          return _vm.saveSection()
-                        }
-                      }
-                    })
-                  ]),
-                  _vm._v(" "),
-                  _c("div", { staticClass: "col-md-3" }, [
-                    _c("input", {
-                      directives: [
-                        {
-                          name: "model",
-                          rawName: "v-model",
-                          value: item.duration,
-                          expression: "item.duration"
-                        }
-                      ],
-                      staticClass: "form-control",
-                      attrs: {
-                        type: "text",
-                        placeholder: "Item Duration (Optional)"
-                      },
-                      domProps: { value: item.duration },
-                      on: {
-                        input: [
-                          function($event) {
-                            if ($event.target.composing) {
-                              return
-                            }
-                            _vm.$set(item, "duration", $event.target.value)
-                          },
-                          function($event) {
-                            return _vm.saveSectionWithDebounce()
-                          }
-                        ],
-                        blur: function($event) {
-                          return _vm.saveSection()
-                        }
-                      }
-                    })
-                  ]),
-                  _vm._v(" "),
-                  _c("div", { staticClass: "col-md-3" }, [
-                    _c("input", {
-                      directives: [
-                        {
-                          name: "model",
-                          rawName: "v-model",
-                          value: item.price,
-                          expression: "item.price"
-                        }
-                      ],
-                      staticClass: "form-control",
-                      attrs: {
-                        type: "number",
-                        step: "0.1",
-                        placeholder: "Item Price"
-                      },
-                      domProps: { value: item.price },
-                      on: {
-                        input: [
-                          function($event) {
-                            if ($event.target.composing) {
-                              return
-                            }
-                            _vm.$set(item, "price", $event.target.value)
-                          },
-                          function($event) {
-                            return _vm.saveSectionWithDebounce()
-                          }
-                        ],
-                        blur: function($event) {
-                          return _vm.saveSection()
-                        }
-                      }
-                    })
-                  ]),
-                  _vm._v(" "),
-                  _c("div", { staticClass: "col-md-1" }, [
-                    _c(
-                      "button",
-                      {
-                        staticClass: "btn btn-sm btn-outline-danger mt-2",
-                        on: {
-                          click: function($event) {
-                            return _vm.removeItem(index)
-                          }
-                        }
-                      },
-                      [_c("i", { staticClass: "icon ion-md-remove" })]
-                    )
-                  ])
-                ])
-              }),
-              _vm._v(" "),
-              _c("div", { staticClass: "row mt-2" }, [
-                _c("div", { staticClass: "col-md-3 offset-md-8 text-right" }, [
-                  _c("b", [_vm._v("Total $ " + _vm._s(_vm.formattedTotal))])
-                ])
+  return _vm.sectionData
+    ? _c(
+        "div",
+        { staticClass: "section p-2 mb-5" },
+        [
+          _vm.sectionData.type == "text"
+            ? _c("small", { staticClass: "text-primary mb-4" }, [
+                _vm._v("Text Section " + _vm._s(_vm.sectionData.id))
+              ])
+            : _c("small", { staticClass: "text-primary mb-4" }, [
+                _vm._v("Prices Section " + _vm._s(_vm.sectionData.id))
               ]),
-              _vm._v(" "),
-              _c(
-                "button",
-                {
-                  staticClass: "btn btn-sm btn-outline-primary mt-2",
-                  on: {
-                    click: function($event) {
-                      return _vm.addItem()
-                    }
+          _vm._v(" "),
+          _c("div", { staticClass: "mb-4 text-right" }, [
+            _c(
+              "button",
+              {
+                staticClass: "btn btn-sm btn-outline-danger mt-2",
+                on: {
+                  click: function($event) {
+                    return _vm.remove()
                   }
-                },
+                }
+              },
+              [_c("i", { staticClass: "icon ion-md-trash" }), _vm._v(" Remove")]
+            )
+          ]),
+          _vm._v(" "),
+          _c("VueTrix", {
+            on: {
+              input: function($event) {
+                return _vm.saveSectionWithDebounce()
+              }
+            },
+            model: {
+              value: _vm.sectionData.text,
+              callback: function($$v) {
+                _vm.$set(_vm.sectionData, "text", $$v)
+              },
+              expression: "sectionData.text"
+            }
+          }),
+          _vm._v(" "),
+          _vm.sectionData.type == "prices"
+            ? _c(
+                "div",
+                { staticClass: "mt-2" },
                 [
-                  _c("i", { staticClass: "icon ion-md-add" }),
-                  _vm._v(" Add Item")
-                ]
+                  _vm._l(_vm.sectionData.items, function(item, index) {
+                    return _c("div", { key: index, staticClass: "row mt-2" }, [
+                      _c("div", { staticClass: "col-md-5" }, [
+                        _c("input", {
+                          directives: [
+                            {
+                              name: "model",
+                              rawName: "v-model",
+                              value: item.description,
+                              expression: "item.description"
+                            }
+                          ],
+                          staticClass: "form-control",
+                          attrs: {
+                            type: "text",
+                            placeholder: "Item Description"
+                          },
+                          domProps: { value: item.description },
+                          on: {
+                            input: [
+                              function($event) {
+                                if ($event.target.composing) {
+                                  return
+                                }
+                                _vm.$set(
+                                  item,
+                                  "description",
+                                  $event.target.value
+                                )
+                              },
+                              function($event) {
+                                return _vm.saveSectionWithDebounce()
+                              }
+                            ],
+                            blur: function($event) {
+                              return _vm.saveSection()
+                            }
+                          }
+                        })
+                      ]),
+                      _vm._v(" "),
+                      _c("div", { staticClass: "col-md-2" }, [
+                        _c("input", {
+                          directives: [
+                            {
+                              name: "model",
+                              rawName: "v-model",
+                              value: item.duration,
+                              expression: "item.duration"
+                            }
+                          ],
+                          staticClass: "form-control",
+                          attrs: {
+                            type: "text",
+                            placeholder: "Item Duration (Optional)"
+                          },
+                          domProps: { value: item.duration },
+                          on: {
+                            input: [
+                              function($event) {
+                                if ($event.target.composing) {
+                                  return
+                                }
+                                _vm.$set(item, "duration", $event.target.value)
+                              },
+                              function($event) {
+                                return _vm.saveSectionWithDebounce()
+                              }
+                            ],
+                            blur: function($event) {
+                              return _vm.saveSection()
+                            }
+                          }
+                        })
+                      ]),
+                      _vm._v(" "),
+                      _c("div", { staticClass: "col-md-2" }, [
+                        _c("input", {
+                          directives: [
+                            {
+                              name: "model",
+                              rawName: "v-model",
+                              value: item.price,
+                              expression: "item.price"
+                            }
+                          ],
+                          staticClass: "form-control",
+                          attrs: {
+                            type: "number",
+                            step: "0.1",
+                            placeholder: "Item Price"
+                          },
+                          domProps: { value: item.price },
+                          on: {
+                            input: [
+                              function($event) {
+                                if ($event.target.composing) {
+                                  return
+                                }
+                                _vm.$set(item, "price", $event.target.value)
+                              },
+                              function($event) {
+                                return _vm.saveSectionWithDebounce()
+                              }
+                            ],
+                            blur: function($event) {
+                              return _vm.saveSection()
+                            }
+                          }
+                        })
+                      ]),
+                      _vm._v(" "),
+                      _c("div", { staticClass: "col-md-2" }, [
+                        _c("div", { staticClass: "switch-container" }, [
+                          _c("label", { staticClass: "switch" }, [
+                            _c("input", {
+                              directives: [
+                                {
+                                  name: "model",
+                                  rawName: "v-model",
+                                  value: item.obligatory,
+                                  expression: "item.obligatory"
+                                }
+                              ],
+                              attrs: { type: "checkbox" },
+                              domProps: {
+                                checked: Array.isArray(item.obligatory)
+                                  ? _vm._i(item.obligatory, null) > -1
+                                  : item.obligatory
+                              },
+                              on: {
+                                change: [
+                                  function($event) {
+                                    var $$a = item.obligatory,
+                                      $$el = $event.target,
+                                      $$c = $$el.checked ? true : false
+                                    if (Array.isArray($$a)) {
+                                      var $$v = null,
+                                        $$i = _vm._i($$a, $$v)
+                                      if ($$el.checked) {
+                                        $$i < 0 &&
+                                          _vm.$set(
+                                            item,
+                                            "obligatory",
+                                            $$a.concat([$$v])
+                                          )
+                                      } else {
+                                        $$i > -1 &&
+                                          _vm.$set(
+                                            item,
+                                            "obligatory",
+                                            $$a
+                                              .slice(0, $$i)
+                                              .concat($$a.slice($$i + 1))
+                                          )
+                                      }
+                                    } else {
+                                      _vm.$set(item, "obligatory", $$c)
+                                    }
+                                  },
+                                  function($event) {
+                                    return _vm.saveSection()
+                                  }
+                                ]
+                              }
+                            }),
+                            _vm._v(" "),
+                            _c("span", { staticClass: "slider round" })
+                          ]),
+                          _vm._v(
+                            "\n                    Obligatory?\n                "
+                          )
+                        ])
+                      ]),
+                      _vm._v(" "),
+                      _c("div", { staticClass: "col-md-1" }, [
+                        _c(
+                          "button",
+                          {
+                            staticClass: "btn btn-sm btn-outline-danger mt-2",
+                            on: {
+                              click: function($event) {
+                                return _vm.removeItem(index)
+                              }
+                            }
+                          },
+                          [_c("i", { staticClass: "icon ion-md-remove" })]
+                        )
+                      ])
+                    ])
+                  }),
+                  _vm._v(" "),
+                  _c("div", { staticClass: "row mt-2" }, [
+                    _c(
+                      "div",
+                      { staticClass: "col-md-3 offset-md-8 text-right" },
+                      [
+                        _c("b", [
+                          _vm._v("Total $ " + _vm._s(_vm.formattedTotal))
+                        ])
+                      ]
+                    )
+                  ]),
+                  _vm._v(" "),
+                  _c(
+                    "button",
+                    {
+                      staticClass: "btn btn-sm btn-outline-primary mt-2",
+                      on: {
+                        click: function($event) {
+                          return _vm.addItem()
+                        }
+                      }
+                    },
+                    [
+                      _c("i", { staticClass: "icon ion-md-add" }),
+                      _vm._v(" Add Item")
+                    ]
+                  )
+                ],
+                2
               )
-            ],
-            2
-          )
-        : _vm._e(),
-      _vm._v(" "),
-      _c("hr", { staticClass: "mt-4" })
-    ],
-    1
-  )
+            : _vm._e(),
+          _vm._v(" "),
+          _c("hr", { staticClass: "mt-4" })
+        ],
+        1
+      )
+    : _vm._e()
 }
 var staticRenderFns = []
 render._withStripped = true

@@ -12,7 +12,7 @@
         <div class="row">
 
             <div class="col-sm-12">
-                <estimate-section v-for="(section, index) in sections" :key="index" :section="section" @sectionRemoved="removeSection(index, 'text')"></estimate-section>
+                <estimate-section v-for="(section, index) in sections" :key="index" :section="section" @sectionUpdated="updateSection($event, index)" @sectionRemoved="removeSection(index, 'text')"></estimate-section>
             </div>
 
             <div class="col-sm-12">
@@ -80,6 +80,11 @@ export default {
             setTimeout(() => {
                 this.saving = false;
             }, 500);
+        },
+
+        updateSection(sectionData, index) {
+            console.log(arguments)
+            this.sections[index] = sectionData;
         },
 
         removeSection(index, type) {

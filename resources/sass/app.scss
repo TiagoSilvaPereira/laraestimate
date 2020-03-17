@@ -7,7 +7,9 @@
 // Bootstrap
 @import '~bootstrap/scss/bootstrap';
 
-@import "toastr";
+@import 'toastr';
+
+@import './switch';
 
 .breadcrumb {
     background-color: transparent;

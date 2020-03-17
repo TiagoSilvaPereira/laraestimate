@@ -9,7 +9,12 @@ class Item extends Model
     protected $fillable = [
         'description',
         'duration',
-        'price'
+        'price',
+        'obligatory',
+    ];
+
+    protected $casts = [
+        'obligatory' => 'boolean'
     ];
 
     public function section()

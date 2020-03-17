@@ -19,6 +19,7 @@ class CreateItemsTable extends Migration
             $table->string('description');
             $table->string('duration')->nullable();
             $table->decimal('price')->nullable()->default(0);
+            $table->boolean('obligatory')->default(false);
 
             $table->unsignedBigInteger('section_id');
             $table->foreign('section_id')

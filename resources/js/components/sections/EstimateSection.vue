@@ -5,26 +5,35 @@
 </style>
 
 <template>
-    <div class="section p-2 mb-5">
-        <small v-if="section.type == 'text'" class="text-primary mb-4">Text Section {{ section.id }}</small>
-        <small v-else class="text-primary mb-4">Prices Section {{ section.id }}</small>
+    <div class="section p-2 mb-5" v-if="sectionData">
+        <small v-if="sectionData.type == 'text'" class="text-primary mb-4">Text Section {{ sectionData.id }}</small>
+        <small v-else class="text-primary mb-4">Prices Section {{ sectionData.id }}</small>
         
         <div class="mb-4 text-right">
             <button class="btn btn-sm btn-outline-danger mt-2" @click="remove()"><i class="icon ion-md-trash"></i> Remove</button>
         </div>
 
-        <VueTrix v-model="text" @input="saveSectionWithDebounce()" />
+        <VueTrix v-model="sectionData.text" @input="saveSectionWithDebounce()" />
 
-        <div class="mt-2" v-if="section.type == 'prices'">
-            <div class="row mt-2" v-for="(item, index) in items" :key="index">
+        <div class="mt-2" v-if="sectionData.type == 'prices'">
+            <div class="row mt-2" v-for="(item, index) in sectionData.items" :key="index">
                 <div class="col-md-5">
                     <input type="text" class="form-control" placeholder="Item Description" v-model="item.description" @input="saveSectionWithDebounce()" @blur="saveSection()">
                 </div>
-                <div class="col-md-3">
+                <div class="col-md-2">
                     <input type="text" class="form-control" placeholder="Item Duration (Optional)" v-model="item.duration" @input="saveSectionWithDebounce()" @blur="saveSection()">
                 </div>
-                <div class="col-md-3">
+                <div class="col-md-2">
                     <input type="number" step="0.1" class="form-control" placeholder="Item Price" v-model="item.price" @input="saveSectionWithDebounce()" @blur="saveSection()">
+                </div>
+                <div class="col-md-2">
+                    <div class="switch-container">
+                        <label class="switch">
+                            <input type="checkbox" v-model="item.obligatory" @change="saveSection()">
+                            <span class="slider round"></span>
+                        </label>
+                        Obligatory?
+                    </div>
                 </div>
                 <div class="col-md-1">
                     <button class="btn btn-sm btn-outline-danger mt-2" @click="removeItem(index)"><i class="icon ion-md-remove"></i></button>
@@ -58,6 +67,7 @@ export default {
             text: null,
             items: [],
             addingItem: false,
+            sectionData: null,
         }
     },
 
@@ -67,13 +77,13 @@ export default {
 
     computed: {
         total() {
-            let total = this.items.reduce((sum, item) => {
+            let total = this.sectionData.items.reduce((sum, item) => {
                 return sum + (parseFloat(item.price) || 0); 
             }, 0);
 
             total = parseFloat(total);
 
-            this.section.total = total;
+            this.sectionData.total = total;
 
             return total;
         },
@@ -83,12 +93,17 @@ export default {
         }
     },
 
+    watch: {
+        sectionData() {
+            this.$emit('sectionUpdated', this.sectionData);
+        }
+    },
+
     methods: {
 
         init() {
-            this.madeFirstInput = this.section.madeFirstInput;
-            this.text = this.section.text;
-            this.items = this.section.items;
+            this.sectionData = this.section;
+            this.madeFirstInput = (this.sectionData.madeFirstInput != undefined) ? this.sectionData.madeFirstInput : true;
         },
 
         saveSectionWithDebounce: _.debounce(function() {
@@ -103,7 +118,7 @@ export default {
             
             this.$parent.showSavingLabel();
 
-            if(!this.section.id) {
+            if(!this.sectionData.id) {
                 this.save();
                 return;
             }
@@ -116,35 +131,35 @@ export default {
             url = url.replace(':estimate', this.$parent.estimate);
 
             axios.post(url, {
-                text: this.text,
-                type: this.section.type,
-                items: this.items,
+                text: this.sectionData.text,
+                type: this.sectionData.type,
+                items: this.sectionData.items,
             }).then(({data}) => {
-                this.section.id = data.id;
+                this.sectionData.id = data.id;
             });
         },
 
         update() {
             let url = '/estimates/:estimate/sections/:section';
             url = url.replace(':estimate', this.$parent.estimate);
-            url = url.replace(':section', this.section.id);
+            url = url.replace(':section', this.sectionData.id);
 
             axios.put(url, {
-                text: this.text,
-                items: this.items,
+                text: this.sectionData.text,
+                items: this.sectionData.items,
             });
         },
 
         remove() {
 
-            if(!this.section.id) {
+            if(!this.sectionData.id) {
                 this.$emit('sectionRemoved');
                 return;
             }
 
             let url = '/estimates/:estimate/sections/:section';
             url = url.replace(':estimate', this.$parent.estimate);
-            url = url.replace(':section', this.section.id);
+            url = url.replace(':section', this.sectionData.id);
 
             bootbox.confirm('Are you sure?', confirmed => {
                 if(confirmed) {
@@ -155,17 +170,18 @@ export default {
         },
 
         addItem() {
-            this.items.push({
+            this.sectionData.items.push({
                 'description': '',
                 'duration': '',
                 'price': null,
+                'obligatory': false,
             });
         },
 
         removeItem(index) {
             bootbox.confirm('Are you sure?', confirmed => {
                 if(confirmed) {
-                    this.items.splice(index, 1);
+                    this.sectionData.items.splice(index, 1);
                     this.saveSection();
                 }
             });
