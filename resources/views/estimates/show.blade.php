@@ -21,18 +21,6 @@
     <!-- Styles -->
     <link href="{{ asset('css/app.css') }}" rel="stylesheet">
 
-    <style>
-        html, body {
-            background-color: #eee;
-            text-align: justify;
-        }
-
-        h1 {
-            text-align: center;
-            font-size: 1.5rem;
-        }
-    </style>
-
     @include('layouts.app-data')
 </head>
 <body>

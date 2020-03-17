@@ -1,4 +1,17 @@
-<style scoped>
+<style>
+    html, body {
+        background-color: #eee;
+        text-align: justify;
+    }
+
+    .print-background {
+        background-color: #fff;
+    }
+
+    h1 {
+        text-align: center;
+        font-size: 1.5rem;
+    }
     tr.item:not(.selected) {
         color: #ccc;
         text-decoration: line-through;
@@ -12,9 +25,15 @@
 
 <template>
     <main class="p-5">
-        <div class="container">
+        <div class="fixed-top p-4 text-right" v-if="estimateData">
+            <button class="btn btn-primary d-print-none" @click="print()"><i class="icon ion-md-print"></i> Print</button>
+        </div>
+
+        <div class="container" id="printContainer">
+
             <div class="row">
-                <div class="col-md-8 offset-md-2 bg-white p-5" v-if="estimateData">
+
+                <div id="estimateDocument" class="col-md-8 offset-md-2 bg-white p-5" v-if="estimateData">
                     <section class="mb-5" v-for="section in estimateData.sections" :key="section.id">
                         <p v-html="section.presentable_text"></p>
     
@@ -52,8 +71,14 @@ export default {
 
     data() {
         return {
-            estimateData: null
+            estimateData: null,
+            isPrinting: false,
         }
+    },
+
+    created() {
+        window.addEventListener('beforeprint', this.preparePrintMode);
+        window.addEventListener('afterprint', this.returnToViewMode);
     },
 
     mounted() {
@@ -139,6 +164,38 @@ export default {
             document.querySelectorAll('.total-selected-price').forEach(priceElement => {
                 priceElement.innerHTML = this.formattedPrice(this.estimateTotalSelectedPrice);
             });
+        },
+
+        print() {
+            window.print();
+        },
+
+        preparePrintMode() {
+            /**
+             * Wee need to manipulate the DOM here because VueJs can't
+             * update the VirtualDOM on beforeprint event
+             */
+            let container = document.getElementById('printContainer'),
+                estimate = document.getElementById('estimateDocument');
+            
+            container.classList.remove('container');
+            container.classList.add('container-fluid');
+            estimate.classList.remove('col-md-8');
+            estimate.classList.remove('offset-md-2');
+
+            document.body.classList.add('print-background');
+        },
+
+        returnToViewMode() {
+            let container = document.getElementById('printContainer'),
+                estimate = document.getElementById('estimateDocument');
+            
+            container.classList.add('container');
+            container.classList.remove('container-fluid');
+            estimate.classList.add('col-md-8');
+            estimate.classList.add('offset-md-2');
+
+            document.body.classList.remove('print-background');
         }
 
     }
