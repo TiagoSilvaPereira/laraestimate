@@ -37,39 +37,7 @@
 </head>
 <body>
     <div id="app">
-        <main class="p-5">
-            <div class="container">
-                <div class="row">
-                    <div class="col-md-8 offset-md-2 bg-white p-5">
-                        @foreach ($estimate->sections as $section)
-                            <section class="mb-5">
-                                {!! $section->text !!}
-            
-                                @if(count($section->items))
-                                    <table class="table mt-4">
-                                        <tr>
-                                            <th></th>
-                                            <th>Description</th>
-                                            <th>Duration</th>
-                                            <th>Price</th>
-                                        </tr>
-            
-                                        @foreach ($section->items as $item)
-                                            <tr>
-                                                <td><input type="checkbox" name="" id=""></td>
-                                                <td>{{ $item->description ?? '-' }}</td>
-                                                <td>{{ $item->duration ?? '-' }}</td>
-                                                <td>{{ $item->price ?? '-' }}</td>
-                                            </tr>
-                                        @endforeach
-                                    </table>
-                                @endif
-                            </section>
-                        @endforeach
-                    </div>
-                </div>
-            </div>
-        </main>
+        <estimate-viewer-component estimate="{{ $estimate->id }}"></estimate-viewer-component>
     </div>
 
     <script src="https://unpkg.com/ionicons@5.0.0/dist/ionicons.js"></script>

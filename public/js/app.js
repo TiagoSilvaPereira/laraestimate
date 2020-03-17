@@ -2006,7 +2006,53 @@ __webpack_require__.r(__webpack_exports__);
 //
 //
 //
-/* harmony default export */ __webpack_exports__["default"] = ({});
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+/* harmony default export */ __webpack_exports__["default"] = ({
+  props: ['estimate'],
+  data: function data() {
+    return {
+      estimateData: null
+    };
+  },
+  mounted: function mounted() {
+    this.init();
+  },
+  methods: {
+    init: function init() {
+      var _this = this;
+
+      axios.get('/estimates/' + this.estimate + '/data').then(function (_ref) {
+        var data = _ref.data;
+        _this.estimateData = data;
+      });
+    }
+  }
+});
 
 /***/ }),
 
@@ -40277,9 +40323,70 @@ var render = function() {
   var _vm = this
   var _h = _vm.$createElement
   var _c = _vm._self._c || _h
-  return _c("div")
+  return _c("main", { staticClass: "p-5" }, [
+    _c("div", { staticClass: "container" }, [
+      _c("div", { staticClass: "row" }, [
+        _c(
+          "div",
+          { staticClass: "col-md-8 offset-md-2 bg-white p-5" },
+          _vm._l(_vm.estimateData.sections, function(section) {
+            return _c("section", { key: section.id, staticClass: "mb-5" }, [
+              _c("p", { domProps: { innerHTML: _vm._s(section.text) } }),
+              _vm._v(" "),
+              section.items.length
+                ? _c(
+                    "table",
+                    { staticClass: "table mt-4" },
+                    [
+                      _vm._m(0, true),
+                      _vm._v(" "),
+                      _vm._l(section.items, function(item) {
+                        return _c("tr", { key: item.id }, [
+                          _vm._m(1, true),
+                          _vm._v(" "),
+                          _c("td", [_vm._v(_vm._s(item.description || "-"))]),
+                          _vm._v(" "),
+                          _c("td", [_vm._v(_vm._s(item.duration || "-"))]),
+                          _vm._v(" "),
+                          _c("td", [_vm._v(_vm._s(item.price || "-"))])
+                        ])
+                      })
+                    ],
+                    2
+                  )
+                : _vm._e()
+            ])
+          }),
+          0
+        )
+      ])
+    ])
+  ])
 }
-var staticRenderFns = []
+var staticRenderFns = [
+  function() {
+    var _vm = this
+    var _h = _vm.$createElement
+    var _c = _vm._self._c || _h
+    return _c("tr", [
+      _c("th"),
+      _vm._v(" "),
+      _c("th", [_vm._v("Description")]),
+      _vm._v(" "),
+      _c("th", [_vm._v("Duration")]),
+      _vm._v(" "),
+      _c("th", [_vm._v("Price")])
+    ])
+  },
+  function() {
+    var _vm = this
+    var _h = _vm.$createElement
+    var _c = _vm._self._c || _h
+    return _c("td", [
+      _c("input", { attrs: { type: "checkbox", name: "", id: "" } })
+    ])
+  }
+]
 render._withStripped = true
 
 

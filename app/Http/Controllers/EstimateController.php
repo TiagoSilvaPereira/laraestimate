@@ -54,7 +54,7 @@ class EstimateController extends Controller
      * @param  \App\Models\Estimate  $estimate
      * @return \Illuminate\Http\Response
      */
-    public function show(Estimate $estimate)
+    public function show(Request $request, Estimate $estimate)
     {
         return view('estimates.show', compact('estimate'));
     }
@@ -94,5 +94,10 @@ class EstimateController extends Controller
         
         return redirect()->route('estimates.index')
             ->withSuccess(trans('app.deleted_successfully'));
+    }
+
+    public function getData(Request $request, Estimate $estimate)
+    {
+        return response()->json($estimate->load('sections'));
     }
 }
