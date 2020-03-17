@@ -2069,10 +2069,6 @@ __webpack_require__.r(__webpack_exports__);
 //
 //
 //
-//
-//
-//
-//
 /* harmony default export */ __webpack_exports__["default"] = ({
   props: ['estimate'],
   data: function data() {
@@ -2168,21 +2164,23 @@ __webpack_require__.r(__webpack_exports__);
        * update the VirtualDOM on beforeprint event
        */
       var container = document.getElementById('printContainer'),
-          estimate = document.getElementById('estimateDocument');
+          estimate = document.getElementById('estimateDocument'),
+          mainElement = document.getElementById('estimateMainSection');
       container.classList.remove('container');
       container.classList.add('container-fluid');
       estimate.classList.remove('col-md-8');
       estimate.classList.remove('offset-md-2');
-      document.body.classList.add('print-background');
+      mainElement.classList.add('bg-white');
     },
     returnToViewMode: function returnToViewMode() {
       var container = document.getElementById('printContainer'),
-          estimate = document.getElementById('estimateDocument');
+          estimate = document.getElementById('estimateDocument'),
+          mainElement = document.getElementById('estimateMainSection');
       container.classList.add('container');
       container.classList.remove('container-fluid');
       estimate.classList.add('col-md-8');
       estimate.classList.add('offset-md-2');
-      document.body.classList.remove('print-background');
+      mainElement.classList.remove('bg-white');
     }
   }
 });
@@ -8372,7 +8370,7 @@ exports = module.exports = __webpack_require__(/*! ../../../node_modules/css-loa
 
 
 // module
-exports.push([module.i, "\n#estimateMainSection {\n    background-color: #eee;\n    text-align: justify;\n}\n#estimateMainSection .print-background {\n    background-color: #fff;\n}\n#estimateMainSection h1 {\n    text-align: left !important;\n    font-size: 1.5rem;\n}\n#estimateMainSection tr.item:not(.selected) {\n    color: #ccc;\n    text-decoration: line-through;\n}\n#estimateMainSection input[type=\"checkbox\"] {\n    width: 1.5em;\n    height: 1.5em;\n}\n", ""]);
+exports.push([module.i, "\n#estimateMainSection {\n    background-color: #eee;\n    text-align: justify;\n}\n#estimateMainSection h1 {\n    text-align: left !important;\n    font-size: 1.5rem;\n}\n#estimateMainSection tr.item:not(.selected) {\n    color: #ccc;\n    text-decoration: line-through;\n}\n#estimateMainSection input[type=\"checkbox\"] {\n    width: 1.5em;\n    height: 1.5em;\n}\n", ""]);
 
 // exports
 

@@ -4,10 +4,6 @@
         text-align: justify;
     }
 
-    #estimateMainSection .print-background {
-        background-color: #fff;
-    }
-
     #estimateMainSection h1 {
         text-align: left !important;
         font-size: 1.5rem;
@@ -177,26 +173,28 @@ export default {
              * update the VirtualDOM on beforeprint event
              */
             let container = document.getElementById('printContainer'),
-                estimate = document.getElementById('estimateDocument');
+                estimate = document.getElementById('estimateDocument'),
+                mainElement = document.getElementById('estimateMainSection');
             
             container.classList.remove('container');
             container.classList.add('container-fluid');
             estimate.classList.remove('col-md-8');
             estimate.classList.remove('offset-md-2');
 
-            document.body.classList.add('print-background');
+            mainElement.classList.add('bg-white');
         },
 
         returnToViewMode() {
             let container = document.getElementById('printContainer'),
-                estimate = document.getElementById('estimateDocument');
+                estimate = document.getElementById('estimateDocument'),
+                mainElement = document.getElementById('estimateMainSection');
             
             container.classList.add('container');
             container.classList.remove('container-fluid');
             estimate.classList.add('col-md-8');
             estimate.classList.add('offset-md-2');
 
-            document.body.classList.remove('print-background');
+            mainElement.classList.remove('bg-white');
         }
 
     }

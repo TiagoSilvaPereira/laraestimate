@@ -21,6 +21,12 @@
     <!-- Styles -->
     <link href="{{ asset('css/app.css') }}" rel="stylesheet">
 
+    <style>
+        html, body {
+            background-color: #fff;
+        }
+    </style>
+
     @include('layouts.app-data')
 </head>
 <body>
