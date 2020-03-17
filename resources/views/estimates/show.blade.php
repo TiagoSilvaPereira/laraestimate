@@ -26,6 +26,11 @@
             background-color: #eee;
             text-align: justify;
         }
+
+        h1 {
+            text-align: center;
+            font-size: 1.5rem;
+        }
     </style>
 
     @include('layouts.app-data')
@@ -43,6 +48,7 @@
                                 @if(count($section->items))
                                     <table class="table mt-4">
                                         <tr>
+                                            <th></th>
                                             <th>Description</th>
                                             <th>Duration</th>
                                             <th>Price</th>
@@ -50,6 +56,7 @@
             
                                         @foreach ($section->items as $item)
                                             <tr>
+                                                <td><input type="checkbox" name="" id=""></td>
                                                 <td>{{ $item->description ?? '-' }}</td>
                                                 <td>{{ $item->duration ?? '-' }}</td>
                                                 <td>{{ $item->price ?? '-' }}</td>
