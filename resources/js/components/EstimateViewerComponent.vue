@@ -35,9 +35,15 @@
                     <div class="modal-body">
                         <label for="link">Copy this link</label>
                         <input ref="shareableUrl" type="text" class="form-control" :value="estimateData.share_url"  @click="copyToClipboard">
-                        <label for="link" class="mt-4">Or send an e-mail:</label>
-                        <input type="email" class="form-control" placeholder="Type e-mail address here" v-model="shareEmail">
-                        <button class="btn btn-primary mt-4 float-right" @click="sendEmail()"><i class="icon ion-md-mail"></i> Send</button>
+
+                        <template v-if="canShareEmail">
+                            <label for="link" class="mt-4">Or send an e-mail:</label>
+                            <input type="email" class="form-control" placeholder="Type e-mail address here" v-model="shareEmail">
+
+                            <span class="mt-2 text-primary" v-show="sendingEmail">Sending email...</span>
+
+                            <button class="btn btn-primary mt-4 float-right" :disabled="sendingEmail" @click="sendEmail()"><i class="icon ion-md-mail"></i> Send</button>
+                        </template>
                     </div>
                 </div>
             </div>
@@ -86,14 +92,13 @@
 <script>
 export default {
 
-    props: ['estimate'],
+    props: ['estimate', 'canShareEmail'],
 
     data() {
         return {
             shareEmail: '',
             sendingEmail: false,
             estimateData: null,
-            isPrinting: false,
         }
     },
 

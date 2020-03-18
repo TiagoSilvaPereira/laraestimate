@@ -56,7 +56,9 @@ class EstimateController extends Controller
      */
     public function show(Request $request, Estimate $estimate)
     {
-        return view('estimates.show', compact('estimate'));
+        $canShareEmail = true;
+        
+        return view('estimates.show', compact('estimate', 'canShareEmail'));
     }
 
     /**

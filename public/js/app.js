@@ -2091,14 +2091,19 @@ __webpack_require__.r(__webpack_exports__);
 //
 //
 //
+//
+//
+//
+//
+//
+//
 /* harmony default export */ __webpack_exports__["default"] = ({
-  props: ['estimate'],
+  props: ['estimate', 'canShareEmail'],
   data: function data() {
     return {
       shareEmail: '',
       sendingEmail: false,
-      estimateData: null,
-      isPrinting: false
+      estimateData: null
     };
   },
   created: function created() {
@@ -40582,66 +40587,92 @@ var render = function() {
                 _c("div", { staticClass: "modal-content" }, [
                   _vm._m(0),
                   _vm._v(" "),
-                  _c("div", { staticClass: "modal-body" }, [
-                    _c("label", { attrs: { for: "link" } }, [
-                      _vm._v("Copy this link")
-                    ]),
-                    _vm._v(" "),
-                    _c("input", {
-                      ref: "shareableUrl",
-                      staticClass: "form-control",
-                      attrs: { type: "text" },
-                      domProps: { value: _vm.estimateData.share_url },
-                      on: { click: _vm.copyToClipboard }
-                    }),
-                    _vm._v(" "),
-                    _c(
-                      "label",
-                      { staticClass: "mt-4", attrs: { for: "link" } },
-                      [_vm._v("Or send an e-mail:")]
-                    ),
-                    _vm._v(" "),
-                    _c("input", {
-                      directives: [
-                        {
-                          name: "model",
-                          rawName: "v-model",
-                          value: _vm.shareEmail,
-                          expression: "shareEmail"
-                        }
-                      ],
-                      staticClass: "form-control",
-                      attrs: {
-                        type: "email",
-                        placeholder: "Type e-mail address here"
-                      },
-                      domProps: { value: _vm.shareEmail },
-                      on: {
-                        input: function($event) {
-                          if ($event.target.composing) {
-                            return
-                          }
-                          _vm.shareEmail = $event.target.value
-                        }
-                      }
-                    }),
-                    _vm._v(" "),
-                    _c(
-                      "button",
-                      {
-                        staticClass: "btn btn-primary mt-4 float-right",
-                        on: {
-                          click: function($event) {
-                            return _vm.sendEmail()
-                          }
-                        }
-                      },
-                      [
-                        _c("i", { staticClass: "icon ion-md-mail" }),
-                        _vm._v(" Send")
-                      ]
-                    )
-                  ])
+                  _c(
+                    "div",
+                    { staticClass: "modal-body" },
+                    [
+                      _c("label", { attrs: { for: "link" } }, [
+                        _vm._v("Copy this link")
+                      ]),
+                      _vm._v(" "),
+                      _c("input", {
+                        ref: "shareableUrl",
+                        staticClass: "form-control",
+                        attrs: { type: "text" },
+                        domProps: { value: _vm.estimateData.share_url },
+                        on: { click: _vm.copyToClipboard }
+                      }),
+                      _vm._v(" "),
+                      _vm.canShareEmail
+                        ? [
+                            _c(
+                              "label",
+                              { staticClass: "mt-4", attrs: { for: "link" } },
+                              [_vm._v("Or send an e-mail:")]
+                            ),
+                            _vm._v(" "),
+                            _c("input", {
+                              directives: [
+                                {
+                                  name: "model",
+                                  rawName: "v-model",
+                                  value: _vm.shareEmail,
+                                  expression: "shareEmail"
+                                }
+                              ],
+                              staticClass: "form-control",
+                              attrs: {
+                                type: "email",
+                                placeholder: "Type e-mail address here"
+                              },
+                              domProps: { value: _vm.shareEmail },
+                              on: {
+                                input: function($event) {
+                                  if ($event.target.composing) {
+                                    return
+                                  }
+                                  _vm.shareEmail = $event.target.value
+                                }
+                              }
+                            }),
+                            _vm._v(" "),
+                            _c(
+                              "span",
+                              {
+                                directives: [
+                                  {
+                                    name: "show",
+                                    rawName: "v-show",
+                                    value: _vm.sendingEmail,
+                                    expression: "sendingEmail"
+                                  }
+                                ],
+                                staticClass: "mt-2 text-primary"
+                              },
+                              [_vm._v("Sending email...")]
+                            ),
+                            _vm._v(" "),
+                            _c(
+                              "button",
+                              {
+                                staticClass: "btn btn-primary mt-4 float-right",
+                                attrs: { disabled: _vm.sendingEmail },
+                                on: {
+                                  click: function($event) {
+                                    return _vm.sendEmail()
+                                  }
+                                }
+                              },
+                              [
+                                _c("i", { staticClass: "icon ion-md-mail" }),
+                                _vm._v(" Send")
+                              ]
+                            )
+                          ]
+                        : _vm._e()
+                    ],
+                    2
+                  )
                 ])
               ])
             ]
