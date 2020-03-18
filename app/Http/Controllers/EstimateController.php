@@ -95,9 +95,4 @@ class EstimateController extends Controller
         return redirect()->route('estimates.index')
             ->withSuccess(trans('app.deleted_successfully'));
     }
-
-    public function getData(Request $request, Estimate $estimate)
-    {
-        return response()->json($estimate->load('sections'));
-    }
 }

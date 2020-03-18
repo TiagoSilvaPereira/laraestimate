@@ -23,9 +23,12 @@ Route::prefix('/')->middleware('auth')->group(function () {
     
     // Estimates
     Route::resource('estimates', 'EstimateController');
-    Route::get('estimates/{estimate}/data', 'EstimateController@getData');
 
     // Estimate Sections
     Route::apiResource('estimates/{estimate}/sections', 'SectionController');
 
 });
+
+Route::get('estimates/{estimate}/data', 'EstimateViewerController@getData');
+Route::get('estimates/{estimate}/view', 'EstimateViewerController@show')->name('estimates.view');
+Route::post('estimates/{estimate}/share', 'EstimateViewerController@share')->name('estimates.share');

@@ -20,6 +20,10 @@ class Estimate extends Model
         'password',
     ];
 
+    protected $appends = [
+        'share_url'
+    ];
+
     public function sections()
     {
         return $this->hasMany(Section::class)->with('items');
@@ -31,5 +35,10 @@ class Estimate extends Model
             return $query->where('name', 'like', "%{$search}%")
                 ->orWhere('description', 'like', "%{$search}%");
         });
-    }    
+    } 
+    
+    public function getShareUrlAttribute()
+    {
+        return route('estimates.view', $this);
+    }
 }

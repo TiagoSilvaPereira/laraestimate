@@ -22,8 +22,30 @@
 
 <template>
     <main id="estimateMainSection" class="p-5">
+
+        <div class="modal fade" id="shareEstimateModal" v-if="estimateData">
+            <div class="modal-dialog">
+                <div class="modal-content">
+                    <div class="modal-header">
+                        <h5 class="modal-title">Share Estimate</h5>
+                        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                            <span aria-hidden="true">&times;</span>
+                        </button>
+                    </div>
+                    <div class="modal-body">
+                        <label for="link">Copy this link</label>
+                        <input ref="shareableUrl" type="text" class="form-control" :value="estimateData.share_url"  @click="copyToClipboard">
+                        <label for="link" class="mt-4">Or send an e-mail:</label>
+                        <input type="email" class="form-control" placeholder="Type e-mail address here" v-model="shareEmail">
+                        <button class="btn btn-primary mt-4 float-right" @click="sendEmail()"><i class="icon ion-md-mail"></i> Send</button>
+                    </div>
+                </div>
+            </div>
+        </div>
+
         <div class="fixed-top p-4 text-right" v-if="estimateData">
             <button class="btn btn-primary d-print-none" @click="print()"><i class="icon ion-md-print"></i> Print</button>
+            <button class="btn btn-success d-print-none" @click="openShareModal()"><i class="icon ion-md-share"></i> Share</button>
         </div>
 
         <div class="container" id="printContainer">
@@ -68,6 +90,8 @@ export default {
 
     data() {
         return {
+            shareEmail: '',
+            sendingEmail: false,
             estimateData: null,
             isPrinting: false,
         }
@@ -161,6 +185,35 @@ export default {
             document.querySelectorAll('.total-selected-price').forEach(priceElement => {
                 priceElement.innerHTML = this.formattedPrice(this.estimateTotalSelectedPrice);
             });
+        },
+
+        openShareModal() {
+            $('#shareEstimateModal').modal('show');
+        },
+
+        copyToClipboard() {
+            var copyText = this.$refs.shareableUrl;
+
+            copyText.select();
+            copyText.setSelectionRange(0, 99999);
+
+            document.execCommand('copy');
+
+            toast.success('Link copied successfully');
+        },
+
+        sendEmail() {
+            this.sendingEmail = true;
+
+            axios.post('/estimates/' + this.estimate + '/share', {
+                'email': this.shareEmail
+            }).then(() => {
+                this.sendingEmail = false;
+                toast.success('E-mail sent successfully');
+            }).catch(error => {
+                this.sendingEmail = false;
+                treatAxiosError(error);
+            })
         },
 
         print() {

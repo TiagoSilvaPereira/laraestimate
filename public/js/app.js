@@ -2069,10 +2069,34 @@ __webpack_require__.r(__webpack_exports__);
 //
 //
 //
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
 /* harmony default export */ __webpack_exports__["default"] = ({
   props: ['estimate'],
   data: function data() {
     return {
+      shareEmail: '',
+      sendingEmail: false,
       estimateData: null,
       isPrinting: false
     };
@@ -2153,6 +2177,30 @@ __webpack_require__.r(__webpack_exports__);
       });
       document.querySelectorAll('.total-selected-price').forEach(function (priceElement) {
         priceElement.innerHTML = _this4.formattedPrice(_this4.estimateTotalSelectedPrice);
+      });
+    },
+    openShareModal: function openShareModal() {
+      $('#shareEstimateModal').modal('show');
+    },
+    copyToClipboard: function copyToClipboard() {
+      var copyText = this.$refs.shareableUrl;
+      copyText.select();
+      copyText.setSelectionRange(0, 99999);
+      document.execCommand('copy');
+      toast.success('Link copied successfully');
+    },
+    sendEmail: function sendEmail() {
+      var _this5 = this;
+
+      this.sendingEmail = true;
+      axios.post('/estimates/' + this.estimate + '/share', {
+        'email': this.shareEmail
+      }).then(function () {
+        _this5.sendingEmail = false;
+        toast.success('E-mail sent successfully');
+      })["catch"](function (error) {
+        _this5.sendingEmail = false;
+        treatAxiosError(error);
       });
     },
     print: function print() {
@@ -40526,6 +40574,81 @@ var render = function() {
     { staticClass: "p-5", attrs: { id: "estimateMainSection" } },
     [
       _vm.estimateData
+        ? _c(
+            "div",
+            { staticClass: "modal fade", attrs: { id: "shareEstimateModal" } },
+            [
+              _c("div", { staticClass: "modal-dialog" }, [
+                _c("div", { staticClass: "modal-content" }, [
+                  _vm._m(0),
+                  _vm._v(" "),
+                  _c("div", { staticClass: "modal-body" }, [
+                    _c("label", { attrs: { for: "link" } }, [
+                      _vm._v("Copy this link")
+                    ]),
+                    _vm._v(" "),
+                    _c("input", {
+                      ref: "shareableUrl",
+                      staticClass: "form-control",
+                      attrs: { type: "text" },
+                      domProps: { value: _vm.estimateData.share_url },
+                      on: { click: _vm.copyToClipboard }
+                    }),
+                    _vm._v(" "),
+                    _c(
+                      "label",
+                      { staticClass: "mt-4", attrs: { for: "link" } },
+                      [_vm._v("Or send an e-mail:")]
+                    ),
+                    _vm._v(" "),
+                    _c("input", {
+                      directives: [
+                        {
+                          name: "model",
+                          rawName: "v-model",
+                          value: _vm.shareEmail,
+                          expression: "shareEmail"
+                        }
+                      ],
+                      staticClass: "form-control",
+                      attrs: {
+                        type: "email",
+                        placeholder: "Type e-mail address here"
+                      },
+                      domProps: { value: _vm.shareEmail },
+                      on: {
+                        input: function($event) {
+                          if ($event.target.composing) {
+                            return
+                          }
+                          _vm.shareEmail = $event.target.value
+                        }
+                      }
+                    }),
+                    _vm._v(" "),
+                    _c(
+                      "button",
+                      {
+                        staticClass: "btn btn-primary mt-4 float-right",
+                        on: {
+                          click: function($event) {
+                            return _vm.sendEmail()
+                          }
+                        }
+                      },
+                      [
+                        _c("i", { staticClass: "icon ion-md-mail" }),
+                        _vm._v(" Send")
+                      ]
+                    )
+                  ])
+                ])
+              ])
+            ]
+          )
+        : _vm._e(),
+      _vm._v(" "),
+      _vm.estimateData
         ? _c("div", { staticClass: "fixed-top p-4 text-right" }, [
             _c(
               "button",
@@ -40538,6 +40661,19 @@ var render = function() {
                 }
               },
               [_c("i", { staticClass: "icon ion-md-print" }), _vm._v(" Print")]
+            ),
+            _vm._v(" "),
+            _c(
+              "button",
+              {
+                staticClass: "btn btn-success d-print-none",
+                on: {
+                  click: function($event) {
+                    return _vm.openShareModal()
+                  }
+                }
+              },
+              [_c("i", { staticClass: "icon ion-md-share" }), _vm._v(" Share")]
             )
           ])
         : _vm._e(),
@@ -40567,7 +40703,7 @@ var render = function() {
                             "table",
                             { staticClass: "table mt-4" },
                             [
-                              _vm._m(0, true),
+                              _vm._m(1, true),
                               _vm._v(" "),
                               _vm._l(section.items, function(item) {
                                 return _c(
@@ -40661,7 +40797,7 @@ var render = function() {
                               }),
                               _vm._v(" "),
                               _c("tr", [
-                                _vm._m(1, true),
+                                _vm._m(2, true),
                                 _vm._v(" "),
                                 _c("td", { staticClass: "text-right" }, [
                                   _vm._v(
@@ -40689,6 +40825,27 @@ var render = function() {
   )
 }
 var staticRenderFns = [
+  function() {
+    var _vm = this
+    var _h = _vm.$createElement
+    var _c = _vm._self._c || _h
+    return _c("div", { staticClass: "modal-header" }, [
+      _c("h5", { staticClass: "modal-title" }, [_vm._v("Share Estimate")]),
+      _vm._v(" "),
+      _c(
+        "button",
+        {
+          staticClass: "close",
+          attrs: {
+            type: "button",
+            "data-dismiss": "modal",
+            "aria-label": "Close"
+          }
+        },
+        [_c("span", { attrs: { "aria-hidden": "true" } }, [_vm._v("×")])]
+      )
+    ])
+  },
   function() {
     var _vm = this
     var _h = _vm.$createElement
@@ -53809,6 +53966,8 @@ window.toast = {
 /***/ (function(module, exports, __webpack_require__) {
 
 __webpack_require__(/*! ./bootstrap */ "./resources/js/bootstrap.js");
+
+__webpack_require__(/*! ./helpers */ "./resources/js/helpers.js");
 /**
  * Loading Adapters
  */
@@ -54132,6 +54291,30 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony reexport (safe) */ __webpack_require__.d(__webpack_exports__, "staticRenderFns", function() { return _node_modules_vue_loader_lib_loaders_templateLoader_js_vue_loader_options_node_modules_vue_loader_lib_index_js_vue_loader_options_EstimateSection_vue_vue_type_template_id_6bff57e7_scoped_true___WEBPACK_IMPORTED_MODULE_0__["staticRenderFns"]; });
 
 
+
+/***/ }),
+
+/***/ "./resources/js/helpers.js":
+/*!*********************************!*\
+  !*** ./resources/js/helpers.js ***!
+  \*********************************/
+/*! no static exports found */
+/***/ (function(module, exports) {
+
+window.treatAxiosError = function (error) {
+  if (error.response) {
+    var data = error.response.data;
+    var errors = data.errors;
+
+    if (errors) {
+      for (var key in errors) {
+        toast.error(errors[key][0]);
+      }
+    } else {
+      toast.error('Something went wrong');
+    }
+  }
+};
 
 /***/ }),
 

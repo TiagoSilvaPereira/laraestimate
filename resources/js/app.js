@@ -1,4 +1,5 @@
 require('./bootstrap');
+require('./helpers');
 
 /**
  * Loading Adapters
