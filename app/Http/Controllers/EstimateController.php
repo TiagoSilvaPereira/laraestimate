@@ -9,11 +9,7 @@ use App\Http\Requests\EstimateUpdateRequest;
 
 class EstimateController extends Controller
 {
-    /**
-     * Display a listing of the resource.
-     *
-     * @return \Illuminate\Http\Response
-     */
+
     public function index(Request $request)
     {
         $search = $request->get('search', '');
@@ -22,22 +18,11 @@ class EstimateController extends Controller
         return view('estimates.index', compact('estimates', 'search'));
     }
 
-    /**
-     * Show the form for creating a new resource.
-     *
-     * @return \Illuminate\Http\Response
-     */
     public function create()
     {
         return view('estimates.create');
     }
 
-    /**
-     * Store a newly created resource in storage.
-     *
-     * @param  \Illuminate\Http\Request  $request
-     * @return \Illuminate\Http\Response
-     */
     public function store(EstimateStoreRequest $request)
     {
         $data = $request->only('name', 'use_name_as_title');
@@ -49,12 +34,6 @@ class EstimateController extends Controller
             ->withSuccess(trans('app.estimate_created_successfully'));
     }
 
-    /**
-     * Display the specified resource.
-     *
-     * @param  \App\Models\Estimate  $estimate
-     * @return \Illuminate\Http\Response
-     */
     public function show(Request $request, Estimate $estimate)
     {
         $canShareEmail = true;
@@ -62,24 +41,11 @@ class EstimateController extends Controller
         return view('estimates.show', compact('estimate', 'canShareEmail'));
     }
 
-    /**
-     * Show the form for editing the specified resource.
-     *
-     * @param  \App\Models\Estimate  $estimate
-     * @return \Illuminate\Http\Response
-     */
     public function edit(Estimate $estimate)
     {
         return view('estimates.edit', compact('estimate'));
     }
 
-    /**
-     * Update the specified resource in storage.
-     *
-     * @param  \Illuminate\Http\Request  $request
-     * @param  \App\Models\Estimate  $estimate
-     * @return \Illuminate\Http\Response
-     */
     public function update(EstimateUpdateRequest $request, Estimate $estimate)
     {
         $data = $request->only('name', 'use_name_as_title', 'sections_positions');
@@ -90,17 +56,18 @@ class EstimateController extends Controller
         return response()->json(true);
     }
 
-    /**
-     * Remove the specified resource from storage.
-     *
-     * @param  \App\Models\Estimate  $estimate
-     * @return \Illuminate\Http\Response
-     */
     public function destroy(Estimate $estimate)
     {
         $estimate->delete();
         
         return redirect()->route('estimates.index')
             ->withSuccess(trans('app.deleted_successfully'));
+    }
+
+    public function duplicate(Request $request, Estimate $estimate)
+    {
+        $duplicated = $estimate->duplicate();
+        
+        return redirect()->route('estimates.edit', $duplicated);
     }
 }

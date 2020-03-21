@@ -60,4 +60,49 @@ class Estimate extends Model
             }
         }        
     }
+
+    public function duplicate()
+    {
+        $estimateData = $this->treatDataForDuplication(
+            $this->toArray()
+        );
+
+        $estimateData['name'] = $estimateData['name'] . ' Copy';
+        $duplicated = Estimate::create($estimateData);
+        
+        $this->copySectionsTo($duplicated);
+
+        return $duplicated;
+    }
+
+    protected function copySectionsTo(Estimate $duplicated)
+    {
+        $this->sections->each(function($section) use ($duplicated) {
+            $sectionData = $this->treatDataForDuplication(
+                $section->toArray()
+            );
+
+            $newSection = $duplicated->sections()->create($sectionData);
+            $this->copySectionItems($section, $newSection);
+
+        });
+    }
+
+    protected function copySectionItems(Section $from, Section $to)
+    {
+        $from->items->each(function($item) use ($to) {
+            $itemData = $this->treatDataForDuplication(
+                $item->toArray()
+            );
+
+            $to->items()->create($itemData);
+        });
+    }
+
+    protected function treatDataForDuplication(array $data)
+    {
+        $removeKeys = ['id', 'created_at', 'updated_at', 'password'];
+        
+        return array_diff_key($data, array_flip($removeKeys));
+    }
 }

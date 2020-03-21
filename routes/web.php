@@ -23,6 +23,7 @@ Route::prefix('/')->middleware('auth')->group(function () {
     
     // Estimates
     Route::resource('estimates', 'EstimateController');
+    Route::get('/estimates/{estimate}/duplicate', 'EstimateController@duplicate')->name('estimates.duplicate');
 
     // Estimate Sections
     Route::apiResource('estimates/{estimate}/sections', 'SectionController');
