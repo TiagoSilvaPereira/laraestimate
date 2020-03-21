@@ -10,7 +10,11 @@
         <small v-else class="text-primary mb-4">Prices Section {{ sectionData.id }}</small>
         
         <div class="mb-4 text-right">
-            <button class="btn btn-sm btn-outline-secondary mt-2 handle"><i class="icon ion-md-move"></i> Move</button>
+            <div>
+                <small v-if="saving">Saving...</small>
+                <small v-else>All changes are saved</small>
+            </div>
+            <button class="btn btn-sm btn-outline-secondary mt-2 handle" :disabled="!sectionData.id"><i class="icon ion-md-move"></i> Move</button>
             <button class="btn btn-sm btn-outline-danger mt-2" @click="remove()"><i class="icon ion-md-trash"></i> Remove</button>
         </div>
 
@@ -60,10 +64,11 @@ export default {
         VueTrix
     },
 
-    props: ['section'],
+    props: ['estimate', 'section'],
 
     data() {
         return {
+            saving: false,
             madeFirstInput: false,
             text: null,
             items: [],
@@ -117,7 +122,7 @@ export default {
                 return;
             }
             
-            this.$parent.showSavingLabel();
+            this.showSavingLabel();
 
             if(!this.sectionData.id) {
                 this.save();
@@ -129,7 +134,7 @@ export default {
 
         save() {
             let url = '/estimates/:estimate/sections';
-            url = url.replace(':estimate', this.$parent.estimate);
+            url = url.replace(':estimate', this.estimate);
 
             axios.post(url, {
                 text: this.sectionData.text,
@@ -142,7 +147,7 @@ export default {
 
         update() {
             let url = '/estimates/:estimate/sections/:section';
-            url = url.replace(':estimate', this.$parent.estimate);
+            url = url.replace(':estimate', this.estimate);
             url = url.replace(':section', this.sectionData.id);
 
             axios.put(url, {
@@ -159,7 +164,7 @@ export default {
             }
 
             let url = '/estimates/:estimate/sections/:section';
-            url = url.replace(':estimate', this.$parent.estimate);
+            url = url.replace(':estimate', this.estimate);
             url = url.replace(':section', this.sectionData.id);
 
             bootbox.confirm('Are you sure?', confirmed => {
@@ -186,7 +191,15 @@ export default {
                     this.saveSection();
                 }
             });
-        }
+        },
+
+        showSavingLabel() {
+            this.saving = true;
+
+            setTimeout(() => {
+                this.saving = false;
+            }, 500);
+        },
     }
 }
 </script>

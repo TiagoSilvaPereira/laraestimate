@@ -25,7 +25,10 @@
             <div class="col-sm-12">
                 <draggable v-model="sections" draggable=".item" handle=".handle" @end="orderChanged()">
                     <div class="item" v-for="(section, index) in sections" :key="section.id">
-                        <estimate-section :section="section" @sectionUpdated="updateSection($event, index)" @sectionRemoved="removeSection(index, 'text')"></estimate-section>
+                        <estimate-section 
+                        :section="section" 
+                        :estimate="estimate"
+                        @sectionUpdated="updateSection($event, index)" @sectionRemoved="removeSection(index, 'text')"></estimate-section>
                     </div>
                 </draggable>
             </div>

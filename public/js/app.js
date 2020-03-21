@@ -1950,6 +1950,9 @@ __webpack_require__.r(__webpack_exports__);
 //
 //
 //
+//
+//
+//
 
 /* harmony default export */ __webpack_exports__["default"] = ({
   props: ['estimate'],
@@ -2368,14 +2371,19 @@ __webpack_require__.r(__webpack_exports__);
 //
 //
 //
+//
+//
+//
+//
 
 /* harmony default export */ __webpack_exports__["default"] = ({
   components: {
     VueTrix: vue_trix__WEBPACK_IMPORTED_MODULE_0__["default"]
   },
-  props: ['section'],
+  props: ['estimate', 'section'],
   data: function data() {
     return {
+      saving: false,
       madeFirstInput: false,
       text: null,
       items: [],
@@ -2418,7 +2426,7 @@ __webpack_require__.r(__webpack_exports__);
         return;
       }
 
-      this.$parent.showSavingLabel();
+      this.showSavingLabel();
 
       if (!this.sectionData.id) {
         this.save();
@@ -2431,7 +2439,7 @@ __webpack_require__.r(__webpack_exports__);
       var _this = this;
 
       var url = '/estimates/:estimate/sections';
-      url = url.replace(':estimate', this.$parent.estimate);
+      url = url.replace(':estimate', this.estimate);
       axios.post(url, {
         text: this.sectionData.text,
         type: this.sectionData.type,
@@ -2443,7 +2451,7 @@ __webpack_require__.r(__webpack_exports__);
     },
     update: function update() {
       var url = '/estimates/:estimate/sections/:section';
-      url = url.replace(':estimate', this.$parent.estimate);
+      url = url.replace(':estimate', this.estimate);
       url = url.replace(':section', this.sectionData.id);
       axios.put(url, {
         text: this.sectionData.text,
@@ -2459,7 +2467,7 @@ __webpack_require__.r(__webpack_exports__);
       }
 
       var url = '/estimates/:estimate/sections/:section';
-      url = url.replace(':estimate', this.$parent.estimate);
+      url = url.replace(':estimate', this.estimate);
       url = url.replace(':section', this.sectionData.id);
       bootbox.confirm('Are you sure?', function (confirmed) {
         if (confirmed) {
@@ -2487,6 +2495,14 @@ __webpack_require__.r(__webpack_exports__);
           _this3.saveSection();
         }
       });
+    },
+    showSavingLabel: function showSavingLabel() {
+      var _this4 = this;
+
+      this.saving = true;
+      setTimeout(function () {
+        _this4.saving = false;
+      }, 500);
     }
   }
 });
@@ -44411,7 +44427,7 @@ var render = function() {
                 { key: section.id, staticClass: "item" },
                 [
                   _c("estimate-section", {
-                    attrs: { section: section },
+                    attrs: { section: section, estimate: _vm.estimate },
                     on: {
                       sectionUpdated: function($event) {
                         return _vm.updateSection($event, index)
@@ -44858,7 +44874,20 @@ var render = function() {
               ]),
           _vm._v(" "),
           _c("div", { staticClass: "mb-4 text-right" }, [
-            _vm._m(0),
+            _c("div", [
+              _vm.saving
+                ? _c("small", [_vm._v("Saving...")])
+                : _c("small", [_vm._v("All changes are saved")])
+            ]),
+            _vm._v(" "),
+            _c(
+              "button",
+              {
+                staticClass: "btn btn-sm btn-outline-secondary mt-2 handle",
+                attrs: { disabled: !_vm.sectionData.id }
+              },
+              [_c("i", { staticClass: "icon ion-md-move" }), _vm._v(" Move")]
+            ),
             _vm._v(" "),
             _c(
               "button",
@@ -45128,18 +45157,7 @@ var render = function() {
       )
     : _vm._e()
 }
-var staticRenderFns = [
-  function() {
-    var _vm = this
-    var _h = _vm.$createElement
-    var _c = _vm._self._c || _h
-    return _c(
-      "button",
-      { staticClass: "btn btn-sm btn-outline-secondary mt-2 handle" },
-      [_c("i", { staticClass: "icon ion-md-move" }), _vm._v(" Move")]
-    )
-  }
-]
+var staticRenderFns = []
 render._withStripped = true
 
 
