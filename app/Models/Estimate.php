@@ -44,7 +44,7 @@ class Estimate extends Model
 
     public function getNextSectionPosition()
     {
-        return $this->sections()->max('order') + 1;
+        return $this->sections()->max('position') + 1;
     }
 
     public function saveSectionsPositions(?array $positions)
