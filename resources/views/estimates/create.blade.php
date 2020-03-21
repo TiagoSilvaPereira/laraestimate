@@ -26,8 +26,15 @@
                         </div>
 
                         <div class="form-group">
-                            <label for="description">@lang('app.labels.description') @include('ui.optional')</label>
-                            <textarea name="description" rows="3" class="form-control"></textarea>
+                            <div class="switch-container mt-2">
+                                <label class="switch">
+                                    <input type="hidden" name="use_name_as_title" value="0">
+                                    <input type="checkbox" name="use_name_as_title" value="1" checked>
+                                    <span class="slider round"></span>
+                                </label>
+                                
+                                Use name as title?
+                            </div>
                         </div>
 
                         <a href="{{ route('estimates.index') }}" class="btn btn-outline-dark btn-lg mt-5"><i class="icon ion-md-arrow-back"></i> @lang('app.labels.back')</a>

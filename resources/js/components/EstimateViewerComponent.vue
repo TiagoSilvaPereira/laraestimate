@@ -1,5 +1,6 @@
 <style>
     #estimateMainSection {
+        min-height: 100vh;
         background-color: #eee;
         text-align: justify;
     }
@@ -59,6 +60,11 @@
             <div class="row">
 
                 <div id="estimateDocument" class="col-md-8 offset-md-2 bg-white p-5" v-if="estimateData">
+
+                    <section class="mb-5" v-if="estimateData.use_name_as_title">
+                        <h1><b>{{ estimateData.name }}</b></h1>
+                    </section>
+
                     <section class="mb-5" v-for="section in estimateData.sections" :key="section.id">
                         <p v-html="section.presentable_text"></p>
     

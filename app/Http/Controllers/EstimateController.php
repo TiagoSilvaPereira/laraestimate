@@ -39,7 +39,7 @@ class EstimateController extends Controller
      */
     public function store(EstimateStoreRequest $request)
     {
-        $data = $request->only('name', 'description');
+        $data = $request->only('name', 'use_name_as_title');
 
         $estimate = Estimate::create($data);
 
@@ -79,9 +79,13 @@ class EstimateController extends Controller
      * @param  \App\Models\Estimate  $estimate
      * @return \Illuminate\Http\Response
      */
-    public function update(Request $request, Estimate $estimate)
+    public function update(EstimateStoreRequest $request, Estimate $estimate)
     {
-        //
+        $data = $request->only('name', 'use_name_as_title');
+
+        $estimate->update($data);
+
+        return response()->json(true);
     }
 
     /**

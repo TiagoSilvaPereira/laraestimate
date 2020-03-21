@@ -1933,16 +1933,28 @@ __webpack_require__.r(__webpack_exports__);
 //
 //
 //
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
 /* harmony default export */ __webpack_exports__["default"] = ({
   props: ['estimate'],
   data: function data() {
     return {
       saving: false,
-      sections: []
+      sections: [],
+      estimateData: null
     };
   },
   mounted: function mounted() {
-    this.getSections();
+    this.init();
   },
   computed: {
     total: function total() {
@@ -1956,14 +1968,29 @@ __webpack_require__.r(__webpack_exports__);
     }
   },
   methods: {
-    getSections: function getSections() {
+    init: function init() {
+      this.getEstimate();
+    },
+    getEstimate: function getEstimate() {
       var _this = this;
 
-      var url = '/estimates/:estimate/sections';
+      var url = '/estimates/:estimate/data';
       url = url.replace(':estimate', this.estimate);
       axios.get(url).then(function (_ref) {
         var data = _ref.data;
-        _this.sections = data;
+        _this.estimateData = data;
+
+        _this.getSections();
+      });
+    },
+    getSections: function getSections() {
+      var _this2 = this;
+
+      var url = '/estimates/:estimate/sections';
+      url = url.replace(':estimate', this.estimate);
+      axios.get(url).then(function (_ref2) {
+        var data = _ref2.data;
+        _this2.sections = data;
       });
     },
     addSection: function addSection() {
@@ -1978,19 +2005,29 @@ __webpack_require__.r(__webpack_exports__);
       });
     },
     showSavingLabel: function showSavingLabel() {
-      var _this2 = this;
+      var _this3 = this;
 
       this.saving = true;
       setTimeout(function () {
-        _this2.saving = false;
+        _this3.saving = false;
       }, 500);
     },
     updateSection: function updateSection(sectionData, index) {
-      console.log(arguments);
       this.sections[index] = sectionData;
     },
     removeSection: function removeSection(index, type) {
       this.sections.splice(index, 1);
+    },
+    updateDebounced: _.debounce(function () {
+      this.update();
+    }, 300),
+    update: function update() {
+      var url = '/estimates/:estimate';
+      url = url.replace(':estimate', this.estimate);
+      axios.put(url, {
+        name: this.estimateData.name,
+        use_name_as_title: this.estimateData.use_name_as_title
+      });
     }
   }
 });
@@ -2006,6 +2043,12 @@ __webpack_require__.r(__webpack_exports__);
 
 "use strict";
 __webpack_require__.r(__webpack_exports__);
+//
+//
+//
+//
+//
+//
 //
 //
 //
@@ -8423,7 +8466,7 @@ exports = module.exports = __webpack_require__(/*! ../../../node_modules/css-loa
 
 
 // module
-exports.push([module.i, "\n#estimateMainSection {\n    background-color: #eee;\n    text-align: justify;\n}\n#estimateMainSection h1 {\n    text-align: left !important;\n    font-size: 1.5rem;\n}\n#estimateMainSection tr.item:not(.selected) {\n    color: #ccc;\n    text-decoration: line-through;\n}\n#estimateMainSection input[type=\"checkbox\"] {\n    width: 1.5em;\n    height: 1.5em;\n}\n", ""]);
+exports.push([module.i, "\n#estimateMainSection {\n    min-height: 100vh;\n    background-color: #eee;\n    text-align: justify;\n}\n#estimateMainSection h1 {\n    text-align: left !important;\n    font-size: 1.5rem;\n}\n#estimateMainSection tr.item:not(.selected) {\n    color: #ccc;\n    text-decoration: line-through;\n}\n#estimateMainSection input[type=\"checkbox\"] {\n    width: 1.5em;\n    height: 1.5em;\n}\n", ""]);
 
 // exports
 
@@ -40499,9 +40542,111 @@ var render = function() {
         : _c("small", [_vm._v("All changes are saved")])
     ]),
     _vm._v(" "),
-    _c("div", [_c("h3", [_vm._v("Total $ " + _vm._s(_vm.formattedTotal))])]),
-    _vm._v(" "),
     _c("div", { staticClass: "row" }, [
+      _vm.estimateData
+        ? _c("div", { staticClass: "col-md-12" }, [
+            _c("input", {
+              directives: [
+                {
+                  name: "model",
+                  rawName: "v-model",
+                  value: _vm.estimateData.name,
+                  expression: "estimateData.name"
+                }
+              ],
+              staticClass: "form-control",
+              attrs: { type: "text" },
+              domProps: { value: _vm.estimateData.name },
+              on: {
+                input: [
+                  function($event) {
+                    if ($event.target.composing) {
+                      return
+                    }
+                    _vm.$set(_vm.estimateData, "name", $event.target.value)
+                  },
+                  function($event) {
+                    return _vm.updateDebounced()
+                  }
+                ]
+              }
+            }),
+            _vm._v(" "),
+            _c("div", { staticClass: "switch-container mt-2" }, [
+              _c("label", { staticClass: "switch" }, [
+                _c("input", {
+                  directives: [
+                    {
+                      name: "model",
+                      rawName: "v-model",
+                      value: _vm.estimateData.use_name_as_title,
+                      expression: "estimateData.use_name_as_title"
+                    }
+                  ],
+                  attrs: { type: "checkbox" },
+                  domProps: {
+                    checked: Array.isArray(_vm.estimateData.use_name_as_title)
+                      ? _vm._i(_vm.estimateData.use_name_as_title, null) > -1
+                      : _vm.estimateData.use_name_as_title
+                  },
+                  on: {
+                    change: [
+                      function($event) {
+                        var $$a = _vm.estimateData.use_name_as_title,
+                          $$el = $event.target,
+                          $$c = $$el.checked ? true : false
+                        if (Array.isArray($$a)) {
+                          var $$v = null,
+                            $$i = _vm._i($$a, $$v)
+                          if ($$el.checked) {
+                            $$i < 0 &&
+                              _vm.$set(
+                                _vm.estimateData,
+                                "use_name_as_title",
+                                $$a.concat([$$v])
+                              )
+                          } else {
+                            $$i > -1 &&
+                              _vm.$set(
+                                _vm.estimateData,
+                                "use_name_as_title",
+                                $$a.slice(0, $$i).concat($$a.slice($$i + 1))
+                              )
+                          }
+                        } else {
+                          _vm.$set(_vm.estimateData, "use_name_as_title", $$c)
+                        }
+                      },
+                      function($event) {
+                        return _vm.update()
+                      }
+                    ]
+                  }
+                }),
+                _vm._v(" "),
+                _c("span", { staticClass: "slider round" })
+              ]),
+              _vm._v("\n                Use name as title?\n            ")
+            ]),
+            _vm._v(" "),
+            _c("h3", [_vm._v("Total $ " + _vm._s(_vm.formattedTotal))]),
+            _vm._v(" "),
+            _c(
+              "a",
+              {
+                staticClass: "btn btn-secondary",
+                attrs: {
+                  target: "_blank",
+                  href: "/estimates/" + _vm.estimateData.id
+                }
+              },
+              [_vm._v("View Estimate")]
+            )
+          ])
+        : _vm._e()
+    ]),
+    _vm._v(" "),
+    _c("div", { staticClass: "row mt-4" }, [
       _c(
         "div",
         { staticClass: "col-sm-12" },
@@ -40718,136 +40863,150 @@ var render = function() {
                   staticClass: "col-md-8 offset-md-2 bg-white p-5",
                   attrs: { id: "estimateDocument" }
                 },
-                _vm._l(_vm.estimateData.sections, function(section) {
-                  return _c(
-                    "section",
-                    { key: section.id, staticClass: "mb-5" },
-                    [
-                      _c("p", {
-                        domProps: {
-                          innerHTML: _vm._s(section.presentable_text)
-                        }
-                      }),
-                      _vm._v(" "),
-                      section.items.length
-                        ? _c(
-                            "table",
-                            { staticClass: "table mt-4" },
-                            [
-                              _vm._m(1, true),
-                              _vm._v(" "),
-                              _vm._l(section.items, function(item) {
-                                return _c(
-                                  "tr",
-                                  {
-                                    key: item.id,
-                                    staticClass: "item",
-                                    class: { selected: item.selected }
-                                  },
-                                  [
-                                    _c("td", [
-                                      !item.obligatory
-                                        ? _c("input", {
-                                            directives: [
-                                              {
-                                                name: "model",
-                                                rawName: "v-model",
-                                                value: item.selected,
-                                                expression: "item.selected"
-                                              }
-                                            ],
-                                            attrs: { type: "checkbox" },
-                                            domProps: {
-                                              checked: Array.isArray(
-                                                item.selected
-                                              )
-                                                ? _vm._i(item.selected, null) >
-                                                  -1
-                                                : item.selected
-                                            },
-                                            on: {
-                                              change: [
-                                                function($event) {
-                                                  var $$a = item.selected,
-                                                    $$el = $event.target,
-                                                    $$c = $$el.checked
-                                                      ? true
-                                                      : false
-                                                  if (Array.isArray($$a)) {
-                                                    var $$v = null,
-                                                      $$i = _vm._i($$a, $$v)
-                                                    if ($$el.checked) {
-                                                      $$i < 0 &&
-                                                        _vm.$set(
-                                                          item,
-                                                          "selected",
-                                                          $$a.concat([$$v])
-                                                        )
-                                                    } else {
-                                                      $$i > -1 &&
-                                                        _vm.$set(
-                                                          item,
-                                                          "selected",
-                                                          $$a
-                                                            .slice(0, $$i)
-                                                            .concat(
-                                                              $$a.slice($$i + 1)
-                                                            )
-                                                        )
-                                                    }
-                                                  } else {
-                                                    _vm.$set(
-                                                      item,
-                                                      "selected",
-                                                      $$c
-                                                    )
-                                                  }
-                                                },
-                                                function($event) {
-                                                  return _vm.renderPrices()
-                                                }
-                                              ]
-                                            }
-                                          })
-                                        : _vm._e()
-                                    ]),
-                                    _vm._v(" "),
-                                    _c("td", [
-                                      _vm._v(_vm._s(item.description || "-"))
-                                    ]),
-                                    _vm._v(" "),
-                                    _c("td", [
-                                      _vm._v(_vm._s(item.duration || "-"))
-                                    ]),
-                                    _vm._v(" "),
-                                    _c("td", { staticClass: "text-right" }, [
-                                      _vm._v(_vm._s(item.price || "-"))
-                                    ])
-                                  ]
-                                )
-                              }),
-                              _vm._v(" "),
-                              _c("tr", [
-                                _vm._m(2, true),
+                [
+                  _vm.estimateData.use_name_as_title
+                    ? _c("section", { staticClass: "mb-5" }, [
+                        _c("h1", [
+                          _c("b", [_vm._v(_vm._s(_vm.estimateData.name))])
+                        ])
+                      ])
+                    : _vm._e(),
+                  _vm._v(" "),
+                  _vm._l(_vm.estimateData.sections, function(section) {
+                    return _c(
+                      "section",
+                      { key: section.id, staticClass: "mb-5" },
+                      [
+                        _c("p", {
+                          domProps: {
+                            innerHTML: _vm._s(section.presentable_text)
+                          }
+                        }),
+                        _vm._v(" "),
+                        section.items.length
+                          ? _c(
+                              "table",
+                              { staticClass: "table mt-4" },
+                              [
+                                _vm._m(1, true),
                                 _vm._v(" "),
-                                _c("td", { staticClass: "text-right" }, [
-                                  _vm._v(
-                                    _vm._s(
-                                      _vm.formattedPrice(
-                                        _vm.sectionTotal(section)
+                                _vm._l(section.items, function(item) {
+                                  return _c(
+                                    "tr",
+                                    {
+                                      key: item.id,
+                                      staticClass: "item",
+                                      class: { selected: item.selected }
+                                    },
+                                    [
+                                      _c("td", [
+                                        !item.obligatory
+                                          ? _c("input", {
+                                              directives: [
+                                                {
+                                                  name: "model",
+                                                  rawName: "v-model",
+                                                  value: item.selected,
+                                                  expression: "item.selected"
+                                                }
+                                              ],
+                                              attrs: { type: "checkbox" },
+                                              domProps: {
+                                                checked: Array.isArray(
+                                                  item.selected
+                                                )
+                                                  ? _vm._i(
+                                                      item.selected,
+                                                      null
+                                                    ) > -1
+                                                  : item.selected
+                                              },
+                                              on: {
+                                                change: [
+                                                  function($event) {
+                                                    var $$a = item.selected,
+                                                      $$el = $event.target,
+                                                      $$c = $$el.checked
+                                                        ? true
+                                                        : false
+                                                    if (Array.isArray($$a)) {
+                                                      var $$v = null,
+                                                        $$i = _vm._i($$a, $$v)
+                                                      if ($$el.checked) {
+                                                        $$i < 0 &&
+                                                          _vm.$set(
+                                                            item,
+                                                            "selected",
+                                                            $$a.concat([$$v])
+                                                          )
+                                                      } else {
+                                                        $$i > -1 &&
+                                                          _vm.$set(
+                                                            item,
+                                                            "selected",
+                                                            $$a
+                                                              .slice(0, $$i)
+                                                              .concat(
+                                                                $$a.slice(
+                                                                  $$i + 1
+                                                                )
+                                                              )
+                                                          )
+                                                      }
+                                                    } else {
+                                                      _vm.$set(
+                                                        item,
+                                                        "selected",
+                                                        $$c
+                                                      )
+                                                    }
+                                                  },
+                                                  function($event) {
+                                                    return _vm.renderPrices()
+                                                  }
+                                                ]
+                                              }
+                                            })
+                                          : _vm._e()
+                                      ]),
+                                      _vm._v(" "),
+                                      _c("td", [
+                                        _vm._v(_vm._s(item.description || "-"))
+                                      ]),
+                                      _vm._v(" "),
+                                      _c("td", [
+                                        _vm._v(_vm._s(item.duration || "-"))
+                                      ]),
+                                      _vm._v(" "),
+                                      _c("td", { staticClass: "text-right" }, [
+                                        _vm._v(_vm._s(item.price || "-"))
+                                      ])
+                                    ]
+                                  )
+                                }),
+                                _vm._v(" "),
+                                _c("tr", [
+                                  _vm._m(2, true),
+                                  _vm._v(" "),
+                                  _c("td", { staticClass: "text-right" }, [
+                                    _vm._v(
+                                      _vm._s(
+                                        _vm.formattedPrice(
+                                          _vm.sectionTotal(section)
+                                        )
                                       )
                                     )
-                                  )
+                                  ])
                                 ])
-                              ])
-                            ],
-                            2
-                          )
-                        : _vm._e()
-                    ]
-                  )
-                }),
-                0
+                              ],
+                              2
+                            )
+                          : _vm._e()
+                      ]
+                    )
+                  })
+                ],
+                2
               )
             : _vm._e()
         ])
@@ -40950,6 +41109,10 @@ var render = function() {
           ]),
           _vm._v(" "),
           _c("VueTrix", {
+            attrs: {
+              placeholder:
+                "Add tour section content here. You can use *TOTAL_PRICE* to show the estimate total price in any place, and *TOTAL_SELECTED_PRICE* to show the total selected price."
+            },
             on: {
               input: function($event) {
                 return _vm.saveSectionWithDebounce()

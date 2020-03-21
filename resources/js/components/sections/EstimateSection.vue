@@ -13,7 +13,7 @@
             <button class="btn btn-sm btn-outline-danger mt-2" @click="remove()"><i class="icon ion-md-trash"></i> Remove</button>
         </div>
 
-        <VueTrix v-model="sectionData.text" @input="saveSectionWithDebounce()" />
+        <VueTrix v-model="sectionData.text" @input="saveSectionWithDebounce()" placeholder="Add tour section content here. You can use *TOTAL_PRICE* to show the estimate total price in any place, and *TOTAL_SELECTED_PRICE* to show the total selected price." />
 
         <div class="mt-2" v-if="sectionData.type == 'prices'">
             <div class="row mt-2" v-for="(item, index) in sectionData.items" :key="index">

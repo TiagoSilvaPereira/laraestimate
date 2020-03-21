@@ -11,7 +11,7 @@ class Estimate extends Model
 
     protected $fillable = [
         'name',
-        'description',
+        'use_name_as_title',
         'expiration_date',
         'currency_symbol',
         'currency_decimal_separator',
@@ -31,10 +31,7 @@ class Estimate extends Model
 
     public function scopeSearch($query, $search)
     {
-        return $query->where(function($query) use ($search) {
-            return $query->where('name', 'like', "%{$search}%")
-                ->orWhere('description', 'like', "%{$search}%");
-        });
+        return $query->where('name', 'like', "%{$search}%");
     } 
     
     public function getShareUrlAttribute()
