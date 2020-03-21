@@ -17,6 +17,15 @@ class Section extends Model
         'presentable_text'
     ];
 
+    public static function boot()
+    {
+        parent::boot();
+
+        self::creating(function($section) {
+            $section->position = $section->estimate->getNextSectionPosition();
+        });
+    }
+
     public function estimate()
     {
         return $this->belongsTo(Estimate::class);

@@ -28,8 +28,8 @@ class Estimate extends Model
     {
         return $this->hasMany(Section::class)
             ->with('items')
-            ->orderBy('order')
-            ->orderBy('created_at');
+            ->orderBy('position')
+            ->orderBy('created_at', 'desc');
     }
 
     public function scopeSearch($query, $search)
@@ -42,6 +42,11 @@ class Estimate extends Model
         return route('estimates.view', $this);
     }
 
+    public function getNextSectionPosition()
+    {
+        return $this->sections()->max('order') + 1;
+    }
+
     public function saveSectionsPositions(?array $positions)
     {
         if(empty($positions)) return;
@@ -50,7 +55,7 @@ class Estimate extends Model
             $section = Section::find($sectionId);
 
             if($section) {
-                $section->order = $position;
+                $section->position = $position;
                 $section->save();
             }
         }        

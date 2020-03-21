@@ -1,10 +1,5 @@
 <template>
     <div>
-        <div>
-            <small v-if="saving">Saving...</small>
-            <small v-else>All changes are saved</small>
-        </div>
-
         <div class="row">
             <div class="col-md-12" v-if="estimateData">
                 <input type="text" class="form-control" v-model="estimateData.name" @input="updateDebounced()">
@@ -147,6 +142,8 @@ export default {
                 name: this.estimateData.name,
                 use_name_as_title: this.estimateData.use_name_as_title,
                 sections_positions: this.calculateSectionsPositions(),
+            }).then(data => {
+                toast.success('Estimate saved successfully');
             });
         },
 

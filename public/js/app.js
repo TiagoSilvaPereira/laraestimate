@@ -1948,11 +1948,6 @@ __webpack_require__.r(__webpack_exports__);
 //
 //
 //
-//
-//
-//
-//
-//
 
 /* harmony default export */ __webpack_exports__["default"] = ({
   props: ['estimate'],
@@ -2044,6 +2039,8 @@ __webpack_require__.r(__webpack_exports__);
         name: this.estimateData.name,
         use_name_as_title: this.estimateData.use_name_as_title,
         sections_positions: this.calculateSectionsPositions()
+      }).then(function (data) {
+        toast.success('Estimate saved successfully');
       });
     },
     calculateSectionsPositions: function calculateSectionsPositions() {
@@ -44289,12 +44286,6 @@ var render = function() {
   var _h = _vm.$createElement
   var _c = _vm._self._c || _h
   return _c("div", [
-    _c("div", [
-      _vm.saving
-        ? _c("small", [_vm._v("Saving...")])
-        : _c("small", [_vm._v("All changes are saved")])
-    ]),
-    _vm._v(" "),
     _c("div", { staticClass: "row" }, [
       _vm.estimateData
         ? _c("div", { staticClass: "col-md-12" }, [
