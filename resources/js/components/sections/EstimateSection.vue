@@ -10,6 +10,7 @@
         <small v-else class="text-primary mb-4">Prices Section {{ sectionData.id }}</small>
         
         <div class="mb-4 text-right">
+            <button class="btn btn-sm btn-outline-secondary mt-2 handle"><i class="icon ion-md-move"></i> Move</button>
             <button class="btn btn-sm btn-outline-danger mt-2" @click="remove()"><i class="icon ion-md-trash"></i> Remove</button>
         </div>
 

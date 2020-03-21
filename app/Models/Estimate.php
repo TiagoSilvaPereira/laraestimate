@@ -26,7 +26,10 @@ class Estimate extends Model
 
     public function sections()
     {
-        return $this->hasMany(Section::class)->with('items');
+        return $this->hasMany(Section::class)
+            ->with('items')
+            ->orderBy('order')
+            ->orderBy('created_at');
     }
 
     public function scopeSearch($query, $search)
@@ -37,5 +40,19 @@ class Estimate extends Model
     public function getShareUrlAttribute()
     {
         return route('estimates.view', $this);
+    }
+
+    public function saveSectionsPositions(?array $positions)
+    {
+        if(empty($positions)) return;
+
+        foreach ($positions as $sectionId => $position) {
+            $section = Section::find($sectionId);
+
+            if($section) {
+                $section->order = $position;
+                $section->save();
+            }
+        }        
     }
 }

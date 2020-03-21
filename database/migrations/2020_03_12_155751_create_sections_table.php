@@ -19,7 +19,7 @@ class CreateSectionsTable extends Migration
             $table->text('text')->nullable();
             $table->enum('type', ['text', 'contact', 'prices']);
 
-            $table->decimal('total')->default(0);
+            $table->smallInteger('order')->unsigned()->default(0);
 
             $table->unsignedBigInteger('estimate_id');
             $table->foreign('estimate_id')

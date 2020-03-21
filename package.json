@@ -28,6 +28,7 @@
         "bootbox": "^5.4.0",
         "toastr": "^2.1.4",
         "trumbowyg": "^2.21.0",
-        "vue-trix": "^1.1.9"
+        "vue-trix": "^1.1.9",
+        "vuedraggable": "^2.23.2"
     }
 }

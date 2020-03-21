@@ -23,7 +23,11 @@
         <div class="row mt-4">
 
             <div class="col-sm-12">
-                <estimate-section v-for="(section, index) in sections" :key="index" :section="section" @sectionUpdated="updateSection($event, index)" @sectionRemoved="removeSection(index, 'text')"></estimate-section>
+                <draggable v-model="sections" draggable=".item" handle=".handle" @end="orderChanged()">
+                    <div class="item" v-for="(section, index) in sections" :key="section.id">
+                        <estimate-section :section="section" @sectionUpdated="updateSection($event, index)" @sectionRemoved="removeSection(index, 'text')"></estimate-section>
+                    </div>
+                </draggable>
             </div>
 
             <div class="col-sm-12">
@@ -35,9 +39,15 @@
 </template>
 
 <script>
+import draggable from 'vuedraggable'
+
 export default {
     props: ['estimate'],
-
+    
+    components: {
+        draggable,
+    },
+    
     data() {
         return {
             saving: false,
@@ -122,6 +132,10 @@ export default {
             this.update();
         }, 300),
 
+        orderChanged() {
+            this.update();
+        },
+
         update() {
             let url = '/estimates/:estimate';
             url = url.replace(':estimate', this.estimate);
@@ -129,8 +143,17 @@ export default {
             axios.put(url, {
                 name: this.estimateData.name,
                 use_name_as_title: this.estimateData.use_name_as_title,
+                sections_positions: this.calculateSectionsPositions(),
             });
         },
+
+        calculateSectionsPositions() {
+            let positions = {};
+
+            this.sections.forEach((section, index) => positions[section.id] = index + 1);
+
+            return positions;
+        }
 
     }
 

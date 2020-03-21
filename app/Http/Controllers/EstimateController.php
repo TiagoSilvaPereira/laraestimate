@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use App\Models\Estimate;
 use Illuminate\Http\Request;
 use App\Http\Requests\EstimateStoreRequest;
+use App\Http\Requests\EstimateUpdateRequest;
 
 class EstimateController extends Controller
 {
@@ -79,11 +80,12 @@ class EstimateController extends Controller
      * @param  \App\Models\Estimate  $estimate
      * @return \Illuminate\Http\Response
      */
-    public function update(EstimateStoreRequest $request, Estimate $estimate)
+    public function update(EstimateUpdateRequest $request, Estimate $estimate)
     {
-        $data = $request->only('name', 'use_name_as_title');
+        $data = $request->only('name', 'use_name_as_title', 'sections_positions');
 
         $estimate->update($data);
+        $estimate->saveSectionsPositions($data['sections_positions']);
 
         return response()->json(true);
     }
