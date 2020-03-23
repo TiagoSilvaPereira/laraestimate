@@ -21,6 +21,11 @@ Auth::routes();
 
 Route::prefix('/')->middleware('auth')->group(function () {
     
+    // Settings
+    Route::get('/settings', 'SettingController@edit')->name('settings.edit');
+    Route::put('/settings', 'SettingController@update')->name('settings.update');
+    Route::post('/settings/store-logo', 'SettingController@storeLogo')->name('settings.image.store');
+
     // Estimates
     Route::resource('estimates', 'EstimateController');
     Route::get('/estimates/{estimate}/duplicate', 'EstimateController@duplicate')->name('estimates.duplicate');

@@ -10,6 +10,7 @@ return [
     'estimate_created_successfully' => 'Estimate created successfully',
     'deleted_successfully' => 'Deleted succesfully',
     'are_you_sure' => 'Are you sure?',
+    'settings_saved_successfully' => 'Settings saved successfully',
 
     'labels' => [
         'optional' => 'Optional',
