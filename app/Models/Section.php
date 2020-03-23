@@ -2,10 +2,13 @@
 
 namespace App\Models;
 
+use App\Traits\HasUUID;
 use Illuminate\Database\Eloquent\Model;
 
 class Section extends Model
 {
+    use HasUUID;
+    
     protected $fillable = [
         'title',
         'text',

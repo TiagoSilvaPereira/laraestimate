@@ -14,14 +14,14 @@ class CreateItemsTable extends Migration
     public function up()
     {
         Schema::create('items', function (Blueprint $table) {
-            $table->id();
+            $table->uuid('id')->primary();
 
             $table->string('description');
             $table->string('duration')->nullable();
             $table->decimal('price')->nullable()->default(0);
             $table->boolean('obligatory')->default(false);
 
-            $table->unsignedBigInteger('section_id');
+            $table->char('section_id', 36);
             $table->foreign('section_id')
                 ->references('id')
                 ->on('sections')

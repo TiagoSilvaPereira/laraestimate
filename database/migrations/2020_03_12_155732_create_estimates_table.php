@@ -14,7 +14,7 @@ class CreateEstimatesTable extends Migration
     public function up()
     {
         Schema::create('estimates', function (Blueprint $table) {
-            $table->id();
+            $table->uuid('id')->primary();
 
             $table->string('name');
             $table->boolean('use_name_as_title')->default(true);

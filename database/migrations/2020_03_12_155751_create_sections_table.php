@@ -14,14 +14,14 @@ class CreateSectionsTable extends Migration
     public function up()
     {
         Schema::create('sections', function (Blueprint $table) {
-            $table->id();
+            $table->uuid('id')->primary();
 
             $table->text('text')->nullable();
             $table->enum('type', ['text', 'contact', 'prices']);
 
             $table->smallInteger('position')->unsigned()->default(0);
 
-            $table->unsignedBigInteger('estimate_id');
+            $table->char('estimate_id', 36);
             $table->foreign('estimate_id')
                 ->references('id')
                 ->on('estimates')
