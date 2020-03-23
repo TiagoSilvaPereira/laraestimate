@@ -43,5 +43,15 @@ class SettingController extends Controller
 
         $setting = Setting::firstOrFail();
         $setting->addMedia($request->image)->toMediaCollection('logo');
+
+        return response()->json(true);
+    }
+
+    public function removeLogo(Request $request)
+    {
+        $setting = Setting::firstOrFail();
+        $setting->getFirstMedia('logo')->delete();
+
+        return response()->json(true);
     }
 }

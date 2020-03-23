@@ -24,7 +24,8 @@ Route::prefix('/')->middleware('auth')->group(function () {
     // Settings
     Route::get('/settings', 'SettingController@edit')->name('settings.edit');
     Route::put('/settings', 'SettingController@update')->name('settings.update');
-    Route::post('/settings/store-logo', 'SettingController@storeLogo')->name('settings.image.store');
+    Route::post('/settings/logo', 'SettingController@storeLogo')->name('settings.image.store');
+    Route::delete('/settings/logo', 'SettingController@removeLogo')->name('settings.image.remove');
 
     // Estimates
     Route::resource('estimates', 'EstimateController');

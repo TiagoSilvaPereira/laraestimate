@@ -34,7 +34,7 @@
         <div class="mb-2">
             <div class="image-viewer">
                 <div class="button-container" v-if="image">
-                    <button type="button" class="btn btn-danger" @click.prevent="remove">Remover</button>
+                    <button type="button" class="btn btn-danger" @click.prevent="remove">Remove</button>
                 </div>
                 <img :src="image" class="cover mr-1" v-if="image">
             </div>
@@ -74,7 +74,7 @@
                 data.append('image', image);
                 
                 axios.post(this.url, data).then(() => {
-                    toast.success('Image enviada com sucesso');
+                    toast.success('Image uploaded successfully');
                 }).catch(error => {
                     if(error.response) {
                         let data = error.response.data;
@@ -85,7 +85,7 @@
                                 toast.error(errors[key][0]);
                             }
                         } else {
-                            toast.error('Não foi possível enviar a imagem');
+                            toast.error('Something went wrong');
                         }
                     }
                 });
@@ -94,10 +94,10 @@
             remove() {
                 if(!this.image) return;
 
-                bootbox.confirm('Tem certeza?', confirmed => {
+                bootbox.confirm('Are you sure?', confirmed => {
                     if(confirmed) {
                         axios.delete(this.url).then(() => {
-                            toast.success('Imagem removida com sucesso');
+                            toast.success('Image removed successfully');
                             this.image = null;
                         });
                     }

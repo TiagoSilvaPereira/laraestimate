@@ -2419,7 +2419,7 @@ __webpack_require__.r(__webpack_exports__);
       var data = new FormData();
       data.append('image', image);
       axios.post(this.url, data).then(function () {
-        toast.success('Image enviada com sucesso');
+        toast.success('Image uploaded successfully');
       })["catch"](function (error) {
         if (error.response) {
           var _data = error.response.data;
@@ -2430,7 +2430,7 @@ __webpack_require__.r(__webpack_exports__);
               toast.error(errors[key][0]);
             }
           } else {
-            toast.error('Não foi possível enviar a imagem');
+            toast.error('Something went wrong');
           }
         }
       });
@@ -2439,10 +2439,10 @@ __webpack_require__.r(__webpack_exports__);
       var _this = this;
 
       if (!this.image) return;
-      bootbox.confirm('Tem certeza?', function (confirmed) {
+      bootbox.confirm('Are you sure?', function (confirmed) {
         if (confirmed) {
           axios["delete"](_this.url).then(function () {
-            toast.success('Imagem removida com sucesso');
+            toast.success('Image removed successfully');
             _this.image = null;
           });
         }
@@ -45093,7 +45093,7 @@ var render = function() {
                     }
                   }
                 },
-                [_vm._v("Remover")]
+                [_vm._v("Remove")]
               )
             ])
           : _vm._e(),
