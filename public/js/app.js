@@ -1948,6 +1948,20 @@ __webpack_require__.r(__webpack_exports__);
 //
 //
 //
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
 
 /* harmony default export */ __webpack_exports__["default"] = ({
   props: ['estimate'],
@@ -2038,7 +2052,10 @@ __webpack_require__.r(__webpack_exports__);
       axios.put(url, {
         name: this.estimateData.name,
         use_name_as_title: this.estimateData.use_name_as_title,
-        sections_positions: this.calculateSectionsPositions()
+        sections_positions: this.calculateSectionsPositions(),
+        currency_symbol: this.estimateData.currency_settings.symbol,
+        currency_decimal_separator: this.estimateData.currency_settings.decimal_separator,
+        currency_thousands_separator: this.estimateData.currency_settings.thousands_separator
       }).then(function (data) {
         toast.success('Estimate saved successfully');
       });
@@ -2064,6 +2081,10 @@ __webpack_require__.r(__webpack_exports__);
 
 "use strict";
 __webpack_require__.r(__webpack_exports__);
+//
+//
+//
+//
 //
 //
 //
@@ -2234,7 +2255,8 @@ __webpack_require__.r(__webpack_exports__);
       return parseFloat(total);
     },
     formattedPrice: function formattedPrice(price) {
-      return price.toFixed(2);
+      var currencySettings = this.estimateData.currency_settings;
+      return currencySettings.symbol + ' ' + formatMoney(price, 2, currencySettings.decimal_separator, currencySettings.thousands_separator).toString();
     },
     renderPrices: function renderPrices() {
       var _this4 = this;
@@ -44486,7 +44508,7 @@ var render = function() {
   return _c("div", [
     _c("div", { staticClass: "row" }, [
       _vm.estimateData
-        ? _c("div", { staticClass: "col-md-12" }, [
+        ? _c("div", { staticClass: "form group col-md-12" }, [
             _c("input", {
               directives: [
                 {
@@ -44585,7 +44607,116 @@ var render = function() {
               [_vm._v("View Estimate")]
             )
           ])
-        : _vm._e()
+        : _vm._e(),
+      _vm._v(" "),
+      _c("div", { staticClass: "form-group" }, [
+        _c("label", { attrs: { for: "currency_symbol" } }, [
+          _vm._v("currency_symbol")
+        ]),
+        _vm._v(" "),
+        _c("input", {
+          directives: [
+            {
+              name: "model",
+              rawName: "v-model",
+              value: _vm.estimateData.currency_settings.symbol,
+              expression: "estimateData.currency_settings.symbol"
+            }
+          ],
+          staticClass: "form-control",
+          attrs: { type: "text" },
+          domProps: { value: _vm.estimateData.currency_settings.symbol },
+          on: {
+            change: function($event) {
+              return _vm.update()
+            },
+            input: function($event) {
+              if ($event.target.composing) {
+                return
+              }
+              _vm.$set(
+                _vm.estimateData.currency_settings,
+                "symbol",
+                $event.target.value
+              )
+            }
+          }
+        })
+      ]),
+      _vm._v(" "),
+      _c("div", { staticClass: "form-group" }, [
+        _c("label", { attrs: { for: "currency_decimal_separator" } }, [
+          _vm._v("currency_decimal_separator")
+        ]),
+        _vm._v(" "),
+        _c("input", {
+          directives: [
+            {
+              name: "model",
+              rawName: "v-model",
+              value: _vm.estimateData.currency_settings.decimal_separator,
+              expression: "estimateData.currency_settings.decimal_separator"
+            }
+          ],
+          staticClass: "form-control",
+          attrs: { type: "text" },
+          domProps: {
+            value: _vm.estimateData.currency_settings.decimal_separator
+          },
+          on: {
+            change: function($event) {
+              return _vm.update()
+            },
+            input: function($event) {
+              if ($event.target.composing) {
+                return
+              }
+              _vm.$set(
+                _vm.estimateData.currency_settings,
+                "decimal_separator",
+                $event.target.value
+              )
+            }
+          }
+        })
+      ]),
+      _vm._v(" "),
+      _c("div", { staticClass: "form-group" }, [
+        _c("label", { attrs: { for: "currency_thousands_separator" } }, [
+          _vm._v("currency_thousands_separator")
+        ]),
+        _vm._v(" "),
+        _c("input", {
+          directives: [
+            {
+              name: "model",
+              rawName: "v-model",
+              value: _vm.estimateData.currency_settings.thousands_separator,
+              expression: "estimateData.currency_settings.thousands_separator"
+            }
+          ],
+          staticClass: "form-control",
+          attrs: { type: "text" },
+          domProps: {
+            value: _vm.estimateData.currency_settings.thousands_separator
+          },
+          on: {
+            change: function($event) {
+              return _vm.update()
+            },
+            input: function($event) {
+              if ($event.target.composing) {
+                return
+              }
+              _vm.$set(
+                _vm.estimateData.currency_settings,
+                "thousands_separator",
+                $event.target.value
+              )
+            }
+          }
+        })
+      ])
     ]),
     _vm._v(" "),
     _c("div", { staticClass: "row mt-4" }, [
@@ -44833,6 +44964,18 @@ var render = function() {
                   attrs: { id: "estimateDocument" }
                 },
                 [
+                  _vm.estimateData.logo_image
+                    ? _c("section", { staticClass: "mb-4 text-center" }, [
+                        _c("img", {
+                          attrs: {
+                            src: _vm.estimateData.logo_image,
+                            alt: "Estimate Image",
+                            width: "150px"
+                          }
+                        })
+                      ])
+                    : _vm._e(),
+                  _vm._v(" "),
                   _vm.estimateData.use_name_as_title
                     ? _c("section", { staticClass: "mb-5" }, [
                         _c("h1", [
@@ -44948,7 +45091,12 @@ var render = function() {
                                       ]),
                                       _vm._v(" "),
                                       _c("td", { staticClass: "text-right" }, [
-                                        _vm._v(_vm._s(item.price || "-"))
+                                        _vm._v(
+                                          _vm._s(
+                                            _vm.formattedPrice(item.price) ||
+                                              "-"
+                                          )
+                                        )
                                       ])
                                     ]
                                   )
@@ -62011,6 +62159,23 @@ window.treatAxiosError = function (error) {
     } else {
       toast.error('Something went wrong');
     }
+  }
+};
+
+window.formatMoney = function (amount) {
+  var decimalCount = arguments.length > 1 && arguments[1] !== undefined ? arguments[1] : 2;
+  var decimal = arguments.length > 2 && arguments[2] !== undefined ? arguments[2] : ".";
+  var thousands = arguments.length > 3 && arguments[3] !== undefined ? arguments[3] : ",";
+
+  try {
+    decimalCount = Math.abs(decimalCount);
+    decimalCount = isNaN(decimalCount) ? 2 : decimalCount;
+    var negativeSign = amount < 0 ? "-" : "";
+    var i = parseInt(amount = Math.abs(Number(amount) || 0).toFixed(decimalCount)).toString();
+    var j = i.length > 3 ? i.length % 3 : 0;
+    return negativeSign + (j ? i.substr(0, j) + thousands : '') + i.substr(j).replace(/(\d{3})(?=\d)/g, "$1" + thousands) + (decimalCount ? decimal + Math.abs(amount - i).toFixed(decimalCount).slice(2) : "");
+  } catch (e) {
+    console.log(e);
   }
 };
 

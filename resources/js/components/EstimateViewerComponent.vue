@@ -61,6 +61,10 @@
 
                 <div id="estimateDocument" class="col-md-8 offset-md-2 bg-white p-5" v-if="estimateData">
 
+                    <section class="mb-4 text-center" v-if="estimateData.logo_image">
+                        <img :src="estimateData.logo_image" alt="Estimate Image" width="150px">
+                    </section>
+
                     <section class="mb-5" v-if="estimateData.use_name_as_title">
                         <h1><b>{{ estimateData.name }}</b></h1>
                     </section>
@@ -80,7 +84,7 @@
                                 <td><input type="checkbox" v-if="!item.obligatory" v-model="item.selected" @change="renderPrices()"></td>
                                 <td>{{ item.description || '-' }}</td>
                                 <td>{{ item.duration || '-' }}</td>
-                                <td class="text-right">{{ item.price || '-' }}</td>
+                                <td class="text-right">{{ formattedPrice(item.price) || '-' }}</td>
                             </tr>
 
                             <tr>
@@ -182,7 +186,13 @@ export default {
         },
 
         formattedPrice(price) {
-            return price.toFixed(2);
+            let currencySettings = this.estimateData.currency_settings;
+
+            return currencySettings.symbol + ' ' + formatMoney(
+                price, 2, 
+                currencySettings.decimal_separator,
+                currencySettings.thousands_separator,
+            ).toString();
         },
 
         renderPrices() {

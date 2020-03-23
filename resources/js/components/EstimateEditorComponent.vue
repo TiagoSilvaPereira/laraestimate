@@ -1,7 +1,7 @@
 <template>
     <div>
         <div class="row">
-            <div class="col-md-12" v-if="estimateData">
+            <div class="form group col-md-12" v-if="estimateData">
                 <input type="text" class="form-control" v-model="estimateData.name" @input="updateDebounced()">
                 <div class="switch-container mt-2">
                     <label class="switch">
@@ -13,6 +13,20 @@
                 <h3>Total $ {{ formattedTotal }}</h3>
                 <a target="_blank" :href="'/estimates/' + estimateData.id" class="btn btn-secondary">View Estimate</a>
             </div>
+            <div class="form-group">
+                            <label for="currency_symbol">currency_symbol</label>
+                            <input type="text" class="form-control" v-model="estimateData.currency_settings.symbol" @change="update()">
+                        </div>
+
+                        <div class="form-group">
+                            <label for="currency_decimal_separator">currency_decimal_separator</label>
+                            <input type="text" class="form-control" v-model="estimateData.currency_settings.decimal_separator" @change="update()">
+                        </div>
+
+                        <div class="form-group">
+                            <label for="currency_thousands_separator">currency_thousands_separator</label>
+                            <input type="text" class="form-control" v-model="estimateData.currency_settings.thousands_separator" @change="update()">
+                        </div>
         </div>
 
         <div class="row mt-4">
@@ -142,6 +156,9 @@ export default {
                 name: this.estimateData.name,
                 use_name_as_title: this.estimateData.use_name_as_title,
                 sections_positions: this.calculateSectionsPositions(),
+                currency_symbol: this.estimateData.currency_settings.symbol,
+                currency_decimal_separator: this.estimateData.currency_settings.decimal_separator,
+                currency_thousands_separator: this.estimateData.currency_settings.thousands_separator,
             }).then(data => {
                 toast.success('Estimate saved successfully');
             });

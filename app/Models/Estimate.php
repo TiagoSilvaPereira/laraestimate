@@ -2,6 +2,7 @@
 
 namespace App\Models;
 
+use App\Models\Setting;
 use App\Traits\HasUUID;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\SoftDeletes;
@@ -22,7 +23,9 @@ class Estimate extends Model
     ];
 
     protected $appends = [
-        'share_url'
+        'share_url',
+        'logo_image',
+        'currency_settings',
     ];
 
     public function sections()
@@ -37,10 +40,32 @@ class Estimate extends Model
     {
         return $query->where('name', 'like', "%{$search}%");
     } 
+
+    public function getLogoImageAttribute()
+    {
+        $setting = Setting::first();
+
+        if($setting) {
+            return $setting->getFirstMediaUrl('logo');
+        }
+
+        return null;
+    }
     
     public function getShareUrlAttribute()
     {
         return route('estimates.view', $this);
+    }
+
+    public function getCurrencySettingsAttribute()
+    {
+        $setting = Setting::first();
+
+        return [
+            'symbol' => $this->currency_symbol ?? optional($setting)->currency_symbol,
+            'decimal_separator' => $this->currency_decimal_separator ?? optional($setting)->currency_decimal_separator,
+            'thousands_separator' => $this->currency_thousands_separator ?? optional($setting)->currency_thousands_separator,
+        ];
     }
 
     public function getNextSectionPosition()

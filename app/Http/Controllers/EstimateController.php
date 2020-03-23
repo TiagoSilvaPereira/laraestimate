@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\Setting;
 use App\Models\Estimate;
 use Illuminate\Http\Request;
 use App\Http\Requests\EstimateStoreRequest;
@@ -20,12 +21,13 @@ class EstimateController extends Controller
 
     public function create()
     {
-        return view('estimates.create');
+        $setting = Setting::first();
+        return view('estimates.create', compact('setting'));
     }
 
     public function store(EstimateStoreRequest $request)
     {
-        $data = $request->only('name', 'use_name_as_title');
+        $data = $request->all();
 
         $estimate = Estimate::create($data);
 
@@ -48,7 +50,7 @@ class EstimateController extends Controller
 
     public function update(EstimateUpdateRequest $request, Estimate $estimate)
     {
-        $data = $request->only('name', 'use_name_as_title', 'sections_positions');
+        $data = $request->all();
 
         $estimate->update($data);
         $estimate->saveSectionsPositions($data['sections_positions']);
