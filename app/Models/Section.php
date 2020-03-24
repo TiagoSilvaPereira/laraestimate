@@ -10,10 +10,8 @@ class Section extends Model
     use HasUUID;
     
     protected $fillable = [
-        'title',
         'text',
         'type',
-        'total'
     ];
 
     protected $appends = [
