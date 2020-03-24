@@ -31,4 +31,17 @@ class EstimateTest extends TestCase
             ->assertStatus(200)
             ->assertSee($estimates[0]->name);
     }
+
+    public function test_a_user_can_search_estimates()
+    {
+        $this->signIn();
+        $estimates = factory(Estimate::class, 20)->create();
+
+        $response = $this->get(route('estimates.index', ['search' => $estimates[0]->name]));
+
+        $response
+            ->assertStatus(200)
+            ->assertSee($estimates[0]->name)
+            ->assertDontSee($estimates[1]->name);
+    }
 }
