@@ -44,4 +44,18 @@ class EstimateTest extends TestCase
             ->assertSee($estimates[0]->name)
             ->assertDontSee($estimates[1]->name);
     }
+
+    public function test_a_user_can_update_estimates()
+    {
+        $this->signIn();
+
+        $estimate = factory(Estimate::class)->create();
+
+        $response = $this->put(route('estimates.update', $estimate), [
+            'name' => $estimate->name . ' Edited',
+            'sections_positions' => []
+        ]);
+        
+        $this->assertEquals($estimate->name . ' Edited', $estimate->fresh()->name);
+    }
 }
