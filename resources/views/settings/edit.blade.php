@@ -22,23 +22,23 @@
                         @method('PUT')
 
                         <div class="form-group">
-                            <label for="image">@lang('app.labels.image')</label>
+                            <label for="image">@lang('app.labels.logo')</label>
                             <image-uploader url="{{ route('settings.image.store') }}" 
                                 image-path="{{ $setting->getFirstMediaUrl('logo') }}"></image-uploader>
                         </div>
                         
                         <div class="form-group">
-                            <label for="currency_symbol">@lang('app.labels.currency_symbol')</label>
+                            <label for="currency_symbol">@lang('app.currency_symbol')</label>
                             <input name="currency_symbol" type="text" class="form-control" value="{{ $setting->currency_symbol ?? '' }}">
                         </div>
 
                         <div class="form-group">
-                            <label for="currency_decimal_separator">@lang('app.labels.currency_decimal_separator')</label>
+                            <label for="currency_decimal_separator">@lang('app.currency_decimal_separator')</label>
                             <input name="currency_decimal_separator" type="text" class="form-control" value="{{ $setting->currency_decimal_separator ?? '' }}">
                         </div>
 
                         <div class="form-group">
-                            <label for="currency_thousands_separator">@lang('app.labels.currency_thousands_separator')</label>
+                            <label for="currency_thousands_separator">@lang('app.currency_thousands_separator')</label>
                             <input name="currency_thousands_separator" type="text" class="form-control" value="{{ $setting->currency_thousands_separator ?? '' }}">
                         </div>
 

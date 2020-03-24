@@ -11,6 +11,7 @@ return [
     'deleted_successfully' => 'Deleted succesfully',
     'are_you_sure' => 'Are you sure?',
     'settings_saved_successfully' => 'Settings saved successfully',
+    'edit_settings' => 'Edit Settings',
 
     'item_duration' => 'Item Duration (Optional)',
     'use_name_as_title' => 'Use name as title?',
@@ -51,6 +52,7 @@ return [
         'total' => 'Total',
         'move' => 'Move',
         'remove' => 'Remove',
+        'logo' => 'Logo Image'
     ],
 
     'mail' => [
