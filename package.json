@@ -26,6 +26,7 @@
     },
     "dependencies": {
         "bootbox": "^5.4.0",
+        "lang.js": "^1.1.14",
         "toastr": "^2.1.4",
         "trumbowyg": "^2.21.0",
         "vue-trix": "^1.1.9",

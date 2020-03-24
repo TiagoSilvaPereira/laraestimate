@@ -6,16 +6,16 @@
 
 <template>
     <div class="section p-2 mb-5" v-if="sectionData">
-        <small v-if="sectionData.type == 'text'" class="text-primary mb-4">Text Section {{ sectionData.id }}</small>
-        <small v-else class="text-primary mb-4">Prices Section {{ sectionData.id }}</small>
+        <small v-if="sectionData.type == 'text'" class="text-primary mb-4">{{ trans.get('app.text_section') }} {{ sectionData.id }}</small>
+        <small v-else class="text-primary mb-4">{{ trans.get('app.prices_section') }} {{ sectionData.id }}</small>
         
         <div class="mb-4 text-right">
             <div>
-                <small v-if="saving">Saving...</small>
-                <small v-else>All changes are saved</small>
+                <small v-if="saving">{{ trans.get('app.saving') }}</small>
+                <small v-else>{{ trans.get('app.all_changes_are_saved') }}</small>
             </div>
-            <button class="btn btn-sm btn-outline-secondary mt-2 handle" :disabled="!sectionData.id"><i class="icon ion-md-move"></i> Move</button>
-            <button class="btn btn-sm btn-outline-danger mt-2" @click="remove()"><i class="icon ion-md-trash"></i> Remove</button>
+            <button class="btn btn-sm btn-outline-secondary mt-2 handle" :disabled="!sectionData.id"><i class="icon ion-md-move"></i> {{ trans.get('app.labels.move') }}</button>
+            <button class="btn btn-sm btn-outline-danger mt-2" @click="remove()"><i class="icon ion-md-trash"></i> {{ trans.get('app.labels.remove') }}</button>
         </div>
 
         <VueTrix v-model="sectionData.text" @input="saveSectionWithDebounce()" placeholder="Add tour section content here. You can use *TOTAL_PRICE* to show the estimate total price in any place, and *TOTAL_SELECTED_PRICE* to show the total selected price." />
@@ -23,13 +23,13 @@
         <div class="mt-2" v-if="sectionData.type == 'prices'">
             <div class="row mt-2" v-for="(item, index) in sectionData.items" :key="index">
                 <div class="col-md-5">
-                    <input type="text" class="form-control" placeholder="Item Description" v-model="item.description" @input="saveSectionWithDebounce()" @blur="saveSection()">
+                    <input type="text" class="form-control" :placeholder="trans.get('app.item_description')" v-model="item.description" @input="saveSectionWithDebounce()" @blur="saveSection()">
                 </div>
                 <div class="col-md-2">
-                    <input type="text" class="form-control" placeholder="Item Duration (Optional)" v-model="item.duration" @input="saveSectionWithDebounce()" @blur="saveSection()">
+                    <input type="text" class="form-control" :placeholder="trans.get('app.item_duration')" v-model="item.duration" @input="saveSectionWithDebounce()" @blur="saveSection()">
                 </div>
                 <div class="col-md-2">
-                    <input type="number" step="0.1" class="form-control" placeholder="Item Price" v-model="item.price" @input="saveSectionWithDebounce()" @blur="saveSection()">
+                    <input type="number" step="0.1" class="form-control" :placeholder="trans.get('app.item_price')" v-model="item.price" @input="saveSectionWithDebounce()" @blur="saveSection()">
                 </div>
                 <div class="col-md-2">
                     <div class="switch-container">
@@ -37,7 +37,7 @@
                             <input type="checkbox" v-model="item.obligatory" @change="saveSection()">
                             <span class="slider round"></span>
                         </label>
-                        Obligatory?
+                        {{ trans.get('app.obligatory') }}
                     </div>
                 </div>
                 <div class="col-md-1">
@@ -46,10 +46,10 @@
             </div>
             <div class="row mt-2">
                 <div class="col-md-3 offset-md-8 text-right">
-                    <b>Total $ {{ formattedTotal }}</b>
+                    <b>{{ trans.get('app.labels.total') }} {{ formattedTotal }}</b>
                 </div>
             </div>
-            <button class="btn btn-sm btn-outline-primary mt-2" @click="addItem()"><i class="icon ion-md-add"></i> Add Item</button>
+            <button class="btn btn-sm btn-outline-primary mt-2" @click="addItem()"><i class="icon ion-md-add"></i> {{ trans.get('app.add_item') }}</button>
         </div>
 
         <hr class="mt-4">
@@ -64,7 +64,7 @@ export default {
         VueTrix
     },
 
-    props: ['estimate', 'section'],
+    props: ['estimate', 'section', 'currencySettings'],
 
     data() {
         return {
@@ -95,7 +95,12 @@ export default {
         },
 
         formattedTotal() {
-            return this.total.toFixed(2);
+            return this.currencySettings.symbol + ' ' + formatMoney(
+                this.total,
+                2,
+                this.currencySettings.decimal_separator,
+                this.currencySettings.thousands_separator,
+            );
         }
     },
 

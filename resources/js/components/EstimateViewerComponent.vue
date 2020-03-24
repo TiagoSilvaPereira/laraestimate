@@ -28,22 +28,22 @@
             <div class="modal-dialog">
                 <div class="modal-content">
                     <div class="modal-header">
-                        <h5 class="modal-title">Share Estimate</h5>
+                        <h5 class="modal-title">{{ trans.get('app.share_estimate') }}</h5>
                         <button type="button" class="close" data-dismiss="modal" aria-label="Close">
                             <span aria-hidden="true">&times;</span>
                         </button>
                     </div>
                     <div class="modal-body">
-                        <label for="link">Copy this link</label>
+                        <label for="link">{{ trans.get('app.copy_this_link') }}</label>
                         <input ref="shareableUrl" type="text" class="form-control" :value="estimateData.share_url"  @click="copyToClipboard">
 
                         <template v-if="canShareEmail">
-                            <label for="link" class="mt-4">Or send an e-mail:</label>
-                            <input type="email" class="form-control" placeholder="Type e-mail address here" v-model="shareEmail">
+                            <label for="link" class="mt-4">{{ trans.get('app.or_send_an_email') }}</label>
+                            <input type="email" class="form-control" :placeholder="trans.get('app.type_email_address_here')" v-model="shareEmail">
 
-                            <span class="mt-2 text-primary" v-show="sendingEmail">Sending email...</span>
+                            <span class="mt-2 text-primary" v-show="sendingEmail">{{ trans.get('app.sending_email') }}</span>
 
-                            <button class="btn btn-primary mt-4 float-right" :disabled="sendingEmail" @click="sendEmail()"><i class="icon ion-md-mail"></i> Send</button>
+                            <button class="btn btn-primary mt-4 float-right" :disabled="sendingEmail" @click="sendEmail()"><i class="icon ion-md-mail"></i> {{ trans.get('app.labels.send') }}</button>
                         </template>
                     </div>
                 </div>
@@ -51,8 +51,8 @@
         </div>
 
         <div class="fixed-top p-4 text-right" v-if="estimateData">
-            <button class="btn btn-primary d-print-none" @click="print()"><i class="icon ion-md-print"></i> Print</button>
-            <button class="btn btn-success d-print-none" @click="openShareModal()"><i class="icon ion-md-share"></i> Share</button>
+            <button class="btn btn-primary d-print-none" @click="print()"><i class="icon ion-md-print"></i> {{ trans.get('app.labels.print') }}</button>
+            <button class="btn btn-success d-print-none" @click="openShareModal()"><i class="icon ion-md-share"></i> {{ trans.get('app.labels.share') }}</button>
         </div>
 
         <div class="container" id="printContainer">
@@ -75,9 +75,9 @@
                         <table class="table mt-4" v-if="section.items.length">
                             <tr>
                                 <th></th>
-                                <th>Description</th>
-                                <th>Duration</th>
-                                <th class="text-right">Price</th>
+                                <th>{{ trans.get('app.description') }}</th>
+                                <th>{{ trans.get('app.duration') }}</th>
+                                <th class="text-right">{{ trans.get('app.price') }}</th>
                             </tr>
 
                             <tr v-for="item in section.items" :key="item.id" class="item" :class="{'selected': item.selected}">
@@ -88,7 +88,7 @@
                             </tr>
 
                             <tr>
-                                <td colspan="3" class="text-right"><b>Section Total:</b></td>
+                                <td colspan="3" class="text-right"><b>{{ trans.get('app.section_total') }}:</b></td>
                                 <td class="text-right">{{ formattedPrice(sectionTotal(section)) }}</td>
                             </tr>
                         </table>

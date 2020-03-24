@@ -8,6 +8,16 @@ require('./adapters/ToastAdapter');
 
 window.Vue = require('vue');
 
+import Lang from 'lang.js';
+
+window.translate = new Lang({
+    messages: App.localizationData,
+    locale: App.defaultLocale,
+    fallback: App.fallbackLocale
+});
+
+Vue.prototype.trans = window.translate;
+
 /**
  * Auto loading components
  */

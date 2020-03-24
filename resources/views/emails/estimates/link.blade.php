@@ -6,13 +6,13 @@
 
 # {{ $estimate->name }}
 
-You received a new estimate. Please click the button below to see the estimate:
+@lang('app.mail.received_estimate')
 
 @component('mail::button', ['url' => $estimate->share_url])
-Open Estimate
+@lang('app.mail.open_estimate')
 @endcomponent
 
-Or access using the direct link: [{{ $estimate->share_url }}]({{ $estimate->share_url }})
+@lang('app.mail.access_using_link') [{{ $estimate->share_url }}]({{ $estimate->share_url }})
 
-Regards<br>
+@lang('app.mail.regards')<br>
 @endcomponent

@@ -1,32 +1,33 @@
 <template>
     <div>
-        <div class="row">
-            <div class="form group col-md-12" v-if="estimateData">
+        <div class="row" v-if="estimateData">
+            <div class="form group col-md-12">
                 <input type="text" class="form-control" v-model="estimateData.name" @input="updateDebounced()">
                 <div class="switch-container mt-2">
                     <label class="switch">
                         <input type="checkbox" v-model="estimateData.use_name_as_title" @change="update()">
                         <span class="slider round"></span>
                     </label>
-                    Use name as title?
+                    {{ trans.get('app.use_name_as_title') }}
                 </div>
-                <h3>Total $ {{ formattedTotal }}</h3>
-                <a target="_blank" :href="'/estimates/' + estimateData.id" class="btn btn-secondary">View Estimate</a>
+                <h3>{{ trans.get('app.labels.total') }} {{ formattedTotal }}</h3>
+                <a target="_blank" :href="'/estimates/' + estimateData.id" class="btn btn-secondary">{{ trans.get('app.view_estimate') }}</a>
             </div>
+
             <div class="form-group">
-                            <label for="currency_symbol">currency_symbol</label>
-                            <input type="text" class="form-control" v-model="estimateData.currency_settings.symbol" @change="update()">
-                        </div>
+                <label for="currency_symbol">{{ trans.get('app.currency_symbol') }}</label>
+                <input type="text" class="form-control" v-model="estimateData.currency_settings.symbol" @change="update()">
+            </div>
 
-                        <div class="form-group">
-                            <label for="currency_decimal_separator">currency_decimal_separator</label>
-                            <input type="text" class="form-control" v-model="estimateData.currency_settings.decimal_separator" @change="update()">
-                        </div>
+            <div class="form-group">
+                <label for="currency_decimal_separator">{{ trans.get('app.currency_decimal_separator') }}</label>
+                <input type="text" class="form-control" v-model="estimateData.currency_settings.decimal_separator" @change="update()">
+            </div>
 
-                        <div class="form-group">
-                            <label for="currency_thousands_separator">currency_thousands_separator</label>
-                            <input type="text" class="form-control" v-model="estimateData.currency_settings.thousands_separator" @change="update()">
-                        </div>
+            <div class="form-group">
+                <label for="currency_thousands_separator">{{ trans.get('app.currency_thousands_separator') }}</label>
+                <input type="text" class="form-control" v-model="estimateData.currency_settings.thousands_separator" @change="update()">
+            </div>
         </div>
 
         <div class="row mt-4">
@@ -37,14 +38,15 @@
                         <estimate-section 
                         :section="section" 
                         :estimate="estimate"
+                        :currencySettings="estimateData.currency_settings"
                         @sectionUpdated="updateSection($event, index)" @sectionRemoved="removeSection(index, 'text')"></estimate-section>
                     </div>
                 </draggable>
             </div>
 
             <div class="col-sm-12">
-                <button class="btn btn-primary" @click="addSection()">Add Text Section</button>
-                <button class="btn btn-success" @click="addSection('prices')">Add Prices Section</button>
+                <button class="btn btn-primary" @click="addSection()">{{ trans.get('app.add_text_section') }}</button>
+                <button class="btn btn-success" @click="addSection('prices')">{{ trans.get('app.add_prices_section') }}</button>
             </div>
         </div>
     </div>
@@ -82,7 +84,7 @@ export default {
         },
 
         formattedTotal() {
-            return this.total.toFixed(2);
+            return this.formatMoney(this.price);
         }
     },
 
@@ -170,6 +172,19 @@ export default {
             this.sections.forEach((section, index) => positions[section.id] = index + 1);
 
             return positions;
+        },
+
+        formatMoney(money) {
+            if(!this.estimateData) return '-';
+
+            let currencySettings = this.estimateData.currency_settings;
+            
+            return currencySettings.symbol + ' ' + formatMoney(
+                this.price, 
+                2, 
+                currencySettings.decimal_separator, 
+                currencySettings.thousands_separator
+            ).toString();
         }
 
     }
