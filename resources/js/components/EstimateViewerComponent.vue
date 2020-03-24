@@ -81,7 +81,7 @@
                             </tr>
 
                             <tr v-for="item in section.items" :key="item.id" class="item" :class="{'selected': item.selected}">
-                                <td><input type="checkbox" v-if="!item.obligatory" v-model="item.selected" @change="renderPrices()"></td>
+                                <td><input class="check-item" type="checkbox" v-if="!item.obligatory" v-model="item.selected" @change="renderPrices()"></td>
                                 <td>{{ item.description || '-' }}</td>
                                 <td>{{ item.duration || '-' }}</td>
                                 <td class="text-right">{{ formattedPrice(item.price) || '-' }}</td>

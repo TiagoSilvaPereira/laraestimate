@@ -45795,6 +45795,7 @@ var render = function() {
                                                   expression: "item.selected"
                                                 }
                                               ],
+                                              staticClass: "check-item",
                                               attrs: { type: "checkbox" },
                                               domProps: {
                                                 checked: Array.isArray(

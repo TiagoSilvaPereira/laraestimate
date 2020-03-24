@@ -36,6 +36,11 @@ class Estimate extends Model
             ->orderBy('created_at', 'desc');
     }
 
+    public function items()
+    {
+        return $this->hasManyThrough(Item::class, Section::class);
+    }
+
     public function scopeSearch($query, $search)
     {
         return $query->where('name', 'like', "%{$search}%");

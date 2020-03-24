@@ -29,45 +29,90 @@ class EstimateViewerTest extends DuskTestCase
         $this->browse(function (Browser $browser) {
             
             $estimate = $this->createEstimate();
-            
-            $browser->visit('/login')
-                ->type('email', $this->user->email)
-                ->type('password', 'password')
-                ->press('Login');
-            
 
             $browser
+                ->loginAs($this->user)
                 ->visit(route('estimates.show', $estimate))
                 ->waitFor('#estimateDocument')
                 ->assertSee($estimate->name);
         });
     }
 
-    // public function test_it_dont_shows_the_estimate_name_as_title_as_set()
-    // {
-    //     $estimate = $this->createEstimate(false);
-        
-    //     $this->browse(function (Browser $browser) use ($estimate) {
-    //         $browser->loginAs($this->user)
-    //             ->visit(route('estimates.show', $estimate));
-
-    //         $browser->waitFor('#estimateDocument')
-    //             ->assertSee('Print')
-    //             ->assertSee('Share')
-    //             ->assertDontSee($estimate->name);
-    //     });
-    // }
-
-    protected function createEstimate($nameAsTitle = true)
+    public function test_it_dont_shows_the_estimate_name_as_title_as_set()
     {
-        $estimate = factory(Estimate::class)->create([
-            'use_name_as_title' => $nameAsTitle
+        $estimate = $this->createEstimate([
+            'use_name_as_title' => false
         ]);
+        
+        $this->browse(function (Browser $browser) use ($estimate) {
+            $browser->loginAs($this->user)
+                ->visit(route('estimates.show', $estimate));
+
+            $browser->waitFor('#estimateDocument')
+                ->assertSee('Print')
+                ->assertSee('Share')
+                ->assertDontSee($estimate->name);
+        });
+    }
+
+    public function test_it_shows_correct_estimate_total_price()
+    {
+        $estimate = $this->createEstimate();
+        
+        $this->browse(function (Browser $browser) use ($estimate) {
+            $browser->loginAs($this->user)
+                ->visit(route('estimates.show', $estimate));
+
+            $pricesSum = $estimate->items->reduce(function ($carry, $item) {
+                return $carry + $item->price;
+            }, 0);
+
+            $browser->waitFor('#estimateDocument')
+                ->assertSee('$ ' . number_format($pricesSum, 2));
+        });
+    }
+
+    public function test_it_shows_correct_estimate_total_selected_price()
+    {
+        $estimate = $this->createEstimate();
+        
+        $this->browse(function (Browser $browser) use ($estimate) {
+            $browser->loginAs($this->user)
+                ->visit(route('estimates.show', $estimate));
+
+            $pricesSum = $estimate->items->reduce(function ($carry, $item) {
+                return $carry + $item->price;
+            }, 0);
+
+            $selectedPrice = $pricesSum - $estimate->items()->first()->price;
+
+            $browser->waitFor('#estimateDocument')
+                ->click('table tr:nth-child(2) .check-item')
+                ->pause('300')
+                ->assertSee('$ ' . number_format($selectedPrice, 2));
+        });
+    }
+
+    protected function createEstimate($data = [])
+    {
+        $estimate = factory(Estimate::class)->create($data);
         
         for($i = 0; $i < 3; $i++) {
             $sectionData = factory(Section::class)->make()->toArray();
             $estimate->sections()->create($sectionData);
         }
+
+        // Creating Prices section
+        $pricesSectionData = factory(Section::class)->make([
+            'type' => 'prices',
+            'text' => 'Total is *TOTAL_PRICE* and total selected is *TOTAL_SELECTED_PRICE*'
+        ])->toArray();
+
+        $section = $estimate->sections()->create($pricesSectionData);
+        
+        $section->items()->create(['description' => 'Item 01', 'price' => 13.58]);
+        $section->items()->create(['description' => 'Item 02', 'price' => 15.79]);
+        $section->items()->create(['description' => 'Item 03', 'price' => 18.20]);
 
         return $estimate;
     }
