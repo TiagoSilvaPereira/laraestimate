@@ -15,6 +15,8 @@ return [
     'estimate_content' => 'Estimate Body Content',
 
     'item_duration' => 'Item Duration (Optional)',
+    'item_description' => 'Item Description',
+    'item_price' => 'Item Price',
     'use_name_as_title' => 'Use name as title?',
     'view_estimate' => 'View Estimate',
     'currency_symbol' => 'Currency Symbol',

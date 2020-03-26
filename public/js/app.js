@@ -46219,13 +46219,78 @@ var render = function() {
             _vm.sectionData.type == "prices"
               ? _c(
                   "div",
-                  { staticClass: "mt-2" },
+                  { staticClass: "mt-4" },
                   [
                     _vm._l(_vm.sectionData.items, function(item, index) {
                       return _c(
                         "div",
                         { key: index, staticClass: "row mt-2" },
                         [
+                          _c("div", { staticClass: "col-md-2" }, [
+                            _c("div", { staticClass: "switch-container" }, [
+                              _c("label", { staticClass: "switch" }, [
+                                _c("input", {
+                                  directives: [
+                                    {
+                                      name: "model",
+                                      rawName: "v-model",
+                                      value: item.obligatory,
+                                      expression: "item.obligatory"
+                                    }
+                                  ],
+                                  attrs: { type: "checkbox" },
+                                  domProps: {
+                                    checked: Array.isArray(item.obligatory)
+                                      ? _vm._i(item.obligatory, null) > -1
+                                      : item.obligatory
+                                  },
+                                  on: {
+                                    change: [
+                                      function($event) {
+                                        var $$a = item.obligatory,
+                                          $$el = $event.target,
+                                          $$c = $$el.checked ? true : false
+                                        if (Array.isArray($$a)) {
+                                          var $$v = null,
+                                            $$i = _vm._i($$a, $$v)
+                                          if ($$el.checked) {
+                                            $$i < 0 &&
+                                              _vm.$set(
+                                                item,
+                                                "obligatory",
+                                                $$a.concat([$$v])
+                                              )
+                                          } else {
+                                            $$i > -1 &&
+                                              _vm.$set(
+                                                item,
+                                                "obligatory",
+                                                $$a
+                                                  .slice(0, $$i)
+                                                  .concat($$a.slice($$i + 1))
+                                              )
+                                          }
+                                        } else {
+                                          _vm.$set(item, "obligatory", $$c)
+                                        }
+                                      },
+                                      function($event) {
+                                        return _vm.saveSection()
+                                      }
+                                    ]
+                                  }
+                                }),
+                                _vm._v(" "),
+                                _c("span", { staticClass: "slider round" })
+                              ]),
+                              _vm._v(
+                                "\n                        " +
+                                  _vm._s(_vm.trans.get("app.obligatory")) +
+                                  "\n                    "
+                              )
+                            ])
+                          ]),
+                          _vm._v(" "),
                           _c("div", { staticClass: "col-md-5" }, [
                             _c("input", {
                               directives: [
@@ -46340,71 +46405,6 @@ var render = function() {
                                 }
                               }
                             })
-                          ]),
-                          _vm._v(" "),
-                          _c("div", { staticClass: "col-md-2" }, [
-                            _c("div", { staticClass: "switch-container" }, [
-                              _c("label", { staticClass: "switch" }, [
-                                _c("input", {
-                                  directives: [
-                                    {
-                                      name: "model",
-                                      rawName: "v-model",
-                                      value: item.obligatory,
-                                      expression: "item.obligatory"
-                                    }
-                                  ],
-                                  attrs: { type: "checkbox" },
-                                  domProps: {
-                                    checked: Array.isArray(item.obligatory)
-                                      ? _vm._i(item.obligatory, null) > -1
-                                      : item.obligatory
-                                  },
-                                  on: {
-                                    change: [
-                                      function($event) {
-                                        var $$a = item.obligatory,
-                                          $$el = $event.target,
-                                          $$c = $$el.checked ? true : false
-                                        if (Array.isArray($$a)) {
-                                          var $$v = null,
-                                            $$i = _vm._i($$a, $$v)
-                                          if ($$el.checked) {
-                                            $$i < 0 &&
-                                              _vm.$set(
-                                                item,
-                                                "obligatory",
-                                                $$a.concat([$$v])
-                                              )
-                                          } else {
-                                            $$i > -1 &&
-                                              _vm.$set(
-                                                item,
-                                                "obligatory",
-                                                $$a
-                                                  .slice(0, $$i)
-                                                  .concat($$a.slice($$i + 1))
-                                              )
-                                          }
-                                        } else {
-                                          _vm.$set(item, "obligatory", $$c)
-                                        }
-                                      },
-                                      function($event) {
-                                        return _vm.saveSection()
-                                      }
-                                    ]
-                                  }
-                                }),
-                                _vm._v(" "),
-                                _c("span", { staticClass: "slider round" })
-                              ]),
-                              _vm._v(
-                                "\n                        " +
-                                  _vm._s(_vm.trans.get("app.obligatory")) +
-                                  "\n                    "
-                              )
-                            ])
                           ]),
                           _vm._v(" "),
                           _c("div", { staticClass: "col-md-1" }, [
