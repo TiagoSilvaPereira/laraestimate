@@ -35,7 +35,7 @@
                     <div class="row mt-2">
                         <div class="col">
                             <a href="{{ route('estimates.edit', $estimate) }}" class="btn btn-light text-primary"><i class="icon ion-md-create"></i> @lang('app.labels.edit')</a>
-                            <a href="{{ route('estimates.show', $estimate) }}" target="_blank" class="btn btn-light text-primary"><i class="icon ion-md-document"></i>  @lang('app.labels.show')</a>
+                            <a href="{{ route('estimates.show', $estimate) }}" target="_blank" class="btn btn-light text-primary"><i class="icon ion-md-document"></i>  @lang('app.labels.view')</a>
                             <a href="{{ route('estimates.duplicate', $estimate) }}" target="_blank" class="btn btn-light text-primary"><i class="icon ion-md-copy"></i> @lang('app.labels.duplicate')</a>
                         </div>
                         <div class="col">

@@ -54,7 +54,8 @@ return [
         'remove' => 'Remove',
         'logo' => 'Logo Image',
         'show' => 'Show',
-        'duplicate' => 'Duplicate'
+        'duplicate' => 'Duplicate',
+        'view' => 'View',
     ],
 
     'mail' => [
