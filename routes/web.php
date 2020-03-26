@@ -17,7 +17,7 @@ Route::get('/', function () {
     return view('welcome');
 });
 
-Auth::routes();
+Auth::routes(['register' => false]);
 
 Route::prefix('/')->middleware('auth')->group(function () {
     
@@ -33,6 +33,9 @@ Route::prefix('/')->middleware('auth')->group(function () {
 
     // Estimate Sections
     Route::apiResource('estimates/{estimate}/sections', 'SectionController');
+
+    // Users
+    Route::resource('users', 'UserController');
 
 });
 

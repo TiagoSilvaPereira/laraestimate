@@ -2,6 +2,8 @@
 
 return [
 
+    'my_estimates' => 'My Estimates',
+    'login' => 'Login',
     'estimates' => 'Estimates',
     'add_estimate' => 'Add Estimate',
     'create_estimate' => 'Create Estimate',
@@ -9,9 +11,10 @@ return [
     'no_estimates_found' => 'No estimates found',
     'estimate_created_successfully' => 'Estimate created successfully',
     'deleted_successfully' => 'Deleted succesfully',
-    'are_you_sure' => 'Are you sure?',
     'settings_saved_successfully' => 'Settings saved successfully',
     'edit_settings' => 'Edit Settings',
+    'settings' => 'Settings',
+    'users' => 'Users',
     'estimate_content' => 'Estimate Body Content',
 
     'item_duration' => 'Item Duration (Optional)',
@@ -40,10 +43,20 @@ return [
     'duration' => 'Duration',
     'price' => 'Price',
     'section_total' => 'Section Total',
+    'create_user' => 'Create User',
+    'edit_user' => 'Edit User',
+    'user' => 'User',
 
     'labels' => [
+        'new' => 'New',
+        'search' => 'Search...',
+        'actions' => 'Actions',
+        'showing' => 'Showing',
         'optional' => 'Optional',
         'name' => 'Name',
+        'email' => 'E-mail',
+        'password' => 'Password',
+        'password_confirmation' => 'Password Confirmation',
         'description' => 'Description',
         'back' => 'Back',
         'create' => 'Create',
@@ -59,6 +72,11 @@ return [
         'show' => 'Show',
         'duplicate' => 'Duplicate',
         'view' => 'View',
+        'back_to_index' => 'Back to Index',
+    ],
+
+    'dialogs' => [
+        'are_you_sure' => 'Are you sure?'
     ],
 
     'mail' => [

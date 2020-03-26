@@ -4,7 +4,7 @@
 <div class="container-fluid">
     <nav aria-label="breadcrumb">
         <ol class="breadcrumb">
-          <li class="breadcrumb-item active" aria-current="page"><a href="{{ route('estimates.index') }}">@lang('app.estimates')</a></li>
+          <li class="breadcrumb-item active" aria-current="page"><a href="{{ route('settings.edit') }}">@lang('app.settings')</a></li>
           <li class="breadcrumb-item active" aria-current="page">@lang('app.labels.edit')</li>
         </ol>
       </nav>
@@ -12,7 +12,7 @@
     <div class="row">
 
         <div class="col mb-4">
-            <div class="card animated bounceInLeft fast">
+            <div class="card animated slideInLeft faster">
                 <div class="card-body">
                     <h4 class="card-title">@lang('app.edit_settings')</h4>
 

@@ -94,7 +94,7 @@
             remove() {
                 if(!this.image) return;
 
-                bootbox.confirm('Are you sure?', confirmed => {
+                bootbox.confirm(translate.get('app.dialogs.are_you_sure'), confirmed => {
                     if(confirmed) {
                         axios.delete(this.url).then(() => {
                             toast.success('Image removed successfully');

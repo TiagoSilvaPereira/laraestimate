@@ -3,13 +3,14 @@
 namespace App\Models;
 
 use App\Traits\HasUUID;
+use App\Models\Scopes\Search;
 use Illuminate\Notifications\Notifiable;
 use Illuminate\Contracts\Auth\MustVerifyEmail;
 use Illuminate\Foundation\Auth\User as Authenticatable;
 
 class User extends Authenticatable
 {
-    use Notifiable, HasUUID;
+    use Notifiable, HasUUID, Search;
 
     /**
      * The attributes that are mass assignable.

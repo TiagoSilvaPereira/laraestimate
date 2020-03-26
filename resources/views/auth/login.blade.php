@@ -5,9 +5,10 @@
     <div class="row justify-content-center">
         <div class="col-md-8">
             <div class="card">
-                <div class="card-header">{{ __('Login') }}</div>
+                <h4 class="card-title">{{ __('Login') }}</h4>
 
-                <div class="card-body">
+                <div class="card-body mt-4">
+
                     <form method="POST" action="{{ route('login') }}">
                         @csrf
 

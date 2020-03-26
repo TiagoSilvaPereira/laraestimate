@@ -1,18 +1,18 @@
 @extends('layouts.app')
 
 @section('content')
-<div class="container-fluid">
+<div class="container">
     <nav aria-label="breadcrumb">
         <ol class="breadcrumb">
-          <li class="breadcrumb-item active" aria-current="page"><a href="{{ route('estimates.index') }}">@lang('app.estimates')</a></li>
-          <li class="breadcrumb-item active" aria-current="page">@lang('app.labels.create')</li>
+            <li class="breadcrumb-item active" aria-current="page"><a href="{{ route('estimates.index') }}">@lang('app.estimates')</a></li>
+            <li class="breadcrumb-item active" aria-current="page">@lang('app.labels.create')</li>
         </ol>
-      </nav>
+    </nav>
 
     <div class="row">
 
         <div class="col mb-4">
-            <div class="card animated bounceInLeft fast">
+            <div class="card animated slideInLeft faster">
                 <div class="card-body">
                     <h4 class="card-title"><a href="{{ route('estimates.index') }}" class="mr-4"><i class="icon ion-md-arrow-back"></i></a> @lang('app.create_estimate')</h4>
 

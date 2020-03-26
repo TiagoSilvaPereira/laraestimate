@@ -2,7 +2,7 @@
 
 @section('content')
 <div class="container-fluid">
-    <div class="row animated bounceInLeft fast">
+    <div class="row animated slideInLeft faster">
 
         <div class="col-sm-12 mb-4">
             <h1>@lang('app.estimates')</h1>
@@ -78,7 +78,7 @@
             event.preventDefault();
             event.stopPropagation();
 
-            bootbox.confirm('{{ trans("app.are_you_sure") }}', function(confirmed) {
+            bootbox.confirm('{{ trans("app.dialogs.are_you_sure") }}', function(confirmed) {
                 if(confirmed) {
                     document.getElementById('deleteEstimateForm' + id).submit();
                 }

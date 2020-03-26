@@ -179,7 +179,7 @@ export default {
             url = url.replace(':estimate', this.estimate);
             url = url.replace(':section', this.sectionData.id);
 
-            bootbox.confirm('Are you sure?', confirmed => {
+            bootbox.confirm(translate.get('app.dialogs.are_you_sure'), confirmed => {
                 if(confirmed) {
                     axios.delete(url);
                     this.$emit('sectionRemoved');
@@ -197,7 +197,7 @@ export default {
         },
 
         removeItem(index) {
-            bootbox.confirm('Are you sure?', confirmed => {
+            bootbox.confirm(translate.get('app.dialogs.are_you_sure'), confirmed => {
                 if(confirmed) {
                     this.sectionData.items.splice(index, 1);
                     this.saveSection();

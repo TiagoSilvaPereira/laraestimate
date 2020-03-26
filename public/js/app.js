@@ -2510,7 +2510,7 @@ __webpack_require__.r(__webpack_exports__);
       var _this = this;
 
       if (!this.image) return;
-      bootbox.confirm('Are you sure?', function (confirmed) {
+      bootbox.confirm(translate.get('app.dialogs.are_you_sure'), function (confirmed) {
         if (confirmed) {
           axios["delete"](_this.url).then(function () {
             toast.success('Image removed successfully');
@@ -2692,7 +2692,7 @@ __webpack_require__.r(__webpack_exports__);
       var url = '/estimates/:estimate/sections/:section';
       url = url.replace(':estimate', this.estimate);
       url = url.replace(':section', this.sectionData.id);
-      bootbox.confirm('Are you sure?', function (confirmed) {
+      bootbox.confirm(translate.get('app.dialogs.are_you_sure'), function (confirmed) {
         if (confirmed) {
           axios["delete"](url);
 
@@ -2711,7 +2711,7 @@ __webpack_require__.r(__webpack_exports__);
     removeItem: function removeItem(index) {
       var _this3 = this;
 
-      bootbox.confirm('Are you sure?', function (confirmed) {
+      bootbox.confirm(translate.get('app.dialogs.are_you_sure'), function (confirmed) {
         if (confirmed) {
           _this3.sectionData.items.splice(index, 1);
 
