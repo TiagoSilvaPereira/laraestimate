@@ -11,6 +11,8 @@
 
 @import './switch';
 
+@import './animate';
+
 body {
     font-size: 1.1rem;
 }
@@ -28,4 +30,10 @@ body {
 
 .btn, .form-control, .page-link {
     border-radius: 0px !important;
+}
+
+.modal-content  {
+    -webkit-border-radius: 0px !important;
+    -moz-border-radius: 0px !important;
+    border-radius: 0px !important; 
 }

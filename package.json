@@ -25,6 +25,7 @@
         "webpack-livereload-plugin": "^1.2.0"
     },
     "dependencies": {
+        "animate.css": "^3.7.2",
         "bootbox": "^5.4.0",
         "lang.js": "^1.1.14",
         "toastr": "^2.1.4",

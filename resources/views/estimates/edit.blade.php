@@ -12,9 +12,9 @@
     <div class="row">
 
         <div class="col mb-4">
-            <div class="card">
+            <div class="card animated bounceInLeft fast">
                 <div class="card-body">
-                    <h4 class="card-title">@lang('app.edit_estimate') <small><a target="_blank" href="{{ route('estimates.view', $estimate) }}">@lang('app.view_estimate')</a></small></h4>
+                    <h4 class="card-title"><a href="{{ route('estimates.index') }}" class="mr-4"><i class="icon ion-md-arrow-back"></i></a> @lang('app.edit_estimate') <small class="ml-2"><a target="_blank" href="{{ route('estimates.show', $estimate) }}">@lang('app.view_estimate')</a></small></h4>
 
                     <div class="mt-4">
                         <estimate-editor-component estimate="{{ $estimate->id }}"></estimate-editor-component>

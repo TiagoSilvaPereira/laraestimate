@@ -12,9 +12,9 @@
     <div class="row">
 
         <div class="col mb-4">
-            <div class="card">
+            <div class="card animated bounceInLeft fast">
                 <div class="card-body">
-                    <h4 class="card-title">@lang('app.create_estimate')</h4>
+                    <h4 class="card-title"><a href="{{ route('estimates.index') }}" class="mr-4"><i class="icon ion-md-arrow-back"></i></a> @lang('app.create_estimate')</h4>
 
                     <form action="{{ route('estimates.store') }}" method="post">
                         

@@ -12,7 +12,7 @@
     <div class="row">
 
         <div class="col mb-4">
-            <div class="card">
+            <div class="card animated bounceInLeft fast">
                 <div class="card-body">
                     <h4 class="card-title">@lang('app.edit_settings')</h4>
 

@@ -45820,7 +45820,8 @@ var render = function() {
             ? _c(
                 "div",
                 {
-                  staticClass: "col-md-8 offset-md-2 bg-white p-5",
+                  staticClass:
+                    "col-md-8 offset-md-2 bg-white p-5 animated bounceIn fast",
                   attrs: { id: "estimateDocument" }
                 },
                 [

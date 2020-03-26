@@ -2,7 +2,7 @@
 
 @section('content')
 <div class="container-fluid">
-    <div class="row">
+    <div class="row animated bounceInLeft fast">
 
         <div class="col-sm-12 mb-4">
             <h1>@lang('app.estimates')</h1>
