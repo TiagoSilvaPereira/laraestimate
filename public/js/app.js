@@ -2354,6 +2354,7 @@ __webpack_require__.r(__webpack_exports__);
           mainElement = document.getElementById('estimateMainSection');
       container.classList.remove('container');
       container.classList.add('container-fluid');
+      estimate.classList.add('col');
       estimate.classList.remove('col-md-8');
       estimate.classList.remove('offset-md-2');
       mainElement.classList.add('bg-white');
@@ -2364,6 +2365,7 @@ __webpack_require__.r(__webpack_exports__);
           mainElement = document.getElementById('estimateMainSection');
       container.classList.add('container');
       container.classList.remove('container-fluid');
+      estimate.classList.remove('col');
       estimate.classList.add('col-md-8');
       estimate.classList.add('offset-md-2');
       mainElement.classList.remove('bg-white');
@@ -45606,7 +45608,10 @@ var render = function() {
               }
             }
           },
-          [_vm._v(_vm._s(_vm.trans.get("app.add_text_section")))]
+          [
+            _c("i", { staticClass: "icon ion-md-document" }),
+            _vm._v(" " + _vm._s(_vm.trans.get("app.add_text_section")))
+          ]
         ),
         _vm._v(" "),
         _c(
@@ -45619,7 +45624,10 @@ var render = function() {
               }
             }
           },
-          [_vm._v(_vm._s(_vm.trans.get("app.add_prices_section")))]
+          [
+            _c("i", { staticClass: "icon ion-md-cash" }),
+            _vm._v(" " + _vm._s(_vm.trans.get("app.add_prices_section")))
+          ]
         )
       ])
     ])
@@ -46450,7 +46458,7 @@ var render = function() {
                     _c(
                       "button",
                       {
-                        staticClass: "btn btn-sm btn-outline-primary mt-2",
+                        staticClass: "btn btn-sm btn-secondary mt-2",
                         on: {
                           click: function($event) {
                             return _vm.addItem()

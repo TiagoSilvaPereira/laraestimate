@@ -252,6 +252,7 @@ export default {
             
             container.classList.remove('container');
             container.classList.add('container-fluid');
+            estimate.classList.add('col');
             estimate.classList.remove('col-md-8');
             estimate.classList.remove('offset-md-2');
 
@@ -265,6 +266,7 @@ export default {
             
             container.classList.add('container');
             container.classList.remove('container-fluid');
+            estimate.classList.remove('col');
             estimate.classList.add('col-md-8');
             estimate.classList.add('offset-md-2');
 

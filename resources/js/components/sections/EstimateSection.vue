@@ -52,7 +52,7 @@
                         <b>{{ trans.get('app.labels.total') }} {{ formattedTotal }}</b>
                     </div>
                 </div>
-                <button class="btn btn-sm btn-outline-primary mt-2" @click="addItem()"><i class="icon ion-md-add"></i> {{ trans.get('app.add_item') }}</button>
+                <button class="btn btn-sm btn-secondary mt-2" @click="addItem()"><i class="icon ion-md-add"></i> {{ trans.get('app.add_item') }}</button>
             </div>
         </div>
 

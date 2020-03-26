@@ -72,8 +72,8 @@
             </div>
 
             <div class="col-sm-12">
-                <button class="btn btn-primary" @click="addSection()">{{ trans.get('app.add_text_section') }}</button>
-                <button class="btn btn-success" @click="addSection('prices')">{{ trans.get('app.add_prices_section') }}</button>
+                <button class="btn btn-primary" @click="addSection()"><i class="icon ion-md-document"></i> {{ trans.get('app.add_text_section') }}</button>
+                <button class="btn btn-success" @click="addSection('prices')"><i class="icon ion-md-cash"></i> {{ trans.get('app.add_prices_section') }}</button>
             </div>
         </div>
     </div>
