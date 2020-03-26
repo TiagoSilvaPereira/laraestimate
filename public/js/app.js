@@ -1964,6 +1964,17 @@ __webpack_require__.r(__webpack_exports__);
 //
 //
 //
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
 
 /* harmony default export */ __webpack_exports__["default"] = ({
   props: ['estimate'],
@@ -2502,6 +2513,7 @@ __webpack_require__.r(__webpack_exports__);
 "use strict";
 __webpack_require__.r(__webpack_exports__);
 /* harmony import */ var vue_trix__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! vue-trix */ "./node_modules/vue-trix/dist/vue-trix.esm.js");
+//
 //
 //
 //
@@ -45224,7 +45236,9 @@ var render = function() {
   return _c("div", [
     _vm.estimateData
       ? _c("div", { staticClass: "row" }, [
-          _c("div", { staticClass: "form group col-md-12" }, [
+          _c("div", { staticClass: "form-group col-md-9" }, [
+            _c("label", [_vm._v(_vm._s(_vm.trans.get("app.labels.name")))]),
+            _vm._v(" "),
             _c("input", {
               directives: [
                 {
@@ -45250,91 +45264,77 @@ var render = function() {
                   }
                 ]
               }
-            }),
-            _vm._v(" "),
-            _c("div", { staticClass: "switch-container mt-2" }, [
-              _c("label", { staticClass: "switch" }, [
-                _c("input", {
-                  directives: [
-                    {
-                      name: "model",
-                      rawName: "v-model",
-                      value: _vm.estimateData.use_name_as_title,
-                      expression: "estimateData.use_name_as_title"
-                    }
-                  ],
-                  attrs: { type: "checkbox" },
-                  domProps: {
-                    checked: Array.isArray(_vm.estimateData.use_name_as_title)
-                      ? _vm._i(_vm.estimateData.use_name_as_title, null) > -1
-                      : _vm.estimateData.use_name_as_title
-                  },
-                  on: {
-                    change: [
-                      function($event) {
-                        var $$a = _vm.estimateData.use_name_as_title,
-                          $$el = $event.target,
-                          $$c = $$el.checked ? true : false
-                        if (Array.isArray($$a)) {
-                          var $$v = null,
-                            $$i = _vm._i($$a, $$v)
-                          if ($$el.checked) {
-                            $$i < 0 &&
-                              _vm.$set(
-                                _vm.estimateData,
-                                "use_name_as_title",
-                                $$a.concat([$$v])
-                              )
-                          } else {
-                            $$i > -1 &&
-                              _vm.$set(
-                                _vm.estimateData,
-                                "use_name_as_title",
-                                $$a.slice(0, $$i).concat($$a.slice($$i + 1))
-                              )
-                          }
-                        } else {
-                          _vm.$set(_vm.estimateData, "use_name_as_title", $$c)
-                        }
-                      },
-                      function($event) {
-                        return _vm.update()
-                      }
-                    ]
-                  }
-                }),
-                _vm._v(" "),
-                _c("span", { staticClass: "slider round" })
-              ]),
-              _vm._v(
-                "\n                " +
-                  _vm._s(_vm.trans.get("app.use_name_as_title")) +
-                  "\n            "
-              )
-            ]),
-            _vm._v(" "),
-            _c("h3", [
-              _vm._v(
-                _vm._s(_vm.trans.get("app.labels.total")) +
-                  " " +
-                  _vm._s(_vm.formattedTotal)
-              )
-            ]),
-            _vm._v(" "),
-            _c(
-              "a",
-              {
-                staticClass: "btn btn-secondary",
-                attrs: {
-                  target: "_blank",
-                  href: "/estimates/" + _vm.estimateData.id
-                }
-              },
-              [_vm._v(_vm._s(_vm.trans.get("app.view_estimate")))]
-            )
+            })
           ]),
           _vm._v(" "),
-          _c("div", { staticClass: "form-group" }, [
+          _c(
+            "div",
+            { staticClass: "form-group col-md-3 d-flex align-items-end" },
+            [
+              _c("div", { staticClass: "switch-container" }, [
+                _c("label", { staticClass: "switch" }, [
+                  _c("input", {
+                    directives: [
+                      {
+                        name: "model",
+                        rawName: "v-model",
+                        value: _vm.estimateData.use_name_as_title,
+                        expression: "estimateData.use_name_as_title"
+                      }
+                    ],
+                    attrs: { type: "checkbox" },
+                    domProps: {
+                      checked: Array.isArray(_vm.estimateData.use_name_as_title)
+                        ? _vm._i(_vm.estimateData.use_name_as_title, null) > -1
+                        : _vm.estimateData.use_name_as_title
+                    },
+                    on: {
+                      change: [
+                        function($event) {
+                          var $$a = _vm.estimateData.use_name_as_title,
+                            $$el = $event.target,
+                            $$c = $$el.checked ? true : false
+                          if (Array.isArray($$a)) {
+                            var $$v = null,
+                              $$i = _vm._i($$a, $$v)
+                            if ($$el.checked) {
+                              $$i < 0 &&
+                                _vm.$set(
+                                  _vm.estimateData,
+                                  "use_name_as_title",
+                                  $$a.concat([$$v])
+                                )
+                            } else {
+                              $$i > -1 &&
+                                _vm.$set(
+                                  _vm.estimateData,
+                                  "use_name_as_title",
+                                  $$a.slice(0, $$i).concat($$a.slice($$i + 1))
+                                )
+                            }
+                          } else {
+                            _vm.$set(_vm.estimateData, "use_name_as_title", $$c)
+                          }
+                        },
+                        function($event) {
+                          return _vm.update()
+                        }
+                      ]
+                    }
+                  }),
+                  _vm._v(" "),
+                  _c("span", { staticClass: "slider round" })
+                ]),
+                _vm._v(
+                  "\n                " +
+                    _vm._s(_vm.trans.get("app.use_name_as_title")) +
+                    "\n            "
+                )
+              ])
+            ]
+          ),
+          _vm._v(" "),
+          _c("div", { staticClass: "form-group col-md-4" }, [
             _c("label", { attrs: { for: "currency_symbol" } }, [
               _vm._v(_vm._s(_vm.trans.get("app.currency_symbol")))
             ]),
@@ -45352,24 +45352,26 @@ var render = function() {
               attrs: { type: "text" },
               domProps: { value: _vm.estimateData.currency_settings.symbol },
               on: {
-                change: function($event) {
-                  return _vm.update()
-                },
-                input: function($event) {
-                  if ($event.target.composing) {
-                    return
+                input: [
+                  function($event) {
+                    if ($event.target.composing) {
+                      return
+                    }
+                    _vm.$set(
+                      _vm.estimateData.currency_settings,
+                      "symbol",
+                      $event.target.value
+                    )
+                  },
+                  function($event) {
+                    return _vm.updateDebounced()
                   }
-                  _vm.$set(
-                    _vm.estimateData.currency_settings,
-                    "symbol",
-                    $event.target.value
-                  )
-                }
+                ]
               }
             })
           ]),
           _vm._v(" "),
-          _c("div", { staticClass: "form-group" }, [
+          _c("div", { staticClass: "form-group col-md-4" }, [
             _c("label", { attrs: { for: "currency_decimal_separator" } }, [
               _vm._v(_vm._s(_vm.trans.get("app.currency_decimal_separator")))
             ]),
@@ -45389,24 +45391,26 @@ var render = function() {
                 value: _vm.estimateData.currency_settings.decimal_separator
               },
               on: {
-                change: function($event) {
-                  return _vm.update()
-                },
-                input: function($event) {
-                  if ($event.target.composing) {
-                    return
+                input: [
+                  function($event) {
+                    if ($event.target.composing) {
+                      return
+                    }
+                    _vm.$set(
+                      _vm.estimateData.currency_settings,
+                      "decimal_separator",
+                      $event.target.value
+                    )
+                  },
+                  function($event) {
+                    return _vm.updateDebounced()
                   }
-                  _vm.$set(
-                    _vm.estimateData.currency_settings,
-                    "decimal_separator",
-                    $event.target.value
-                  )
-                }
+                ]
               }
             })
           ]),
           _vm._v(" "),
-          _c("div", { staticClass: "form-group" }, [
+          _c("div", { staticClass: "form-group col-md-4" }, [
             _c("label", { attrs: { for: "currency_thousands_separator" } }, [
               _vm._v(_vm._s(_vm.trans.get("app.currency_thousands_separator")))
             ]),
@@ -45427,26 +45431,34 @@ var render = function() {
                 value: _vm.estimateData.currency_settings.thousands_separator
               },
               on: {
-                change: function($event) {
-                  return _vm.update()
-                },
-                input: function($event) {
-                  if ($event.target.composing) {
-                    return
+                input: [
+                  function($event) {
+                    if ($event.target.composing) {
+                      return
+                    }
+                    _vm.$set(
+                      _vm.estimateData.currency_settings,
+                      "thousands_separator",
+                      $event.target.value
+                    )
+                  },
+                  function($event) {
+                    return _vm.updateDebounced()
                   }
-                  _vm.$set(
-                    _vm.estimateData.currency_settings,
-                    "thousands_separator",
-                    $event.target.value
-                  )
-                }
+                ]
               }
             })
           ])
         ])
       : _vm._e(),
     _vm._v(" "),
+    _c("hr"),
+    _vm._v(" "),
     _c("div", { staticClass: "row mt-4" }, [
+      _c("div", { staticClass: "col-sm-12" }, [
+        _c("h5", [_vm._v(_vm._s(_vm.trans.get("app.estimate_content")))])
+      ]),
+      _vm._v(" "),
       _c(
         "div",
         { staticClass: "col-sm-12" },
@@ -46058,18 +46070,10 @@ var render = function() {
         [
           _vm.sectionData.type == "text"
             ? _c("small", { staticClass: "text-primary mb-4" }, [
-                _vm._v(
-                  _vm._s(_vm.trans.get("app.text_section")) +
-                    " " +
-                    _vm._s(_vm.sectionData.id)
-                )
+                _vm._v(_vm._s(_vm.trans.get("app.text_section")))
               ])
             : _c("small", { staticClass: "text-primary mb-4" }, [
-                _vm._v(
-                  _vm._s(_vm.trans.get("app.prices_section")) +
-                    " " +
-                    _vm._s(_vm.sectionData.id)
-                )
+                _vm._v(_vm._s(_vm.trans.get("app.prices_section")))
               ]),
           _vm._v(" "),
           _c("div", { staticClass: "mb-4 text-right" }, [

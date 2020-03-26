@@ -6,8 +6,9 @@
 
 <template>
     <div class="section p-2 mb-5" v-if="sectionData">
-        <small v-if="sectionData.type == 'text'" class="text-primary mb-4">{{ trans.get('app.text_section') }} {{ sectionData.id }}</small>
-        <small v-else class="text-primary mb-4">{{ trans.get('app.prices_section') }} {{ sectionData.id }}</small>
+        
+        <small v-if="sectionData.type == 'text'" class="text-primary mb-4">{{ trans.get('app.text_section') }}</small>
+        <small v-else class="text-primary mb-4">{{ trans.get('app.prices_section') }}</small>
         
         <div class="mb-4 text-right">
             <div>
