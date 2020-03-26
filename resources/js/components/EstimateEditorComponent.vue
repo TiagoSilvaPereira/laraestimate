@@ -1,12 +1,22 @@
+<style scoped>
+    .total-viewer {
+        display: inline-block;
+        align-items: center;
+        background: #eee;
+        border: 1px solid #ccc;
+        padding: 1.3em;
+    }
+
+    .total-viewer h3 {
+        margin: 0px;
+    }
+</style>
 <template>
     <div>
         <div class="row" v-if="estimateData">
             <div class="form-group col-md-9">
                 <label>{{ trans.get('app.labels.name') }}</label>
                 <input type="text" class="form-control" v-model="estimateData.name" @input="updateDebounced()">
-                
-                <!-- <h3>{{ trans.get('app.labels.total') }} {{ formattedTotal }}</h3>
-                <a target="_blank" :href="'/estimates/' + estimateData.id" class="btn btn-secondary">{{ trans.get('app.view_estimate') }}</a> -->
             </div>
 
             <div class="form-group col-md-3 d-flex align-items-end">
@@ -33,17 +43,23 @@
                 <label for="currency_thousands_separator">{{ trans.get('app.currency_thousands_separator') }}</label>
                 <input type="text" class="form-control" v-model="estimateData.currency_settings.thousands_separator" @input="updateDebounced()">
             </div>
+
+            <div class="col-md-12 text-right">
+                <div class="total-viewer">
+                    <h3>{{ trans.get('app.labels.total') }} {{ formattedTotal }}</h3>
+                </div>
+            </div>
         </div>
         
         <hr>
 
         <div class="row mt-4">
 
-            <div class="col-sm-12">
+            <div class="col-sm-12 mt-5">
                 <h5>{{ trans.get('app.estimate_content') }}</h5>
             </div>
 
-            <div class="col-sm-12">
+            <div class="col-sm-12 mt-4">
                 <draggable v-model="sections" draggable=".item" handle=".handle" @end="orderChanged()">
                     <div class="item" v-for="(section, index) in sections" :key="section.id">
                         <estimate-section 

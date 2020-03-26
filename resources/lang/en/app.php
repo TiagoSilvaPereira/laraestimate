@@ -12,7 +12,7 @@ return [
     'are_you_sure' => 'Are you sure?',
     'settings_saved_successfully' => 'Settings saved successfully',
     'edit_settings' => 'Edit Settings',
-    'estimate_content' => 'Estimate Content',
+    'estimate_content' => 'Estimate Body Content',
 
     'item_duration' => 'Item Duration (Optional)',
     'use_name_as_title' => 'Use name as title?',

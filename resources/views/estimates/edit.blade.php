@@ -14,9 +14,9 @@
         <div class="col mb-4">
             <div class="card">
                 <div class="card-body">
-                    <h4 class="card-title">@lang('app.edit_estimate')</h4>
+                    <h4 class="card-title">@lang('app.edit_estimate') <small><a target="_blank" href="{{ route('estimates.view', $estimate) }}">@lang('app.view_estimate')</a></small></h4>
 
-                    <div>
+                    <div class="mt-4">
                         <estimate-editor-component estimate="{{ $estimate->id }}"></estimate-editor-component>
                     </div>
 
