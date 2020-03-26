@@ -104,14 +104,14 @@ export default {
     computed: {
         total() {
             let total = this.sections.reduce((sum, section) => {
-                return sum + (parseFloat(section.total) || 0); 
+                return sum + parseFloat(section.total || 0); 
             }, 0);
 
             return parseFloat(total);
         },
 
         formattedTotal() {
-            return this.formatMoney(this.price);
+            return this.formatMoney(this.total);
         }
     },
 
@@ -162,7 +162,11 @@ export default {
         },
 
         updateSection(sectionData, index) {
-            this.sections[index] = sectionData;
+            this.$set(this.sections, index, sectionData);
+            
+            let total = this.sections.reduce((sum, section) => {
+                return sum + parseFloat(section.total || 0); 
+            }, 0)
         },
 
         removeSection(index, type) {
@@ -207,7 +211,7 @@ export default {
             let currencySettings = this.estimateData.currency_settings;
             
             return currencySettings.symbol + ' ' + formatMoney(
-                this.price, 
+                money, 
                 2, 
                 currencySettings.decimal_separator, 
                 currencySettings.thousands_separator

@@ -2010,12 +2010,12 @@ __webpack_require__.r(__webpack_exports__);
   computed: {
     total: function total() {
       var total = this.sections.reduce(function (sum, section) {
-        return sum + (parseFloat(section.total) || 0);
+        return sum + parseFloat(section.total || 0);
       }, 0);
       return parseFloat(total);
     },
     formattedTotal: function formattedTotal() {
-      return this.formatMoney(this.price);
+      return this.formatMoney(this.total);
     }
   },
   methods: {
@@ -2064,7 +2064,10 @@ __webpack_require__.r(__webpack_exports__);
       }, 500);
     },
     updateSection: function updateSection(sectionData, index) {
-      this.sections[index] = sectionData;
+      this.$set(this.sections, index, sectionData);
+      var total = this.sections.reduce(function (sum, section) {
+        return sum + parseFloat(section.total || 0);
+      }, 0);
     },
     removeSection: function removeSection(index, type) {
       this.sections.splice(index, 1);
@@ -2109,7 +2112,7 @@ __webpack_require__.r(__webpack_exports__);
     }(function (money) {
       if (!this.estimateData) return '-';
       var currencySettings = this.estimateData.currency_settings;
-      return currencySettings.symbol + ' ' + formatMoney(this.price, 2, currencySettings.decimal_separator, currencySettings.thousands_separator).toString();
+      return currencySettings.symbol + ' ' + formatMoney(money, 2, currencySettings.decimal_separator, currencySettings.thousands_separator).toString();
     })
   }
 });
@@ -2616,7 +2619,7 @@ __webpack_require__.r(__webpack_exports__);
         return sum + (parseFloat(item.price) || 0);
       }, 0);
       total = parseFloat(total);
-      this.sectionData.total = total;
+      this.$set(this.sectionData, 'total', total);
       return total;
     },
     formattedTotal: function formattedTotal() {
@@ -2632,6 +2635,7 @@ __webpack_require__.r(__webpack_exports__);
     init: function init() {
       this.sectionData = this.section;
       this.madeFirstInput = this.sectionData.madeFirstInput != undefined ? this.sectionData.madeFirstInput : true;
+      this.$emit('sectionUpdated', this.sectionData);
     },
     saveSectionWithDebounce: _.debounce(function () {
       this.saveSection();
@@ -2642,6 +2646,7 @@ __webpack_require__.r(__webpack_exports__);
         return;
       }
 
+      this.$emit('sectionUpdated', this.sectionData);
       this.showSavingLabel();
 
       if (!this.sectionData.id) {

@@ -93,7 +93,7 @@ export default {
 
             total = parseFloat(total);
 
-            this.sectionData.total = total;
+            this.$set(this.sectionData, 'total', total);
 
             return total;
         },
@@ -119,6 +119,7 @@ export default {
         init() {
             this.sectionData = this.section;
             this.madeFirstInput = (this.sectionData.madeFirstInput != undefined) ? this.sectionData.madeFirstInput : true;
+            this.$emit('sectionUpdated', this.sectionData);
         },
 
         saveSectionWithDebounce: _.debounce(function() {
@@ -130,6 +131,8 @@ export default {
                 this.madeFirstInput = true;
                 return;
             }
+           
+            this.$emit('sectionUpdated', this.sectionData);
             
             this.showSavingLabel();
 
