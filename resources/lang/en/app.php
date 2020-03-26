@@ -52,7 +52,9 @@ return [
         'total' => 'Total',
         'move' => 'Move',
         'remove' => 'Remove',
-        'logo' => 'Logo Image'
+        'logo' => 'Logo Image',
+        'show' => 'Show',
+        'duplicate' => 'Duplicate'
     ],
 
     'mail' => [

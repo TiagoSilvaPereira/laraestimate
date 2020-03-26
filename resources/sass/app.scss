@@ -11,6 +11,21 @@
 
 @import './switch';
 
+body {
+    font-size: 1.2rem;
+}
+
 .breadcrumb {
     background-color: transparent;
+}
+
+.card {
+    border-radius: 0px;
+    padding: 1em;
+    border: none;
+    box-shadow: 0 2px 25px -4px rgba(0,0,0,0.15);
+}
+
+.btn, .form-control, .page-link {
+    border-radius: 0px !important;
 }

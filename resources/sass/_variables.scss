@@ -7,13 +7,17 @@ $font-size-base: 0.9rem;
 $line-height-base: 1.6;
 
 // Colors
-$blue: #3490dc;
+$blue: #3498db;
 $indigo: #6574cd;
-$purple: #9561e2;
+$purple: #9b59b6;
 $pink: #f66d9b;
-$red: #e3342f;
-$orange: #f6993f;
-$yellow: #ffed4a;
-$green: #38c172;
+$red: #e74c3c;
+$orange: #ff6348;
+$yellow: #ffa502;
+$green: #2ecc71;
 $teal: #4dc0b5;
 $cyan: #6cb2eb;
+$turquoise: #1abc9c;
+
+$primary:       $turquoise !default;
+$secondary:     #2f3542 !default;
