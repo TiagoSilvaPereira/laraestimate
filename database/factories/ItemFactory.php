@@ -2,7 +2,7 @@
 
 /** @var \Illuminate\Database\Eloquent\Factory $factory */
 
-use App\Models\Section;
+use App\Models\Item;
 use Illuminate\Support\Str;
 use Faker\Generator as Faker;
 
@@ -17,9 +17,11 @@ use Faker\Generator as Faker;
 |
 */
 
-$factory->define(Section::class, function (Faker $faker) {
+$factory->define(Item::class, function (Faker $faker) {
     return [
-        'text' => Str::title($faker->sentence(20)),
-        'type' => 'text',
+        'description' => Str::title($faker->sentence(5)),
+        'duration' => null,
+        'price' => rand(49,199),
+        'obligatory' => false,
     ];
 });
