@@ -3,7 +3,7 @@
 use App\Models\User;
 use Illuminate\Database\Seeder;
 
-class UsersSeeder extends Seeder
+class AdminUserSeeder extends Seeder
 {
     /**
      * Run the database seeds.
@@ -12,8 +12,8 @@ class UsersSeeder extends Seeder
      */
     public function run()
     {
-        if(app()->environment() == 'local') {
-            $this->call(AdminUserSeeder::class);
-        }
+        factory(User::class, 1)->create([
+            'email' => 'admin@admin.com'
+        ]);
     }
 }
