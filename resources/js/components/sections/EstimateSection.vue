@@ -25,7 +25,7 @@
 
             <div class="mt-4" v-if="sectionData.type == 'prices'">
                 
-                 <draggable v-model="items" draggable=".item" handle=".handle" @end="saveSection()">
+                 <draggable v-model="sectionData.items" draggable=".item" handle=".handle" @end="saveSection()">
                     <div class="row mt-2 item" v-for="(item, index) in sectionData.items" :key="item.id">
                         <div class="col-md-2">
                             <div class="switch-container">
@@ -45,7 +45,7 @@
                         <div class="col-md-2">
                             <input type="number" step="0.1" class="form-control" :placeholder="trans.get('app.item_price')" v-model="item.price" @input="saveSectionWithDebounce()" @blur="saveSection()">
                         </div>
-                        <div class="col-md-1">
+                        <div class="col-md-1 text-right">
                             <button class="btn btn-sm btn-outline-secondary mt-2 handle" :disabled="!item.id" :title="trans.get('app.labels.move')"><i class="icon ion-md-move"></i></button>
                             <button class="btn btn-sm btn-outline-danger mt-2" @click="removeItem(index)"><i class="icon ion-md-trash"></i></button>
                         </div>

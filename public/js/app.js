@@ -46254,11 +46254,11 @@ var render = function() {
                           }
                         },
                         model: {
-                          value: _vm.items,
+                          value: _vm.sectionData.items,
                           callback: function($$v) {
-                            _vm.items = $$v
+                            _vm.$set(_vm.sectionData, "items", $$v)
                           },
-                          expression: "items"
+                          expression: "sectionData.items"
                         }
                       },
                       _vm._l(_vm.sectionData.items, function(item, index) {
@@ -46453,7 +46453,7 @@ var render = function() {
                               })
                             ]),
                             _vm._v(" "),
-                            _c("div", { staticClass: "col-md-1" }, [
+                            _c("div", { staticClass: "col-md-1 text-right" }, [
                               _c(
                                 "button",
                                 {
