@@ -20,6 +20,15 @@ class Item extends Model
         'obligatory' => 'boolean'
     ];
 
+    public static function boot()
+    {
+        parent::boot();
+
+        self::creating(function($item) {
+            $item->position = $item->section->getNextItemPosition();
+        });
+    }
+
     public function section()
     {
         return $this->belongsTo(Section::class);

@@ -21,6 +21,8 @@ class CreateItemsTable extends Migration
             $table->decimal('price')->nullable()->default(0);
             $table->boolean('obligatory')->default(false);
 
+            $table->smallInteger('position')->unsigned()->default(0);
+
             $table->char('section_id', 36);
             $table->foreign('section_id')
                 ->references('id')

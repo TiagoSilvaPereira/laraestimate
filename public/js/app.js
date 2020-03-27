@@ -2534,6 +2534,13 @@ __webpack_require__.r(__webpack_exports__);
 "use strict";
 __webpack_require__.r(__webpack_exports__);
 /* harmony import */ var vue_trix__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! vue-trix */ "./node_modules/vue-trix/dist/vue-trix.esm.js");
+/* harmony import */ var vuedraggable__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! vuedraggable */ "./node_modules/vuedraggable/dist/vuedraggable.common.js");
+/* harmony import */ var vuedraggable__WEBPACK_IMPORTED_MODULE_1___default = /*#__PURE__*/__webpack_require__.n(vuedraggable__WEBPACK_IMPORTED_MODULE_1__);
+//
+//
+//
+//
+//
 //
 //
 //
@@ -2597,9 +2604,11 @@ __webpack_require__.r(__webpack_exports__);
 //
 //
 
+
 /* harmony default export */ __webpack_exports__["default"] = ({
   components: {
-    VueTrix: vue_trix__WEBPACK_IMPORTED_MODULE_0__["default"]
+    VueTrix: vue_trix__WEBPACK_IMPORTED_MODULE_0__["default"],
+    draggable: vuedraggable__WEBPACK_IMPORTED_MODULE_1___default.a
   },
   props: ['estimate', 'section', 'currencySettings'],
   data: function data() {
@@ -46214,7 +46223,7 @@ var render = function() {
             _c("VueTrix", {
               attrs: {
                 placeholder:
-                  "Add tour section content here. You can use *TOTAL_PRICE* to show the estimate total price in any place, and *TOTAL_SELECTED_PRICE* to show the total selected price."
+                  "Add your section content here. You can use *TOTAL_PRICE* to show the estimate total price in any place, and *TOTAL_SELECTED_PRICE* to show the total selected price."
               },
               on: {
                 input: function($event) {
@@ -46235,210 +46244,248 @@ var render = function() {
                   "div",
                   { staticClass: "mt-4" },
                   [
-                    _vm._l(_vm.sectionData.items, function(item, index) {
-                      return _c(
-                        "div",
-                        { key: index, staticClass: "row mt-2" },
-                        [
-                          _c("div", { staticClass: "col-md-2" }, [
-                            _c("div", { staticClass: "switch-container" }, [
-                              _c("label", { staticClass: "switch" }, [
-                                _c("input", {
-                                  directives: [
-                                    {
-                                      name: "model",
-                                      rawName: "v-model",
-                                      value: item.obligatory,
-                                      expression: "item.obligatory"
+                    _c(
+                      "draggable",
+                      {
+                        attrs: { draggable: ".item", handle: ".handle" },
+                        on: {
+                          end: function($event) {
+                            return _vm.saveSection()
+                          }
+                        },
+                        model: {
+                          value: _vm.items,
+                          callback: function($$v) {
+                            _vm.items = $$v
+                          },
+                          expression: "items"
+                        }
+                      },
+                      _vm._l(_vm.sectionData.items, function(item, index) {
+                        return _c(
+                          "div",
+                          { key: item.id, staticClass: "row mt-2 item" },
+                          [
+                            _c("div", { staticClass: "col-md-2" }, [
+                              _c("div", { staticClass: "switch-container" }, [
+                                _c("label", { staticClass: "switch" }, [
+                                  _c("input", {
+                                    directives: [
+                                      {
+                                        name: "model",
+                                        rawName: "v-model",
+                                        value: item.obligatory,
+                                        expression: "item.obligatory"
+                                      }
+                                    ],
+                                    attrs: { type: "checkbox" },
+                                    domProps: {
+                                      checked: Array.isArray(item.obligatory)
+                                        ? _vm._i(item.obligatory, null) > -1
+                                        : item.obligatory
+                                    },
+                                    on: {
+                                      change: [
+                                        function($event) {
+                                          var $$a = item.obligatory,
+                                            $$el = $event.target,
+                                            $$c = $$el.checked ? true : false
+                                          if (Array.isArray($$a)) {
+                                            var $$v = null,
+                                              $$i = _vm._i($$a, $$v)
+                                            if ($$el.checked) {
+                                              $$i < 0 &&
+                                                _vm.$set(
+                                                  item,
+                                                  "obligatory",
+                                                  $$a.concat([$$v])
+                                                )
+                                            } else {
+                                              $$i > -1 &&
+                                                _vm.$set(
+                                                  item,
+                                                  "obligatory",
+                                                  $$a
+                                                    .slice(0, $$i)
+                                                    .concat($$a.slice($$i + 1))
+                                                )
+                                            }
+                                          } else {
+                                            _vm.$set(item, "obligatory", $$c)
+                                          }
+                                        },
+                                        function($event) {
+                                          return _vm.saveSection()
+                                        }
+                                      ]
+                                    }
+                                  }),
+                                  _vm._v(" "),
+                                  _c("span", { staticClass: "slider round" })
+                                ]),
+                                _vm._v(
+                                  "\n                            " +
+                                    _vm._s(_vm.trans.get("app.obligatory")) +
+                                    "\n                        "
+                                )
+                              ])
+                            ]),
+                            _vm._v(" "),
+                            _c("div", { staticClass: "col-md-5" }, [
+                              _c("input", {
+                                directives: [
+                                  {
+                                    name: "model",
+                                    rawName: "v-model",
+                                    value: item.description,
+                                    expression: "item.description"
+                                  }
+                                ],
+                                staticClass: "form-control",
+                                attrs: {
+                                  type: "text",
+                                  placeholder: _vm.trans.get(
+                                    "app.item_description"
+                                  )
+                                },
+                                domProps: { value: item.description },
+                                on: {
+                                  input: [
+                                    function($event) {
+                                      if ($event.target.composing) {
+                                        return
+                                      }
+                                      _vm.$set(
+                                        item,
+                                        "description",
+                                        $event.target.value
+                                      )
+                                    },
+                                    function($event) {
+                                      return _vm.saveSectionWithDebounce()
                                     }
                                   ],
-                                  attrs: { type: "checkbox" },
-                                  domProps: {
-                                    checked: Array.isArray(item.obligatory)
-                                      ? _vm._i(item.obligatory, null) > -1
-                                      : item.obligatory
-                                  },
-                                  on: {
-                                    change: [
-                                      function($event) {
-                                        var $$a = item.obligatory,
-                                          $$el = $event.target,
-                                          $$c = $$el.checked ? true : false
-                                        if (Array.isArray($$a)) {
-                                          var $$v = null,
-                                            $$i = _vm._i($$a, $$v)
-                                          if ($$el.checked) {
-                                            $$i < 0 &&
-                                              _vm.$set(
-                                                item,
-                                                "obligatory",
-                                                $$a.concat([$$v])
-                                              )
-                                          } else {
-                                            $$i > -1 &&
-                                              _vm.$set(
-                                                item,
-                                                "obligatory",
-                                                $$a
-                                                  .slice(0, $$i)
-                                                  .concat($$a.slice($$i + 1))
-                                              )
-                                          }
-                                        } else {
-                                          _vm.$set(item, "obligatory", $$c)
-                                        }
-                                      },
-                                      function($event) {
-                                        return _vm.saveSection()
-                                      }
-                                    ]
+                                  blur: function($event) {
+                                    return _vm.saveSection()
                                   }
-                                }),
-                                _vm._v(" "),
-                                _c("span", { staticClass: "slider round" })
-                              ]),
-                              _vm._v(
-                                "\n                        " +
-                                  _vm._s(_vm.trans.get("app.obligatory")) +
-                                  "\n                    "
+                                }
+                              })
+                            ]),
+                            _vm._v(" "),
+                            _c("div", { staticClass: "col-md-2" }, [
+                              _c("input", {
+                                directives: [
+                                  {
+                                    name: "model",
+                                    rawName: "v-model",
+                                    value: item.duration,
+                                    expression: "item.duration"
+                                  }
+                                ],
+                                staticClass: "form-control",
+                                attrs: {
+                                  type: "text",
+                                  placeholder: _vm.trans.get(
+                                    "app.item_duration"
+                                  )
+                                },
+                                domProps: { value: item.duration },
+                                on: {
+                                  input: [
+                                    function($event) {
+                                      if ($event.target.composing) {
+                                        return
+                                      }
+                                      _vm.$set(
+                                        item,
+                                        "duration",
+                                        $event.target.value
+                                      )
+                                    },
+                                    function($event) {
+                                      return _vm.saveSectionWithDebounce()
+                                    }
+                                  ],
+                                  blur: function($event) {
+                                    return _vm.saveSection()
+                                  }
+                                }
+                              })
+                            ]),
+                            _vm._v(" "),
+                            _c("div", { staticClass: "col-md-2" }, [
+                              _c("input", {
+                                directives: [
+                                  {
+                                    name: "model",
+                                    rawName: "v-model",
+                                    value: item.price,
+                                    expression: "item.price"
+                                  }
+                                ],
+                                staticClass: "form-control",
+                                attrs: {
+                                  type: "number",
+                                  step: "0.1",
+                                  placeholder: _vm.trans.get("app.item_price")
+                                },
+                                domProps: { value: item.price },
+                                on: {
+                                  input: [
+                                    function($event) {
+                                      if ($event.target.composing) {
+                                        return
+                                      }
+                                      _vm.$set(
+                                        item,
+                                        "price",
+                                        $event.target.value
+                                      )
+                                    },
+                                    function($event) {
+                                      return _vm.saveSectionWithDebounce()
+                                    }
+                                  ],
+                                  blur: function($event) {
+                                    return _vm.saveSection()
+                                  }
+                                }
+                              })
+                            ]),
+                            _vm._v(" "),
+                            _c("div", { staticClass: "col-md-1" }, [
+                              _c(
+                                "button",
+                                {
+                                  staticClass:
+                                    "btn btn-sm btn-outline-secondary mt-2 handle",
+                                  attrs: {
+                                    disabled: !item.id,
+                                    title: _vm.trans.get("app.labels.move")
+                                  }
+                                },
+                                [_c("i", { staticClass: "icon ion-md-move" })]
+                              ),
+                              _vm._v(" "),
+                              _c(
+                                "button",
+                                {
+                                  staticClass:
+                                    "btn btn-sm btn-outline-danger mt-2",
+                                  on: {
+                                    click: function($event) {
+                                      return _vm.removeItem(index)
+                                    }
+                                  }
+                                },
+                                [_c("i", { staticClass: "icon ion-md-trash" })]
                               )
                             ])
-                          ]),
-                          _vm._v(" "),
-                          _c("div", { staticClass: "col-md-5" }, [
-                            _c("input", {
-                              directives: [
-                                {
-                                  name: "model",
-                                  rawName: "v-model",
-                                  value: item.description,
-                                  expression: "item.description"
-                                }
-                              ],
-                              staticClass: "form-control",
-                              attrs: {
-                                type: "text",
-                                placeholder: _vm.trans.get(
-                                  "app.item_description"
-                                )
-                              },
-                              domProps: { value: item.description },
-                              on: {
-                                input: [
-                                  function($event) {
-                                    if ($event.target.composing) {
-                                      return
-                                    }
-                                    _vm.$set(
-                                      item,
-                                      "description",
-                                      $event.target.value
-                                    )
-                                  },
-                                  function($event) {
-                                    return _vm.saveSectionWithDebounce()
-                                  }
-                                ],
-                                blur: function($event) {
-                                  return _vm.saveSection()
-                                }
-                              }
-                            })
-                          ]),
-                          _vm._v(" "),
-                          _c("div", { staticClass: "col-md-2" }, [
-                            _c("input", {
-                              directives: [
-                                {
-                                  name: "model",
-                                  rawName: "v-model",
-                                  value: item.duration,
-                                  expression: "item.duration"
-                                }
-                              ],
-                              staticClass: "form-control",
-                              attrs: {
-                                type: "text",
-                                placeholder: _vm.trans.get("app.item_duration")
-                              },
-                              domProps: { value: item.duration },
-                              on: {
-                                input: [
-                                  function($event) {
-                                    if ($event.target.composing) {
-                                      return
-                                    }
-                                    _vm.$set(
-                                      item,
-                                      "duration",
-                                      $event.target.value
-                                    )
-                                  },
-                                  function($event) {
-                                    return _vm.saveSectionWithDebounce()
-                                  }
-                                ],
-                                blur: function($event) {
-                                  return _vm.saveSection()
-                                }
-                              }
-                            })
-                          ]),
-                          _vm._v(" "),
-                          _c("div", { staticClass: "col-md-2" }, [
-                            _c("input", {
-                              directives: [
-                                {
-                                  name: "model",
-                                  rawName: "v-model",
-                                  value: item.price,
-                                  expression: "item.price"
-                                }
-                              ],
-                              staticClass: "form-control",
-                              attrs: {
-                                type: "number",
-                                step: "0.1",
-                                placeholder: _vm.trans.get("app.item_price")
-                              },
-                              domProps: { value: item.price },
-                              on: {
-                                input: [
-                                  function($event) {
-                                    if ($event.target.composing) {
-                                      return
-                                    }
-                                    _vm.$set(item, "price", $event.target.value)
-                                  },
-                                  function($event) {
-                                    return _vm.saveSectionWithDebounce()
-                                  }
-                                ],
-                                blur: function($event) {
-                                  return _vm.saveSection()
-                                }
-                              }
-                            })
-                          ]),
-                          _vm._v(" "),
-                          _c("div", { staticClass: "col-md-1" }, [
-                            _c(
-                              "button",
-                              {
-                                staticClass:
-                                  "btn btn-sm btn-outline-danger mt-2",
-                                on: {
-                                  click: function($event) {
-                                    return _vm.removeItem(index)
-                                  }
-                                }
-                              },
-                              [_c("i", { staticClass: "icon ion-md-remove" })]
-                            )
-                          ])
-                        ]
-                      )
-                    }),
+                          ]
+                        )
+                      }),
+                      0
+                    ),
                     _vm._v(" "),
                     _c("div", { staticClass: "row mt-2" }, [
                       _c(
@@ -46472,7 +46519,7 @@ var render = function() {
                       ]
                     )
                   ],
-                  2
+                  1
                 )
               : _vm._e()
           ],

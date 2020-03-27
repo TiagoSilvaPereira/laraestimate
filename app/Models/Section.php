@@ -35,7 +35,7 @@ class Section extends Model
     public function items()
     {
         return $this->hasMany(Item::class)
-            ->orderBy('created_at', 'asc');
+            ->orderBy('position');
     }
 
     public function getPresentableTextAttribute()
@@ -55,5 +55,24 @@ class Section extends Model
         collect($items)->each(function($item) {
             $this->items()->create($item);
         });
+    }
+
+    public function getNextItemPosition()
+    {
+        return $this->items()->max('position') + 1;
+    }
+
+    public function saveItemsPositions(?array $positions)
+    {
+        if(empty($positions)) return;
+
+        foreach ($positions as $itemId => $position) {
+            $item = Item::find($sectionId);
+
+            if($item) {
+                $item->position = $position;
+                $item->save();
+            }
+        }        
     }
 }
