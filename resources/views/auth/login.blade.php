@@ -4,7 +4,7 @@
 <div class="container">
     <div class="row justify-content-center">
         <div class="col-md-8">
-            <div class="card">
+            <div class="card animated slideInLeft faster">
                 <h4 class="card-title">{{ __('Login') }}</h4>
 
                 <div class="card-body mt-4">

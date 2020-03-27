@@ -46472,6 +46472,9 @@ var render = function() {
                                 {
                                   staticClass:
                                     "btn btn-sm btn-outline-danger mt-2",
+                                  attrs: {
+                                    title: _vm.trans.get("app.labels.remove")
+                                  },
                                   on: {
                                     click: function($event) {
                                       return _vm.removeItem(index)

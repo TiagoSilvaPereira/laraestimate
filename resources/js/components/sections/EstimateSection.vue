@@ -47,7 +47,7 @@
                         </div>
                         <div class="col-md-1 text-right">
                             <button class="btn btn-sm btn-outline-secondary mt-2 handle" :disabled="!item.id" :title="trans.get('app.labels.move')"><i class="icon ion-md-move"></i></button>
-                            <button class="btn btn-sm btn-outline-danger mt-2" @click="removeItem(index)"><i class="icon ion-md-trash"></i></button>
+                            <button class="btn btn-sm btn-outline-danger mt-2"  :title="trans.get('app.labels.remove')"@click="removeItem(index)"><i class="icon ion-md-trash"></i></button>
                         </div>
                     </div>
                 </draggable>
