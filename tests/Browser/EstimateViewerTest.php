@@ -87,7 +87,7 @@ class EstimateViewerTest extends DuskTestCase
             $selectedPrice = $pricesSum - $estimate->items()->first()->price;
 
             $browser->waitFor('#estimateDocument')
-                ->click('table tr:nth-child(2) .check-item')
+                ->click('.check-item')
                 ->pause('300')
                 ->assertSee('$ ' . number_format($selectedPrice, 2));
         });
