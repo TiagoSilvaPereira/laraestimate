@@ -196,14 +196,14 @@ export default {
         },
 
         renderPrices() {
-            let totalPriceElements = document.querySelectorAll('.total-price');
-            let totalSelectedPriceElements = document.querySelectorAll('.total-selected-price');
+            let totalPriceElements = document.querySelectorAll('.total-calc-price');
+            let totalSelectedPriceElements = document.querySelectorAll('.total-selected-calc-price');
 
-            document.querySelectorAll('.total-price').forEach(priceElement => {
+            totalPriceElements.forEach(priceElement => {
                 priceElement.innerHTML = this.formattedPrice(this.estimateTotalPrice);
             });
 
-            document.querySelectorAll('.total-selected-price').forEach(priceElement => {
+            totalSelectedPriceElements.forEach(priceElement => {
                 priceElement.innerHTML = this.formattedPrice(this.estimateTotalSelectedPrice);
             });
         },

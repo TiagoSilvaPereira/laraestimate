@@ -42,8 +42,8 @@ class Section extends Model
     {
         $text = $this->text;
 
-        $text = str_replace('*TOTAL_PRICE*', '<span class="total-price"></span>', $text);
-        $text = str_replace('*TOTAL_SELECTED_PRICE*', '<span class="total-selected-price"><span/>', $text);
+        $text = str_replace('*TOTAL_PRICE*', '<span class="total-calc-price"></span>', $text);
+        $text = str_replace('*TOTAL_SELECTED_PRICE*', '<span class="total-selected-calc-price"></span>', $text);
 
         return $text;
     }

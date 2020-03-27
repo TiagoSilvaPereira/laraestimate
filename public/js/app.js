@@ -2308,12 +2308,12 @@ __webpack_require__.r(__webpack_exports__);
     renderPrices: function renderPrices() {
       var _this4 = this;
 
-      var totalPriceElements = document.querySelectorAll('.total-price');
-      var totalSelectedPriceElements = document.querySelectorAll('.total-selected-price');
-      document.querySelectorAll('.total-price').forEach(function (priceElement) {
+      var totalPriceElements = document.querySelectorAll('.total-calc-price');
+      var totalSelectedPriceElements = document.querySelectorAll('.total-selected-calc-price');
+      totalPriceElements.forEach(function (priceElement) {
         priceElement.innerHTML = _this4.formattedPrice(_this4.estimateTotalPrice);
       });
-      document.querySelectorAll('.total-selected-price').forEach(function (priceElement) {
+      totalSelectedPriceElements.forEach(function (priceElement) {
         priceElement.innerHTML = _this4.formattedPrice(_this4.estimateTotalSelectedPrice);
       });
     },
