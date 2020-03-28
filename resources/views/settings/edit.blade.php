@@ -46,7 +46,7 @@
                             <input name="currency_thousands_separator" type="text" class="form-control" value="{{ $setting->currency_thousands_separator ?? '' }}">
                         </div>
 
-                        <button class="btn btn-primary">@lang('app.labels.save')</button>
+                        <button class="btn btn-primary float-right"><i class="icon ion-md-save"></i> @lang('app.labels.save')</button>
 
                     </form>
 
