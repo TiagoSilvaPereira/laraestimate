@@ -21,7 +21,7 @@ $factory->define(Item::class, function (Faker $faker) {
     return [
         'description' => Str::title($faker->sentence(5)),
         'duration' => null,
-        'price' => rand(49,199),
+        'price' => rand(199,599),
         'obligatory' => false,
     ];
 });
