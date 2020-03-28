@@ -17,6 +17,10 @@ Route::get('/', function () {
     return view('welcome');
 });
 
+Route::get('/preview/blocked', function() {
+    return view('preview-blocked');
+});
+
 Auth::routes(['register' => false]);
 
 Route::prefix('/')->middleware('auth')->group(function () {

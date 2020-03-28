@@ -14,6 +14,8 @@ class UserController extends Controller
     
     public function index(Request $request)
     {
+        $this->authorize('view-any', [User::class]);
+
         $search = $request->search ?? '';
         $users = User::searchLatestPaginated($search);
 
@@ -22,6 +24,8 @@ class UserController extends Controller
 
     public function create()
     {
+        $this->authorize('create', [User::class]);
+
         return view('users.create');
     }
 
