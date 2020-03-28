@@ -19,17 +19,11 @@ Route::get('/', function () {
 
 Route::get('/preview/blocked', function() {
     return view('preview-blocked');
-});
+})->name('preview.blocked');
 
 Auth::routes(['register' => false]);
 
 Route::prefix('/')->middleware('auth')->group(function () {
-    
-    // Settings
-    Route::get('/settings', 'SettingController@edit')->name('settings.edit');
-    Route::put('/settings', 'SettingController@update')->name('settings.update');
-    Route::post('/settings/logo', 'SettingController@storeLogo')->name('settings.image.store');
-    Route::delete('/settings/logo', 'SettingController@removeLogo')->name('settings.image.remove');
 
     // Estimates
     Route::resource('estimates', 'EstimateController');
@@ -38,8 +32,18 @@ Route::prefix('/')->middleware('auth')->group(function () {
     // Estimate Sections
     Route::apiResource('estimates/{estimate}/sections', 'SectionController');
 
-    // Users
-    Route::resource('users', 'UserController');
+    Route::middleware('block.on.preview')->group(function() {
+        
+        // Settings
+        Route::get('/settings', 'SettingController@edit')->name('settings.edit');
+        Route::put('/settings', 'SettingController@update')->name('settings.update');
+        Route::post('/settings/logo', 'SettingController@storeLogo')->name('settings.image.store');
+        Route::delete('/settings/logo', 'SettingController@removeLogo')->name('settings.image.remove');
+
+        // Users
+        Route::resource('users', 'UserController')->middleware('block.on.preview');
+
+    });
 
 });
 

@@ -20,6 +20,8 @@
                         
                         @csrf
                         @method('PUT')
+                        
+                        <div class="alert alert-warning mb-4">Logo upload is disabled on <b>Preview Mode</b></div>
 
                         <div class="form-group">
                             <label for="image">@lang('app.labels.logo')</label>
