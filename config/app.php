@@ -32,7 +32,7 @@ return [
      * This indicates if the application is in preview mode or not. Once in preview mode,
      * some operations like editing users, etc aren't allowed
      */
-    'preview' => env('APP_PREVIEW', false),
+    'preview' => (bool) env('APP_PREVIEW', false),
 
     /*
     |--------------------------------------------------------------------------
