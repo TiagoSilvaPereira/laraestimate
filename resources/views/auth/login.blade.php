@@ -12,7 +12,7 @@
                     @if(config('app.preview'))
                     <div class="alert alert-info mb-5">
                         <h4 class="alert-heading">Preview Mode</h4>
-                        Log in with e-mail <b>admin@admin.com</b> and password <b>password</b>. The data on preview mode is refreshed hourly.
+                        Log in with e-mail <b>admin@admin.com</b> and password <b>password</b>. The data on preview mode is refreshed every 03 hours.
                     </div>
                     @endif
 
