@@ -30,7 +30,7 @@
                 <div class="card-body">
                     <h4 class="card-title">{{ $estimate->name }}</h4>
 
-                    <p class="card-subtitle">{{ $estimate->created_at->diffForHumans() }}</p>
+                    <p class="card-subtitle text-black-50">{{ $estimate->created_at->diffForHumans() }}</p>
 
                     <div class="row mt-2">
                         <div class="col">
