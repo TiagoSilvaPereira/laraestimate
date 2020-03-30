@@ -25,7 +25,7 @@ class Kernel extends ConsoleKernel
      */
     protected function schedule(Schedule $schedule)
     {
-        $schedule->command(ClearEstimates::class)->everyMinute();
+        $schedule->command(ClearEstimates::class)->hourly();
     }
 
     /**
