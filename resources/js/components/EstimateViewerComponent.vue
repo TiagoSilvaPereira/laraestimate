@@ -1,4 +1,11 @@
 <style>
+    .fixed-buttons {
+        position: fixed;
+        top: 0;
+        right: 0;
+        z-index: 1030;
+    }
+
     #estimateMainSection {
         min-height: 100vh;
         background-color: #eee;
@@ -50,7 +57,7 @@
             </div>
         </div>
 
-        <div class="fixed-top p-4 text-right" v-if="estimateData">
+        <div class="fixed-buttons p-4 text-right" v-if="estimateData">
             <button class="btn btn-primary d-print-none" @click="print()"><i class="icon ion-md-print"></i> {{ trans.get('app.labels.print') }}</button>
             <button class="btn btn-success d-print-none" @click="openShareModal()"><i class="icon ion-md-share"></i> {{ trans.get('app.labels.share') }}</button>
         </div>
