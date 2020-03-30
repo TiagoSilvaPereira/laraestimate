@@ -45,7 +45,7 @@ class ClearEstimates extends Command
 
         $this->call('db:seed', [
             '--class' => 'PreviewEstimatesSeeder',
-            '--force'
+            '--force' => true,
         ]);
     }
 }
