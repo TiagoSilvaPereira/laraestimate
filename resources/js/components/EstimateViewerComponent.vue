@@ -29,7 +29,7 @@
 </style>
 
 <template>
-    <main id="estimateMainSection" class="p-5">
+    <main id="estimateMainSection" class="p-md-5">
 
         <div class="modal fade" id="shareEstimateModal" v-if="estimateData">
             <div class="modal-dialog">
@@ -66,7 +66,7 @@
 
             <div class="row">
 
-                <div id="estimateDocument" class="col-md-8 offset-md-2 bg-white p-5 animated bounceIn fast" v-if="estimateData">
+                <div id="estimateDocument" class="col-md-8 offset-md-2 bg-white p-md-5 animated bounceIn fast" v-if="estimateData">
 
                     <section class="mb-4 text-center" v-if="estimateData.logo_image">
                         <img :src="estimateData.logo_image" alt="Estimate Image" width="150px">
@@ -78,27 +78,29 @@
 
                     <section class="mb-5" v-for="section in estimateData.sections" :key="section.id">
                         <p v-html="section.presentable_text"></p>
-    
-                        <table class="table mt-4" v-if="section.items.length">
-                            <tr>
-                                <th></th>
-                                <th>{{ trans.get('app.description') }}</th>
-                                <th>{{ trans.get('app.duration') }}</th>
-                                <th class="text-right">{{ trans.get('app.price') }}</th>
-                            </tr>
+                        
+                        <div class="table-responsive">
+                            <table class="table mt-4 p-sm-2 p-md-0" v-if="section.items.length">
+                                <tr>
+                                    <th></th>
+                                    <th>{{ trans.get('app.description') }}</th>
+                                    <th>{{ trans.get('app.duration') }}</th>
+                                    <th class="text-right">{{ trans.get('app.price') }}</th>
+                                </tr>
 
-                            <tr v-for="item in section.items" :key="item.id" class="item" :class="{'selected': item.selected}">
-                                <td><input class="check-item" type="checkbox" v-if="!item.obligatory" v-model="item.selected" @change="renderPrices()"></td>
-                                <td>{{ item.description || '-' }}</td>
-                                <td>{{ item.duration || '-' }}</td>
-                                <td class="text-right">{{ formattedPrice(item.price) || '-' }}</td>
-                            </tr>
+                                <tr v-for="item in section.items" :key="item.id" class="item" :class="{'selected': item.selected}">
+                                    <td><input class="check-item" type="checkbox" v-if="!item.obligatory" v-model="item.selected" @change="renderPrices()"></td>
+                                    <td>{{ item.description || '-' }}</td>
+                                    <td>{{ item.duration || '-' }}</td>
+                                    <td class="text-right">{{ formattedPrice(item.price) || '-' }}</td>
+                                </tr>
 
-                            <tr>
-                                <td colspan="3" class="text-right"><b>{{ trans.get('app.section_total') }}:</b></td>
-                                <td class="text-right">{{ formattedPrice(sectionTotal(section)) }}</td>
-                            </tr>
-                        </table>
+                                <tr>
+                                    <td colspan="3" class="text-right"><b>{{ trans.get('app.section_total') }}:</b></td>
+                                    <td class="text-right">{{ formattedPrice(sectionTotal(section)) }}</td>
+                                </tr>
+                            </table>
+                        </div>
                     </section>
                 </div>
             </div>
