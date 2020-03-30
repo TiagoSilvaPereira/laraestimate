@@ -44,7 +44,8 @@ class ClearEstimates extends Command
         Estimate::all()->each->forceDelete();
 
         $this->call('db:seed', [
-            '--class' => 'PreviewEstimatesSeeder'
+            '--class' => 'PreviewEstimatesSeeder',
+            '--force'
         ]);
     }
 }
