@@ -49,8 +49,5 @@ If you can't do it, dont worry :blush:... You can always help-me sharing my code
 
 If you liked this system, please consider following me on [Twitter](https://twitter.com/Tiago_Ferat) to stay on top of the news I intend to release soon
 
-## Current Version
-0.1.8
-
 ## License
 [MIT](LICENSE.md)
