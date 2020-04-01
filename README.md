@@ -30,6 +30,7 @@ LaraEstimate has an intuitive and beautiful interface for creating and presentin
 Things I want to add in the future
 
 - [ ] Estimate password
+- [ ] Scroll after adding a section
 - [ ] Expiration Date
 - [ ] Estimate Templates
 - [ ] Estimate Designs
