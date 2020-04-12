@@ -34,7 +34,6 @@ window.onload = () => {
     }
 
     if(App.messages.errors && App.messages.errors.length) {
-        console.log('here')
         App.messages.errors.forEach(error => toast.error(error));
     }
 
