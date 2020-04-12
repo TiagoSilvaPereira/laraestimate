@@ -51,7 +51,7 @@ If you liked this system, please consider following me on [Twitter](https://twit
 
 ## Languages
 
-Current localizations available:
+Current available localizations:
 
 - English
 - German
