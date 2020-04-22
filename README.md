@@ -54,7 +54,7 @@ If you liked this system, please consider following me on [Twitter](https://twit
 Current available localizations:
 
 - English
-- German (thanks to @johanneslo1)
+- German (thanks to [johanneslo1](https://github.com/johanneslo1))
 
 ## License
 [MIT](LICENSE.md)
