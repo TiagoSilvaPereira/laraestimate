@@ -24,7 +24,7 @@ return [
     'view_estimate' => 'Visualizar Orçamento',
     'currency_symbol' => 'Símbolo da Moeda',
     'currency_decimal_separator' => 'Separador Decimal',
-    'currency_thousands_separator' => 'Separador dos Mil.',
+    'currency_thousands_separator' => 'Separador dos Milhares',
     'text_section' => 'Seção de Texto',
     'prices_section' => 'Seção de Preços',
     'all_changes_are_saved' => 'Alterações salvas',
