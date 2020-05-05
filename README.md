@@ -55,6 +55,7 @@ Current available localizations:
 
 - English
 - German (thanks to [johanneslo1](https://github.com/johanneslo1))
+- Portuguese (Brazil)
 
 ## License
 [MIT](LICENSE.md)
