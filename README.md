@@ -39,11 +39,7 @@ Things I want to add in the future
 
 ## Supporting
 
-I have a lot of ideas for Laravel systems and packages. If you want to support me creating more code, please consider supporting me:
-
-[![Become a Patron!](https://c5.patreon.com/external/logo/become_a_patron_button@2x.png)](https://www.patreon.com/bePatron?u=32841026)
-
-If you can't do it, dont worry :blush:... You can always help-me sharing my code and following me on [Twitter](https://twitter.com/Tiago_Ferat)
+Please consider following me on [Twitter](https://twitter.com/Tiago_Ferat)
 
 ## Follow me
 
